@@ -6,6 +6,12 @@
             controller: "homeController",
             controllerAs: "self"
         })
+        .when("/createContact",
+        {
+            templateUrl: "ViewsClient/createContact.html",
+            controller: "createContactController",
+            controllerAs: "self"
+        })
         .otherwise(
         {
             redirectTo: "/"

@@ -11,8 +11,10 @@
     <div>
         This is from the Index.cshtml
     </div>
+    <a href="/">Home</a>
+    <a href="/createContact">New Contact</a>
     <div class="container">
-        <div ng-view id="main"></div>
+        <div ng-view class="body-content"></div>
     </div>
     @Scripts.Render("~/bundles/controllers")
     <script src="~/ScriptsAppSpecific/appServices.js"></script>

@@ -1,0 +1,100 @@
+﻿<div class="container" style="width:100%; min-height: 450px">
+    <h1 style="text-align: center">New Contact</h1>
+    <br />
+    <form name="form">
+        <!--New Contact Row 1-->
+        <div class="row topBorder" style="text-align: left;">
+            <div class="col-3 rightBorder form-cell">
+                <label>First Name</label>
+                <input type="text"
+                       class="form-control"
+                       maxlength="50"
+                       style="background-color: lightgoldenrodyellow"
+                       placeholder="---"
+                       ng-model="self.contact.firstName" />
+            </div>
+            <div class="col-3 rightBorder form-cell">
+                <label>Last Name</label>
+                <input type="text"
+                       class="form-control"
+                       maxlength="50"
+                       style="background-color: lightgoldenrodyellow"
+                       placeholder="---"
+                       ng-model="self.contact.lastName" />
+            </div>
+            <div class="col-3 rightBorder form-cell">
+                <label>Mobile Phone Number</label>
+                <input type="text"
+                       class="form-control"
+                       maxlength="10"
+                       style="background-color: lightgoldenrodyellow"
+                       placeholder="---"
+                       ng-model="self.contact.phone" />
+            </div>
+            <div class="col-3 form-cell form-group" style="padding-left: 20px">
+                <label>Email Address</label>
+                <input type="text"
+                       class="form-control"
+                       maxlength="50"
+                       style="background-color: lightgoldenrodyellow"
+                       placeholder="---"
+                       ng-model="self.contact.email"/>
+            </div>
+        </div>
+        <!--New Contact Row 2-->
+        <div class="row topBorder" style="text-align: left">
+            <div class="col-4 rightBorder form-cell">
+                <label>Street Address</label>
+                <input type="text"
+                       class="form-control "
+                       maxlength="50"
+                       style="background-color: lightgoldenrodyellow"
+                       placeholder="---"
+                       ng-model="self.contact.streetAddress" />
+            </div>
+            <div class="col-3 rightBorder form-cell">
+                <label>City</label>
+                <input type="text"
+                       class="form-control"
+                       maxlength="30"
+                       style="background-color: lightgoldenrodyellow"
+                       placeholder="---"
+                       ng-model="self.contact.city" />
+            </div>
+            <div class="col-3 rightBorder form-cell">
+                <label>State</label>
+                <select class="form-control"
+                        style="background-color: lightgoldenrodyellow"
+                        ng-model="self.contact.state">
+                    <option value="" style="color: #ccc !important" disabled> -Select State- </option>
+                    <option  ng-repeat="state in self.states" value="{{state.substring(0,2)}}"> {{state}} </option>             
+                </select>                 
+            </div>
+            <div class="col-2 form-group form-cell">
+                <label>Zip Code</label>
+                <input type="text"
+                       class="form-control"
+                       maxlength="15"
+                       style="background-color: lightgoldenrodyellow"
+                       placeholder="---"
+                       ng-model="self.contact.zipCode" />
+            </div>
+        </div>
+        <!--New Contact Row 3-->
+        <div class="row topBorder">
+            <div class="col-3 rightBorder form-cell">
+                <label>Type of Service</label>
+                <select class="form-control"
+                        style="background-color: lightgoldenrodyellow"
+                        ng-model="self.contact.serviceType">
+                    <option value="" style="color: #ccc !important" disabled> -Select Service- </option>
+                    <option value="mobile"> Mobile </option>
+                    <option value="email"> Email </option>
+                    <option value="both"> Mobile and Email </option>
+                </select>
+            </div>
+            <div class=""></div>
+        </div>     
+        
+    </form>
+</div>

@@ -205,12 +205,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApiControllers\AppApiController.cs" />
+    <Compile Include="Controllers\ApiControllers\ListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -230,24 +233,25 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="ScriptsAppSpecific\appServices.js" />
+    <Content Include="ScriptsAppSpecific\controllers\createContactController.js" />
     <Content Include="ScriptsAppSpecific\controllers\homeController.js" />
     <Content Include="ScriptsAppSpecific\controllers\initialController.js" />
     <Content Include="ScriptsAppSpecific\main.js" />
-    <Content Include="Scripts\angular-animate.js" />
-    <Content Include="Scripts\angular-animate.min.js" />
-    <Content Include="Scripts\angular-google-maps-street-view.js" />
-    <Content Include="Scripts\angular-google-maps-street-view.min.js" />
-    <Content Include="Scripts\angular-google-maps.js" />
-    <Content Include="Scripts\angular-google-maps.min.js" />
-    <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="Scripts\angular-route.js" />
-    <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular\angular-animate.js" />
+    <Content Include="Scripts\angular\angular-animate.min.js" />
+    <Content Include="Scripts\angular\angular-google-maps-street-view.js" />
+    <Content Include="Scripts\angular\angular-google-maps-street-view.min.js" />
+    <Content Include="Scripts\angular\angular-google-maps.js" />
+    <Content Include="Scripts\angular\angular-google-maps.min.js" />
+    <Content Include="Scripts\angular\angular-mocks.js" />
+    <Content Include="Scripts\angular\angular-route.js" />
+    <Content Include="Scripts\angular\angular-route.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
-    <Content Include="Scripts\angular.js" />
-    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\angular\angular.js" />
+    <Content Include="Scripts\angular\angular.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -270,9 +274,9 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Scripts\angular-route.min.js.map" />
-    <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Scripts\angular\angular.min.js.map" />
+    <Content Include="Scripts\angular\angular-route.min.js.map" />
+    <Content Include="Scripts\angular\angular-animate.min.js.map" />
     <Content Include="Content\ui-grid.woff" />
     <Content Include="Content\ui-grid.ttf" />
     <Content Include="Content\ui-grid.svg" />
@@ -329,13 +333,14 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\ui-grid.js" />
-    <Content Include="Scripts\ui-grid.min.js" />
+    <Content Include="Scripts\angular-ui\ui-grid.js" />
+    <Content Include="Scripts\angular-ui\ui-grid.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="ViewsClient\createContact.html" />
     <Content Include="ViewsClient\home.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -381,6 +386,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Mapping\" />
+    <Folder Include="Views\AppApi\" />
+    <Folder Include="Views\List\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

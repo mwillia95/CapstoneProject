@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
@@ -17,8 +16,44 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
+}*/
+ 
+/*Adam added for for createContact.html*/
+.topBorder{
+    border-top: 1px solid black;
 }
+
+.leftBorder{
+    border-left: 1px solid black;
+}
+
+.rightBorder{
+    border-right: 1px solid black;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.form-cell{
+    height: 85px; 
+}
+
+label{
+    padding-top: 5px;
+    font-weight: bolder;
+}
+
+.row{
+    margin: 0px 15px;
+    height: 85px
+}
+
+form{
+    min-width: 80px;
+}
+
+
+/*end form createContact.html*/
