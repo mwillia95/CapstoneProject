@@ -12,6 +12,12 @@
             controller: "createContactController",
             controllerAs: "self"
         })
+        .when("/searchContact",
+        {
+            templateUrl: "ViewsClient/searchContact.html",
+            controller: "searchContactController",
+            controllerAs: "self",
+        })
         .otherwise(
         {
             redirectTo: "/"

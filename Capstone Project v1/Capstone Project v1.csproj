@@ -241,6 +241,7 @@
     <Content Include="ScriptsAppSpecific\controllers\createContactController.js" />
     <Content Include="ScriptsAppSpecific\controllers\homeController.js" />
     <Content Include="ScriptsAppSpecific\controllers\initialController.js" />
+    <Content Include="ScriptsAppSpecific\controllers\searchContactController.js" />
     <Content Include="ScriptsAppSpecific\main.js" />
     <Content Include="Scripts\angular\angular-animate.js" />
     <Content Include="Scripts\angular\angular-animate.min.js" />
@@ -353,6 +354,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="ViewsClient\createContact.html" />
     <Content Include="ViewsClient\home.html" />
+    <Content Include="ViewsClient\searchContact.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

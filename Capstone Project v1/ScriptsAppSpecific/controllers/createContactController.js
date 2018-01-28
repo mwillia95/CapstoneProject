@@ -1,4 +1,4 @@
-﻿angular.module("app").controller("createContactController", ['$scope', 'AppServices','$location', function ($scope, appServices, $http, $location) {
+﻿angular.module("app").controller("createContactController", ['$scope', 'AppServices','$location', function ($scope, appServices, $location) {
     var self = this;
    
     self.contact = {};
