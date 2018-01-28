@@ -15,7 +15,8 @@ namespace Capstone_Project_v1
                 "~/Content/ui-bootstrap-csp.css",
                 "~/Content/ui-grid.css",
                 "~/Content/bootstrap.css",
-                "~/Content/Site.css"
+                "~/Content/Site.css",
+                "~/Content/font-awesome.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/all").Include(

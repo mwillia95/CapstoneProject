@@ -4,8 +4,10 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 60px;
+    min-height: 825px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -54,6 +56,54 @@ label{
 form{
     min-width: 80px;
 }
-
-
 /*end form createContact.html*/
+
+/*Nav Bar CSS*/
+nav{
+    background-color: #0069aa;
+    height: 100px;
+}
+
+.navLinks{
+    font-size: 20px;
+    color:white;
+    font-family: 'Lato', sans-serif;
+}
+
+.nav-item{
+    padding-top: 13px;
+}
+
+.navLinks:hover{
+    text-decoration: underline;
+}
+
+.nav-item:hover{
+    text-decoration: underline;
+}
+
+#itemsLeftNav{
+    margin-left: 10px;
+}
+
+nav .container{
+    max-width: 1920px;
+}
+
+.dropdown-item a {
+    color: black;
+}
+
+#appName{
+    font-size: 25px;
+    color: #75a4e5;
+    font-style: italic;
+     font-family: 'Lato', sans-serif;
+}
+
+#appName span{
+    font-size: 35px;
+    color: white;
+}
+/*End Nav Bar CSS*/
+
