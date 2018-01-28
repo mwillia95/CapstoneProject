@@ -9,9 +9,8 @@ namespace Capstone_Project_v1.Models
     [Table("CONTACT")]
     public class Contact
     {
-        [Column("CONTACT_ID")]
-        [Required]
         [Key]
+        [Column("CONTACT_ID")]
         public int ContactId { get; set; }
 
         [Column("FIRST_NAME")]
@@ -20,14 +19,18 @@ namespace Capstone_Project_v1.Models
         [Column("LAST_NAME")]
         public string LastName { get; set; }
 
-        [Column("EMAIL")]
         [EmailAddress]
+        [Column("EMAIL")]
         public string Email { get; set; }
 
-        [Column("PHONE")]
         [Phone]
+        [Column("PHONE_NUMBER")]
         public string PhoneNumber { get; set; }
 
+        [Column("ADDRESS_ID")]
+        public int AddressId { get; set; }
+
+        [ForeignKey("AddressId")]
         public Address Address { get; set; }
     }
 }

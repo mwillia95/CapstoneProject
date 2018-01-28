@@ -10,8 +10,6 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
     [RoutePrefix("api/" + AppName + "/contacts")]
     public class ContactController : AppApiController
     {
-        DataContext DataContext = new DataContext();
-
         [HttpPost]
         [Route("addContact")]
         public IHttpActionResult AddNewContact(Contact c)
@@ -33,20 +31,12 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 con.Email = c.Email;
                 con.Address = add;
             }
-
-            //List<Address> list = DataContext.Addresses.ToList();
-            //Address old = list.Where(x => x.City == add.City && x.Street == add.Street && x.Zip == add.Zip && x.State == add.State).ToList()?[0];
-            //if (old == null)
-            //{
-                DataContext.Addresses.Add(add);
-                //DataContext.SaveChanges();
-                //con.AddressRefId = add.AddressId;
-            //}
-            //else
-            //{
-                //con.AddressRefId = old.AddressId;
-           // }
-
+            List<Address> list = DataContext.Addresses.ToList();
+            Address old = list.Where(x => x.City == add.City && x.Street == add.Street && x.Zip == add.Zip && x.State == add.State).ToList()?[0];
+            if (old != null)
+            {
+                con.Address = old;
+            }
             DataContext.Contacts.Add(con);
             DataContext.SaveChanges();
 

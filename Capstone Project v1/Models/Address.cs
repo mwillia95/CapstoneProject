@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Capstone_Project_v1.Models
 {
-    [Table("CONTACT")]
+    [Table("ADDRESS")]
     public class Address
     {
         [Key]
@@ -20,5 +20,6 @@ namespace Capstone_Project_v1.Models
         public string City { get; set; }
         [Column("ZIP")]
         public string Zip { get; set; }
+
     }
 }
