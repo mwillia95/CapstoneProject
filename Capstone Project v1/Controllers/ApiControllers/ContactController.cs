@@ -46,9 +46,9 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [HttpGet]
         [Route("getContacts")]
         public IHttpActionResult GetContacts()
-        {
-            var item = DataContext.Contacts;
-            return Ok(item);
+        {          
+               
+            return Ok();
         }
     }
 }
