@@ -15,6 +15,7 @@ namespace Capstone_Project_v1
                 "~/Content/ui-bootstrap-csp.css",
                 "~/Content/ui-grid.css",
                 "~/Content/bootstrap.css",
+                "~/Content/font-awesome.css",
                 "~/Content/Site.css"
                 ));
 

@@ -1,7 +1,7 @@
 ﻿<div class="container" style="width:100%; min-height: 450px">
     <h1 style="text-align: center">New Contact</h1>
     <br />
-    <form name="form">
+    <form name="form" ng-submit="form.$valid">
         <!--New Contact Row 1-->
         <div class="row topBorder" style="text-align: left;">
             <div class="col-3 rightBorder form-cell">
@@ -93,7 +93,9 @@
                     <option value="both"> Mobile and Email </option>
                 </select>
             </div>
-            <div class=""></div>
+            <div class="col-9" style="text-align: center;">
+                <button type="button" class="btn btn-success" style="margin-top: 10px;" ng-click="self.submit(true)">Submit <span class="fa fa-plus"></span></button>
+            </div>
         </div>     
         
     </form>

@@ -13,6 +13,10 @@ namespace Capstone_Project_v1.Models
             :base("name=DefaultConnection")
         { }
 
+        public DbSet<Contact> Contacts { get; set; }
+
+        public DbSet<Address> Addresses { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
