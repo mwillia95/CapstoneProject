@@ -30,6 +30,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 con.PhoneNumber = c.PhoneNumber;
                 con.Email = c.Email;
                 con.Address = add;
+                con.ServiceType = c.ServiceType;
             }
             List<Address> list = DataContext.Addresses.ToList();
             List<Address> old = list.Where(x => x.City == add.City && x.Street == add.Street && x.Zip == add.Zip && x.State == add.State).ToList();
@@ -46,9 +47,9 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [HttpGet]
         [Route("getContacts")]
         public IHttpActionResult GetContacts()
-        {          
-               
-            return Ok();
+        {            
+            var item = DataContext.Contacts.Include("Address");
+            return Ok(item);
         }
     }
 }

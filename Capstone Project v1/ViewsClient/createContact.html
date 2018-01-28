@@ -11,7 +11,8 @@
                        maxlength="50"
                        style="background-color: lightgoldenrodyellow"
                        placeholder="---"
-                       ng-model="self.contact.firstName" />
+                       ng-model="self.contact.firstName" 
+                       required />
             </div>
             <div class="col-3 rightBorder form-cell">
                 <label>Last Name</label>
@@ -20,7 +21,8 @@
                        maxlength="50"
                        style="background-color: lightgoldenrodyellow"
                        placeholder="---"
-                       ng-model="self.contact.lastName" />
+                       ng-model="self.contact.lastName" 
+                       required />
             </div>
             <div class="col-3 rightBorder form-cell">
                 <label>Mobile Phone Number</label>
@@ -33,7 +35,7 @@
             </div>
             <div class="col-3 form-cell form-group" style="padding-left: 20px">
                 <label>Email Address</label>
-                <input type="text"
+                <input type="email"
                        class="form-control"
                        maxlength="50"
                        style="background-color: lightgoldenrodyellow"
@@ -50,7 +52,8 @@
                        maxlength="50"
                        style="background-color: lightgoldenrodyellow"
                        placeholder="---"
-                       ng-model="self.contact.streetAddress" />
+                       ng-model="self.contact.streetAddress" 
+                       required />
             </div>
             <div class="col-3 rightBorder form-cell">
                 <label>City</label>
@@ -59,7 +62,8 @@
                        maxlength="30"
                        style="background-color: lightgoldenrodyellow"
                        placeholder="---"
-                       ng-model="self.contact.city" />
+                       ng-model="self.contact.city" 
+                       required />
             </div>
             <div class="col-3 rightBorder form-cell">
                 <label>State</label>
@@ -77,7 +81,7 @@
                        maxlength="15"
                        style="background-color: lightgoldenrodyellow"
                        placeholder="---"
-                       ng-model="self.contact.zipCode" />
+                       ng-model="self.contact.zipCode" required/>
             </div>
         </div>
         <!--New Contact Row 3-->
@@ -94,8 +98,8 @@
                 </select>
             </div>
             <div class="col-9" style="text-align: center;">
-                <button type="button" class="btn btn-success" style="margin-top: 20px;" ng-click="self.submit(true)">Submit <span class="fa fa-plus"></span></button>
-                <button type="button" class="btn btn-danger" style="margin-top: 20px; margin-left: 20px;" ng-click="self.clear()">Cancel <span class="fa fa-minus"></span></button>
+                <button type="button" class="btn btn-success" style="margin-top: 20px;" ng-click="self.submit(form.$valid)">Submit <span class="fa fa-plus"></span></button>
+                <button type="button" class="btn btn-danger" style="margin-top: 20px; margin-left: 20px;" ng-click="self.clear()">Cancel</button>
             </div>
         </div>   
         <div class="topBorder"></div>  

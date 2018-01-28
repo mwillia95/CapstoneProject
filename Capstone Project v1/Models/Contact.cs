@@ -27,10 +27,13 @@ namespace Capstone_Project_v1.Models
         [Column("PHONE_NUMBER")]
         public string PhoneNumber { get; set; }
 
+        [Column("SERVICE_TYPE")]
+        public string ServiceType { get; set; }
+
         [Column("ADDRESS_ID")]
         public int AddressId { get; set; }
 
         [ForeignKey("AddressId")]
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
     }
 }
