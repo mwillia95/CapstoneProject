@@ -94,6 +94,10 @@ nav .container{
     color: black;
 }
 
+.dropdown-item:active{
+    background-color: white;
+}
+
 #appName{
     font-size: 25px;
     color: #75a4e5;
@@ -106,4 +110,20 @@ nav .container{
     color: white;
 }
 /*End Nav Bar CSS*/
+
+/*Search Contact Grid*/
+.myGrid{
+    width: 100%;
+    height: 660px;
+}
+
+.grid-label{
+    display: inline-block;
+    width: 90%;
+    padding: 2px 3px 2px 3px;
+    font-weight: bold;
+    border-radius: 3px;
+    color: black;
+}
+/*Search Contact Grid*/
 

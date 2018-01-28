@@ -32,15 +32,23 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 con.Address = add;
             }
             List<Address> list = DataContext.Addresses.ToList();
-            Address old = list.Where(x => x.City == add.City && x.Street == add.Street && x.Zip == add.Zip && x.State == add.State).ToList()?[0];
-            if (old != null)
+            List<Address> old = list.Where(x => x.City == add.City && x.Street == add.Street && x.Zip == add.Zip && x.State == add.State).ToList();
+            if (old != null && old.Count > 0)
             {
-                con.Address = old;
+                con.Address = old[0];
             }
             DataContext.Contacts.Add(con);
             DataContext.SaveChanges();
 
             return Ok(con);
+        }
+
+        [HttpGet]
+        [Route("getContacts")]
+        public IHttpActionResult GetContacts()
+        {
+            var item = DataContext.Contacts;
+            return Ok(item);
         }
     }
 }
