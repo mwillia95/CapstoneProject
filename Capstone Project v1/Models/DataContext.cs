@@ -11,14 +11,16 @@ namespace Capstone_Project_v1.Models
     {
         public DataContext()
             :base("name=DefaultConnection")
-        { }
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+        }
 
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            
         }
     }
 }
