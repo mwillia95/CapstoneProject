@@ -1,4 +1,4 @@
-﻿angular.module("app", ["ngRoute", "ngAnimate", "ui.bootstrap"]).config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
+﻿angular.module("app", ["ngRoute", "ngAnimate", "ui.bootstrap", "ui.grid", "ui.grid.pagination", "ui.grid.selection", "ui.grid.resizeColumns", "ui.grid.exporter", "ui.grid.moveColumns"]).config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
     $routeProvider
         .when("/",
         {
