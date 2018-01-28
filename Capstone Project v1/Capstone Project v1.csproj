@@ -407,7 +407,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Mapping\" />
     <Folder Include="Views\AppApi\" />
     <Folder Include="Views\List\" />
   </ItemGroup>
