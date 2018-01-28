@@ -28,9 +28,6 @@ namespace Capstone_Project_v1.Models
         [Phone]
         public string PhoneNumber { get; set; }
 
-        [Column("ADDRESS_REF_ID")]
-        public int AddressRefId { get; set; }
-        [ForeignKey("AddressRefId")]
         public Address Address { get; set; }
     }
 }

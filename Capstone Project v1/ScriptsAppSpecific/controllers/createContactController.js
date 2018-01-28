@@ -34,4 +34,9 @@
             self.contact = {};
         });
     };
+
+    self.clear = function ()
+    {
+        self.contact = {};
+    }
 }]);
