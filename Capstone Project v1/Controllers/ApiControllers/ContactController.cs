@@ -47,7 +47,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [HttpGet]
         [Route("getContacts")]
         public IHttpActionResult GetContacts()
-        {
+        {            
             var item = DataContext.Contacts.Include("Address");
             return Ok(item);
         }

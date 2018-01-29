@@ -5,7 +5,11 @@
 
     self.gridOptions = {
         enableColumnResizing: false,
+        enableGridMenu: true,
+        exporterMenuAllData: false,
+        exporterMenuVisibleData: false,
         enableFiltering: true,
+        enablesorting: true,
         enablePaginationControls: true,
         enableHorizontalScrollbar: uiGridConstants.scrollbars.Always,
         enableRowHeaderSelection: false,
@@ -13,7 +17,7 @@
         paginationPageSize: 25,
         columnDefs: [
             {
-                field: "firstName",
+                field: "FirstName",
                 displayName: "First Name",
                 enableColumnMenu: true,
                 width: "15%",
@@ -22,7 +26,7 @@
                 }
             },
             {
-                field: "lastName",
+                field: "LastName",
                 displayName: "Last Name",
                 enableColumnMenu: true,
                 width: "15%",
