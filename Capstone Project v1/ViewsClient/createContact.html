@@ -1,8 +1,8 @@
 ﻿<div class="container" style="width:100%;">
-    <h1 style="text-align: center">New Contact</h1>
-    <br />
+    <h1 style="text-align: center;">New Contact</h1>
     <form name="form" ng-submit="form.$valid">
         <!--New Contact Row 1-->
+        <div class ="container" style="text-align: center; color: red; padding-bottom: 10px;">{{self.error}}</div>
         <div class="row topBorder" style="text-align: left;">
             <div class="col-3 rightBorder form-cell">
                 <label>First Name</label>
@@ -12,7 +12,7 @@
                        style="background-color: lightgoldenrodyellow"
                        placeholder="---"
                        ng-model="self.contact.firstName" 
-                       required />
+                       />
             </div>
             <div class="col-3 rightBorder form-cell">
                 <label>Last Name</label>
@@ -22,7 +22,7 @@
                        style="background-color: lightgoldenrodyellow"
                        placeholder="---"
                        ng-model="self.contact.lastName" 
-                       required />
+                       />
             </div>
             <div class="col-3 rightBorder form-cell">
                 <label>Mobile Phone Number</label>
@@ -53,7 +53,7 @@
                        style="background-color: lightgoldenrodyellow"
                        placeholder="---"
                        ng-model="self.contact.streetAddress" 
-                       required />
+                       />
             </div>
             <div class="col-3 rightBorder form-cell">
                 <label>City</label>
@@ -63,7 +63,7 @@
                        style="background-color: lightgoldenrodyellow"
                        placeholder="---"
                        ng-model="self.contact.city" 
-                       required />
+                       />
             </div>
             <div class="col-3 rightBorder form-cell">
                 <label>State</label>
