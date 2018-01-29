@@ -11,6 +11,9 @@
             },
             getContacts: function (search) {
                 return $http.get("api/PublicEmergencyNotificationSystem/contacts/getContacts/" + search);
+            },
+            getContactsAll: function () {
+                return $http.get("api/PublicEmergencyNotificationSystem/contacts/getContactsAll");
             }
         };
     }]);

@@ -55,5 +55,13 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 
             return Ok(item);
         }
+
+        [HttpGet]
+        [Route("getContactsAll")]
+        public IHttpActionResult GetContactsAll()
+        {
+            var item = DataContext.Contacts.Include("Address");
+            return Ok(item);
+        }
     }
 }
