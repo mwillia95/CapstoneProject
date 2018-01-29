@@ -1,6 +1,5 @@
 ﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', function ($scope, appServices,$location,uiGridConstants) {
     var self = this;
-    self.search = "";
     self.gridOptions = {
         rowHeight: 36,
         enableColumnResizing: false,
@@ -91,7 +90,13 @@
     };
 
     self.gridOptions.data = [];
-    self.refreshData = function () {
+    self.refreshData = function (){
+        if (self.search == "" || null)
+        {
+            self.results = null;
+            self.gridOptions.data = null;
+            return;
+        }
         appServices.getContacts(self.search).then(function (response) {                //send search string through to query
             self.gridOptions.data = response.data;
             self.results = self.gridOptions.data;
@@ -100,14 +105,5 @@
         //}).catch(function () {
         //    console.log("There was an Error Bro!");
         });
-    };
-
-    //self.getContacts = function () {
-    //    appServices.getContacts().then(function (response) {
-    //        self.gridOptions.data = response.data;
-    //        console.log(self.gridOptions.data);
-    //    });
-    //};
-
-    
+    }; 
 }]);
