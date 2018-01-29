@@ -21,5 +21,9 @@ namespace Capstone_Project_v1.Models
         [Column("ZIP")]
         public string Zip { get; set; }
 
+        public string Searchable()
+        {
+            return Street + " " + Zip;
+        }
     }
 }

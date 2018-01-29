@@ -35,5 +35,10 @@ namespace Capstone_Project_v1.Models
 
         [ForeignKey("AddressId")]
         public virtual Address Address { get; set; }
+
+        public string Searchable()
+        {
+            return FirstName + " " + LastName + " " + Email + " " + PhoneNumber + " " + Address.Searchable();
+        }
     }
 }

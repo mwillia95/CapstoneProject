@@ -1,6 +1,7 @@
 ﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', function ($scope, appServices,$location,uiGridConstants) {
     var self = this;
     self.search = "";
+
     self.gridOptions = {
         rowHeight: 36,
         enableColumnResizing: false,
@@ -73,7 +74,7 @@
                 field: " ",
                 displayName: "Edit",
                 width: "5%",
-                enableColumnMenu: false,             
+                enableColumnMenu: false,
                 cellTemplate: "<div class=\"text-center\" style=\"padding-top:3px; margin-left:3px; padding-bottom: 2px;\"><button type=\"button\" class=\"btn btn-sm btn-warning\"><span class=\"fa fa-pencil\"></span></button></div>",
                 enableSorting: false,
                 enableFiltering: false
@@ -89,21 +90,25 @@
             }
         ]
     };
+    //end self.gridOptions();
 
     self.gridOptions.data = [];
     searchValidation = /\S/;
     
     self.refreshData = function () {
-        if (!searchValidation.test(self.search)) {
+        if (!searchValidation.test(self.search))
+        {
             console.log("test1");
-            appServices.getContactsAll().then(function (response) {
+            appServices.getContactsAll().then(function (response)
+            {
                 self.gridOptions.data = response.data;
                 self.results = self.gridOptions.data;
                 self.gridOptions.paginationCurrentPage = 1;
                 console.log(self.gridOptions.data);
             });
-        } else {
-            appServices.getContacts(self.search).then(function (response) {                //send search string through to query
+        }
+        else {
+            appServices.getContacts(self.search).then(function (response) { //send search string through to query
                 console.log("test2");
                 self.gridOptions.data = response.data;
                 self.results = self.gridOptions.data;
@@ -111,5 +116,6 @@
                 console.log(self.gridOptions.data);
             });
         };
-    }; 
+    };
+    //end self.refreshData()
 }]);
