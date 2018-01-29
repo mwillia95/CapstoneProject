@@ -23,7 +23,7 @@ namespace Capstone_Project_v1.Models
 
         public string Searchable()
         {
-            return Street + " " + Zip;
+            return Street + " " + Zip + " " + State + " " + City;
         }
     }
 }

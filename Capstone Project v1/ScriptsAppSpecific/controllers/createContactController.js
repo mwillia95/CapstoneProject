@@ -66,7 +66,7 @@
         self.error = "";
         return true;
     }
-
+    //end self.validate
 
     self.submit = function (valid) {
         //if (!valid)
@@ -75,12 +75,14 @@
         {
             return;
         }
-
+        var phonestrip = /[()+-]/g;
+        console.log({ Test: self.contact.phone.replace(phonestrip, '') });
+        return;
         var contact =
             {
                 FirstName: self.contact.firstName,
                 LastName: self.contact.lastName,
-                PhoneNumber: self.contact.phone,
+                PhoneNumber: self.contact.phone.replace(phonestrip, ''),
                 Email: self.contact.email,
                 ServiceType: self.contact.serviceType,
                 Address: 
@@ -103,4 +105,22 @@
     {
         self.contact = {};
     }
+    //code for testing updates
+    //var Contact = {
+    //    ContactId: 1,
+    //    FirstName: 'Mitchell',
+    //    LastName: 'Williams',
+    //    Email: 'mwilliams10@augusta.edu',
+    //    PhoneNumber: '7067269834',
+    //    AddressId: 1,
+    //    Address: {
+    //        Street: '904 Windmill Parkway',
+    //        City: 'Evans',
+    //        State: 'GA',
+    //        Zip: '30809'
+    //    }
+    //}
+    //appServices.updateContact(Contact).then(function (response) {
+    //    console.log(response);
+    //});
 }]);

@@ -87,23 +87,57 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             return Ok(item);
         }
 
+        //As of now, fully functioning
         [HttpPost]
         [Route("updateContact")]
         public IHttpActionResult UpdateContact(Contact c)
         {
-            var old = DataContext.Contacts.Find(c.ContactId);
+            //make sure that contact objects always keep their database key
+            var oldContact = DataContext.Contacts.Find(c.ContactId);
+            if (oldContact == null)
             {
-                //TODO: Make sure if the address changes for one person, it does not change the address for everyone who used to have that address
-                //This will likely mean checking if a new address needs to be made
-                old.Address = c.Address;
-                old.Email = c.Email;
-                old.PhoneNumber = c.PhoneNumber;
-                old.FirstName = c.FirstName;
-                old.LastName = c.LastName;
+                return Ok("contact missing");
             }
-            DataContext.SaveChanges();
+            {
+                //change the contacts information besides the address (will remain same if there was no change)
+                oldContact.FirstName = c.FirstName;
+                oldContact.LastName = c.LastName;
+                oldContact.PhoneNumber = c.PhoneNumber;
+                oldContact.ServiceType = c.ServiceType;
+                oldContact.Email = c.Email;
+                DataContext.SaveChanges();
+            }
 
-            return Ok();
+            oldContact.Address = DataContext.Addresses.Find(oldContact.AddressId);
+            //if addresses changed (or either object is missing an address) check if a new address needs to be made for the new values of changed address.
+            if(AddressChanged(c.Address, oldContact.Address))
+            {
+                var a = c.Address;
+                //see if we can reuse an address already in the system
+                var _newAdd = DataContext.Addresses.Where(x => x.City == a.City && x.Zip == a.Zip && x.State == a.State && x.Street == a.Street).ToList();
+                Address newAdd;
+
+                if (_newAdd.Count != 0)
+                    newAdd = _newAdd[0]; //use the address thats arleady made
+                else
+                {
+                    //create a new address
+                    newAdd = new Address();
+                    newAdd.City = a.City;
+                    newAdd.State = a.State;
+                    newAdd.Street = a.Street;
+                    newAdd.Zip = a.Zip;
+
+                }
+                oldContact.Address = newAdd;
+            }
+
+            DataContext.SaveChanges();
+            return Ok(oldContact);
+        }
+        private bool AddressChanged(Address old, Address changed)
+        {
+            return old == null || changed == null || old.City != changed.City || old.Street != changed.Street || old.State != changed.State || old.Zip != changed.Zip || old.AddressId != changed.AddressId;
         }
 
         [HttpPost]
@@ -111,6 +145,8 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         public IHttpActionResult RemoveContact(Contact c)
         {
             var old = DataContext.Contacts.Find(c.ContactId);
+            if (old == null)
+                return Ok();
             DataContext.Contacts.Remove(old);
             DataContext.SaveChanges();
             return Ok();
