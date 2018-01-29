@@ -1,27 +1,29 @@
 ﻿<div class="container" style="width:100%;">
     <h1 style="text-align: center">Search Contacts</h1>
     <br />
-
+  <form name="form" ng-submit="form.$valid">
+    <!--New Contact Row 1-->
+    <div class="row" style="text-align: center;">
+            <div class="col-2"></div>
+            <div class="col-7">           
+                    <input type="text"
+                           class="form-control"
+                           style="background-color: lightgoldenrodyellow"
+                           placeholder="Search Contacts..."
+                           ng-model="self.search" />                   
+            </div>
+            <div class="col-3" style="text-align: left; padding-left: 0px;">
+                <button type="submit" ng-click="self.refreshData()" class="btn btn-primary"><span class="fa fa-search"><span style="font-family: 'Lato', sans-serif;">Search</span></span></button>
+            </div>                
+     </div>
+   </form>
+    <div ng-if="self.results.length === 0" style="text-align: center;">
+        Sorry but your search returned no matches...
+    </div>
     <!--Grid Table-->
-    <div class="myGrid" style="cursor: default;" ui-grid-pagination ui-grid-selection ui-grid-exporter
+    <div ng-if="self.gridOptions.data.length > 0" class="myGrid" style="cursor: default;" ui-grid-pagination ui-grid-selection ui-grid-exporter
           ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid="self.gridOptions">
     </div>
  
 </div>
 
-
-
-<!--<form name="form" ng-submit="form.$valid">-->
-    <!--New Contact Row 1-->
-    <!--<div class="row" style="text-align: center;">
-        <div class="col-2"></div>
-        <div class="col-8">
-            <input type="text"
-                   class="form-control"
-                   style="background-color: lightgoldenrodyellow"
-                   placeholder="Search Contacts..."
-                   ng-model="self.search" />
-        </div>
-        <div class="col-2"></div>
-    </div>
-</form>-->

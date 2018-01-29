@@ -9,8 +9,8 @@
             addNewContact: function (contact) {
                 return $http.post("api/PublicEmergencyNotificationSystem/contacts/addContact", contact);
             },
-            getContacts: function () {
-                return $http.get("api/PublicEmergencyNotificationSystem/contacts/getContacts");
+            getContacts: function (search) {
+                return $http.get("api/PublicEmergencyNotificationSystem/contacts/getContacts/" + search);
             }
         };
     }]);
