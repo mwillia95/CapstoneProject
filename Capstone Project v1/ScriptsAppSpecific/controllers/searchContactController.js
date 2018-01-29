@@ -90,11 +90,13 @@
     };
 
     self.gridOptions.data = [];
-    self.refreshData = function (){
-        if (self.search == "" || null)
+    searchValidation = /\S/;
+    
+    self.refreshData = function () {
+        if (!searchValidation.test(self.search))
         {
-            self.results = null;
             self.gridOptions.data = null;
+            self.results = null;
             return;
         }
         appServices.getContacts(self.search).then(function (response) {                //send search string through to query
@@ -102,8 +104,6 @@
             self.results = self.gridOptions.data;
             self.gridOptions.paginationCurrentPage = 1;
             console.log(self.gridOptions.data);
-        //}).catch(function () {
-        //    console.log("There was an Error Bro!");
-        });
+        })           
     }; 
 }]);

@@ -51,12 +51,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             var item = DataContext.Contacts.Include("Address").Where(x => x.FirstName.Contains(search) || x.LastName.Contains(search) || x.PhoneNumber.Contains(search)
                     || x.Email.Contains(search) || x.ServiceType.Contains(search) || x.Address.City.Contains(search) || x.Address.State.Contains(search) || x.Address.Street.Contains(search)
                     || x.Address.Zip.Contains(search));
-
-            if(item == null)
-            {
-                string notFound = "nothing";
-                return Ok(notFound);
-            }
+                       
                 
             return Ok(item);
         }
