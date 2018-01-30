@@ -48,7 +48,10 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("getContactById")]
         public IHttpActionResult GetContactById(int id)
         {
-            var contact = DataContext.Contacts.Include("Address").Where(x => x.ContactId == id);
+            //If I'm not mistaken, .Where will search through every database entry, while .Find will use hash tables for constant-time lookup
+            //var contact = DataContext.Contacts.Include("Address").Where(x => x.ContactId == id);
+            var contact = DataContext.Contacts.Find(id);
+            contact.Address = DataContext.Addresses.Find(contact.AddressId);
             return Ok(contact);
         }
 
@@ -57,7 +60,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         public IHttpActionResult GetContacts(string search)
         {
             //split the search into individual terms
-            var terms = search.Split(' ');
+            var terms = search.ToLower().Split(' ');
             var list = DataContext.Contacts.Include("Address").ToList();
             var items = new List<Contact>();
 
@@ -120,7 +123,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
             oldContact.Address = DataContext.Addresses.Find(oldContact.AddressId);
             //if addresses changed (or either object is missing an address) check if a new address needs to be made for the new values of changed address.
-            if(AddressChanged(c.Address, oldContact.Address))
+            if (AddressChanged(c.Address, oldContact.Address))
             {
                 var a = c.Address;
                 //see if we can reuse an address already in the system
@@ -145,21 +148,30 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             DataContext.SaveChanges();
             return Ok(oldContact);
         }
-        private bool AddressChanged(Address old, Address changed)
-        {
-            return old == null || changed == null || old.City != changed.City || old.Street != changed.Street || old.State != changed.State || old.Zip != changed.Zip || old.AddressId != changed.AddressId;
-        }
-
         [HttpPost]
         [Route("removeContact")]
         public IHttpActionResult RemoveContact(Contact c)
         {
+            string message = "everything worked";
             var old = DataContext.Contacts.Find(c.ContactId);
-            if (old == null)
+            if(old == null)
+            {
                 return Ok();
+            }
+            var address = DataContext.Addresses.Find(old.AddressId);
             DataContext.Contacts.Remove(old);
+            if (DataContext.Contacts.Count(x => x.AddressId == address.AddressId && x.ContactId != c.ContactId) == 0)
+            {
+                DataContext.Addresses.Remove(address);
+                message += ": removed old address";
+            }
+            
             DataContext.SaveChanges();
-            return Ok();
+            return Ok(message);
+        }
+        private bool AddressChanged(Address old, Address changed)
+        {
+            return old == null || changed == null || old.City != changed.City || old.Street != changed.Street || old.State != changed.State || old.Zip != changed.Zip || old.AddressId != changed.AddressId;
         }
     }
 }
