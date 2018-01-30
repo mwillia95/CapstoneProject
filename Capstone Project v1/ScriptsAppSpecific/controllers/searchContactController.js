@@ -1,4 +1,4 @@
-﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', '$routeParams', function ($scope, appServices,$location,uiGridConstants,$routeParams) {
+﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', '$routeParams', function ($scope, appServices, $location, uiGridConstants, $routeParams) {
     var self = this;
     self.search = "";
     self.gridOptions = {
@@ -76,7 +76,7 @@
                 enableColumnMenu: false,
                 cellTemplate: "<div class=\"text-center\" style=\"padding-top:3px; margin-left:3px; padding-bottom: 2px;\"><button type=\"button\" class=\"btn btn-sm btn-warning\" ng-click=\"grid.appScope.self.updateContact(row.entity)\"><span class=\"fa fa-pencil\"></span></button></div>",
                 enableSorting: false,
-                enableFiltering: false                                                                                                                                              
+                enableFiltering: false
             },
             {
                 field: " ",
@@ -93,14 +93,13 @@
 
     self.gridOptions.data = [];
     searchValidation = /\S/;
-    
+
     self.refreshData = function () {
-        if (!searchValidation.test(self.search))
-        {
+        if (!searchValidation.test(self.search)) {
             appServices.getContactsAll().then(function (response) {
                 self.gridOptions.data = response.data;
                 self.results = self.gridOptions.data;
-                self.gridOptions.paginationCurrentPage = 1;            
+                self.gridOptions.paginationCurrentPage = 1;
             });
         }
         else {
@@ -113,7 +112,7 @@
     };
 
     self.updateContact = function (request) {
-        if (searchValidation.test(self.search)) {           
+        if (searchValidation.test(self.search)) {
             $location.path('/updateContact/' + request.ContactId + '/' + self.search);//.search({ param: 'request.ContactId' });
         }
         else {
@@ -123,18 +122,17 @@
     };
 
     self.removeContact = function (request) {
-        if(confirm("Are you sure you want to delete this contact?"))
-        {
+        if (confirm("Are you sure you want to delete this contact?")) {
             console.log(request);
-            appServices.removeContact(request.ContactId).then(function () {
-                self.gridOptions.data.remove(request);
+            appServices.removeContact(request).then(function (response) {
+                console.log(response);
+                self.refreshData();
             });
         }
-    };
+    }
     //end self.refreshData()
-    if($routeParams.param1)
-    {
-            self.search = $routeParams.param1;
-            self.refreshData();
+    if ($routeParams.param1) {
+        self.search = $routeParams.param1;
+        self.refreshData();
     }
 }]);

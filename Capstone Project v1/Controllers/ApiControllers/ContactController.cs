@@ -123,7 +123,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
             oldContact.Address = DataContext.Addresses.Find(oldContact.AddressId);
             //if addresses changed (or either object is missing an address) check if a new address needs to be made for the new values of changed address.
-            if(AddressChanged(c.Address, oldContact.Address))
+            if (AddressChanged(c.Address, oldContact.Address))
             {
                 var a = c.Address;
                 //see if we can reuse an address already in the system
@@ -150,21 +150,28 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         }
         [HttpPost]
         [Route("removeContact")]
-        public IHttpActionResult RemoveContact(int id)
+        public IHttpActionResult RemoveContact(Contact c)
         {
-            //TODO: Figure out how to handle the address. Either do not mess with it, or remove it if no other contact uses it
-            var old = DataContext.Contacts.Find(id);
-            if (old == null)
+            string message = "everything worked";
+            var old = DataContext.Contacts.Find(c.ContactId);
+            if(old == null)
+            {
                 return Ok();
+            }
+            var address = DataContext.Addresses.Find(old.AddressId);
             DataContext.Contacts.Remove(old);
+            if (DataContext.Contacts.Count(x => x.AddressId == address.AddressId && x.ContactId != c.ContactId) == 0)
+            {
+                DataContext.Addresses.Remove(address);
+                message += ": removed old address";
+            }
+            
             DataContext.SaveChanges();
-            return Ok();
+            return Ok(message);
         }
         private bool AddressChanged(Address old, Address changed)
         {
             return old == null || changed == null || old.City != changed.City || old.Street != changed.Street || old.State != changed.State || old.Zip != changed.Zip || old.AddressId != changed.AddressId;
         }
-
-
     }
 }

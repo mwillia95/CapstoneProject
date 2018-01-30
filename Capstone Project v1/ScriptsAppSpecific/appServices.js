@@ -18,12 +18,11 @@
             getContactsAll: function () {
                 return $http.get("api/PublicEmergencyNotificationSystem/contacts/getContactsAll");
             },
-
             updateContact: function (contact) {
                 return $http.post("api/PublicEmergencyNotificationSystem/contacts/updateContact", contact);
             },
-            removeContact: function (id) {
-                return $http.post("api/PublicEmergencyNotificationSystem/contacts/removeContact", id);
-            }
+            removeContact: function (contact) {
+                return $http.post("api/PublicEmergencyNotificationSystem/contacts/removeContact", contact)
+            }     
         };
     }]);
