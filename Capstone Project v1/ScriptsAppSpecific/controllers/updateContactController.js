@@ -1,7 +1,6 @@
 ﻿angular.module("app").controller("updateContactController", ['$scope', 'AppServices', '$location', '$routeParams', function ($scope, appServices, $location, $routeParams) {
     var self = this;
     self.contact = {};
-
     var id = $routeParams.param1;
     var searchString = $routeParams.param2;    //searchstring to send back to search controller and renter into search bar to show previous screen before pressing edit?
     console.log(searchString);
@@ -14,7 +13,7 @@
 
     self.getForm = function () {
         appServices.getContactById(id).then(function (response) {
-            self.contact = response.data[0];
+            self.contact = response.data;
         });
         var service = document.getElementsByClassName("serviceUpdate");      
         
@@ -25,6 +24,7 @@
                 service[i].selected = true;
             }
         };
+
     };
 
     var phoneValidation = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
@@ -106,11 +106,13 @@
             console.log("Updated information")
             console.log(response.data);
             self.contact = {}; ///test for update info
+            $location.path('/searchContact/' + searchString);
         });
     };
 
     self.clear = function () {    // needs to redirect back to table with searchString as search input
         self.contact = {};
+        $location.path('/searchContact/' + searchString);
     };
 
     stateList();

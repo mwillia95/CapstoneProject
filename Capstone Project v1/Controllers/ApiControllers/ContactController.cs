@@ -48,7 +48,10 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("getContactById")]
         public IHttpActionResult GetContactById(int id)
         {
-            var contact = DataContext.Contacts.Include("Address").Where(x => x.ContactId == id);
+            //If I'm not mistaken, .Where will search through every database entry, while .Find will use hash tables for constant-time lookup
+            //var contact = DataContext.Contacts.Include("Address").Where(x => x.ContactId == id);
+            var contact = DataContext.Contacts.Find(id);
+            contact.Address = DataContext.Addresses.Find(contact.AddressId);
             return Ok(contact);
         }
 
@@ -57,7 +60,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         public IHttpActionResult GetContacts(string search)
         {
             //split the search into individual terms
-            var terms = search.Split(' ');
+            var terms = search.ToLower().Split(' ');
             var list = DataContext.Contacts.Include("Address").ToList();
             var items = new List<Contact>();
 
@@ -145,21 +148,23 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             DataContext.SaveChanges();
             return Ok(oldContact);
         }
-        private bool AddressChanged(Address old, Address changed)
-        {
-            return old == null || changed == null || old.City != changed.City || old.Street != changed.Street || old.State != changed.State || old.Zip != changed.Zip || old.AddressId != changed.AddressId;
-        }
-
         [HttpPost]
         [Route("removeContact")]
-        public IHttpActionResult RemoveContact(Contact c)
+        public IHttpActionResult RemoveContact(int id)
         {
-            var old = DataContext.Contacts.Find(c.ContactId);
+            //TODO: Figure out how to handle the address. Either do not mess with it, or remove it if no other contact uses it
+            var old = DataContext.Contacts.Find(id);
             if (old == null)
                 return Ok();
             DataContext.Contacts.Remove(old);
             DataContext.SaveChanges();
             return Ok();
         }
+        private bool AddressChanged(Address old, Address changed)
+        {
+            return old == null || changed == null || old.City != changed.City || old.Street != changed.Street || old.State != changed.State || old.Zip != changed.Zip || old.AddressId != changed.AddressId;
+        }
+
+
     }
 }
