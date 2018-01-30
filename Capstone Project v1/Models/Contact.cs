@@ -38,7 +38,8 @@ namespace Capstone_Project_v1.Models
 
         public string Searchable()
         {
-            return FirstName + " " + LastName + " " + Email + " " + PhoneNumber + " " + Address.Searchable();
+            return FirstName + " " + LastName + " " + Email + " " + PhoneNumber + " " + Address.Searchable() + " " + FirstName.ToLower() 
+                + " " + LastName.ToLower() + " " + Email.ToLower() + " " + PhoneNumber.ToLower();
         }
     }
 }
