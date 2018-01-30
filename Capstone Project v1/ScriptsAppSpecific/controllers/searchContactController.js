@@ -1,4 +1,4 @@
-﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', function ($scope, appServices,$location,uiGridConstants) {
+﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', '$routeParams', function ($scope, appServices,$location,uiGridConstants,$routeParams) {
     var self = this;
     self.search = "";
 
@@ -75,9 +75,9 @@
                 displayName: "Edit",
                 width: "5%",
                 enableColumnMenu: false,
-                cellTemplate: "<div class=\"text-center\" style=\"padding-top:3px; margin-left:3px; padding-bottom: 2px;\"><button type=\"button\" class=\"btn btn-sm btn-warning\"><span class=\"fa fa-pencil\"></span></button></div>",
+                cellTemplate: "<div class=\"text-center\" style=\"padding-top:3px; margin-left:3px; padding-bottom: 2px;\"><button type=\"button\" class=\"btn btn-sm btn-warning\" ng-click=\"grid.appScope.self.updateContact(row.entity)\"><span class=\"fa fa-pencil\"></span></button></div>",
                 enableSorting: false,
-                enableFiltering: false
+                enableFiltering: false                                                                                                                                              
             },
             {
                 field: " ",
@@ -98,24 +98,29 @@
     self.refreshData = function () {
         if (!searchValidation.test(self.search))
         {
-            console.log("test1");
-            appServices.getContactsAll().then(function (response)
-            {
+            appServices.getContactsAll().then(function (response) {
                 self.gridOptions.data = response.data;
                 self.results = self.gridOptions.data;
-                self.gridOptions.paginationCurrentPage = 1;
-                console.log(self.gridOptions.data);
+                self.gridOptions.paginationCurrentPage = 1;            
             });
         }
         else {
             appServices.getContacts(self.search).then(function (response) { //send search string through to query
-                console.log("test2");
                 self.gridOptions.data = response.data;
                 self.results = self.gridOptions.data;
                 self.gridOptions.paginationCurrentPage = 1;
-                console.log(self.gridOptions.data);
             });
         };
+    };
+
+    self.updateContact = function (request) {
+        if (searchValidation.test(self.search)) {           
+            $location.path('/updateContact/' + request.ContactId + '/' + self.search);//.search({ param: 'request.ContactId' });
+        }
+        else {
+            self.search = " ";
+            $location.path('/updateContact/' + request.ContactId + '/' + self.search);//.search({ param: 'request.ContactId' });
+        }
     };
     //end self.refreshData()
 }]);

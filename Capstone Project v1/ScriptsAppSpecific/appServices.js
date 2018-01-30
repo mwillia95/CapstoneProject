@@ -6,6 +6,9 @@
                 return $http.get("api/PublicEmergencyNotificationSystem/lists/" + listName);
             },
             //ContactController functions
+            getContactById: function (id){  
+               return $http.get("api/PublicEmergencyNotificationSystem/contacts/getContactById?id=" + id);  
+            },
             addNewContact: function (contact) {
                 return $http.post("api/PublicEmergencyNotificationSystem/contacts/addContact", contact);
             },

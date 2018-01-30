@@ -1,4 +1,4 @@
-﻿angular.module("app").controller("createContactController", ['$scope', 'AppServices', '$location', function ($scope, appServices, $http, $location) {
+﻿angular.module("app").controller("createContactController", ['$scope', 'AppServices', '$location', function ($scope, appServices, $location) {
     var self = this;
    
     self.contact = {};
@@ -76,8 +76,8 @@
             return;
         }
         var phonestrip = /[()+-]/g;
-        console.log({ Test: self.contact.phone.replace(phonestrip, '') });
-        return;
+        //console.log({ Test: self.contact.phone.replace(phonestrip, '') });
+        //return;
         var contact =
             {
                 FirstName: self.contact.firstName,

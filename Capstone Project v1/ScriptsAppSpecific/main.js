@@ -18,6 +18,12 @@
             controller: "searchContactController",
             controllerAs: "self",
         })
+        .when("/updateContact/:param1/:param2",
+        {
+            templateUrl: "ViewsClient/updateContact.html",
+            controller: "updateContactController",
+            controllerAs: "self",
+        })
         .otherwise(
         {
             redirectTo: "/"

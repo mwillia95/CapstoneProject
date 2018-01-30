@@ -45,37 +45,45 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         }
 
         [HttpGet]
+        [Route("getContactById")]
+        public IHttpActionResult GetContactById(int id)
+        {
+            var contact = DataContext.Contacts.Include("Address").Where(x => x.ContactId == id);
+            return Ok(contact);
+        }
+
+        [HttpGet]
         [Route("getContacts/{search}")]
         public IHttpActionResult GetContacts(string search)
         {
             //split the search into individual terms
-            var terms = search.Split(' ');
-            var list = DataContext.Contacts.Include("Address").ToList();
-            var items = new List<Contact>();
+            //var terms = search.Split(' ');
+            //var list = DataContext.Contacts.Include("Address").ToList();
+            //var items = new List<Contact>();
 
-            //return an item if every term appears in the contact somewhere
-            foreach(var c in list)
-            {
-                bool valid = true;
-                var searchable = c.Searchable();
-                foreach(var t in terms)
-                {
-                    if (!searchable.Contains(t))
-                    {
-                        valid = false;
-                        break;
-                    }
-                }
-                if (valid)
-                    items.Add(c);
-            }
+            ////return an item if every term appears in the contact somewhere
+            //foreach(var c in list)
+            //{
+            //    bool valid = true;
+            //    var searchable = c.Searchable();
+            //    foreach(var t in terms)
+            //    {
+            //        if (!searchable.Contains(t))
+            //        {
+            //            valid = false;
+            //            break;
+            //        }
+            //    }
+            //    if (valid)
+            //        items.Add(c);
+            //}
 
-            //var item = DataContext.Contacts.Include("Address").Where(x => x.FirstName.Contains(search) || x.LastName.Contains(search) || x.PhoneNumber.Contains(search)
-            //        || x.Email.Contains(search) || x.ServiceType.Contains(search) || x.Address.City.Contains(search) || x.Address.State.Contains(search) || x.Address.Street.Contains(search)
-            //        || x.Address.Zip.Contains(search));
-                       
-                
-            return Ok(items);
+            var item = DataContext.Contacts.Include("Address").Where(x => x.FirstName.Contains(search) || x.LastName.Contains(search) || x.PhoneNumber.Contains(search)
+                    || x.Email.Contains(search) || x.ServiceType.Contains(search) || x.Address.City.Contains(search) || x.Address.State.Contains(search) || x.Address.Street.Contains(search)
+                    || x.Address.Zip.Contains(search));
+
+
+            return Ok(item);
         }
 
 
