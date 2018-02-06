@@ -23,8 +23,7 @@
             {
                 service[i].selected = true;
             }
-        };
-
+        }
     };
 
     var phoneValidation = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
@@ -43,14 +42,14 @@
             self.error = "Please select a service type";
             return false;
         }
-        if (type == "email" || type == "both") {
+        if (type === "email" || type === "both") {
             var email = self.contact.Email;
             if (!email || !email.trim()) {
                 self.error = "Please enter a valid email address";
                 return false;
             }
         }
-        if (type == "mobile" || type == "both") {
+        if (type === "mobile" || type === "both") {
             if (!phoneValidation.test(self.contact.PhoneNumber)) {
                 self.error = "Please enter a valid phone number";
                 return false;
@@ -74,7 +73,7 @@
         }
         self.error = "";
         return true;
-    }
+    };
     //end self.validate
 
     self.submit = function (valid) {
@@ -103,7 +102,7 @@
 
             };
         appServices.updateContact(contact).then(function (response) {
-            console.log("Updated information")
+            console.log("Updated information");
             console.log(response.data);
             self.contact = {}; ///test for update info
             $location.path('/searchContact/' + searchString);
