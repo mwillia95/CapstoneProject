@@ -8,6 +8,7 @@
     padding-right: 10px;
     padding-top: 60px;
     min-height: 825px;
+    min-width: 600px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -126,4 +127,66 @@ nav .container{
     color: black;
 }
 /*Search Contact Grid*/
+
+/*Google Maps CSS*/
+#map-canvas{
+    margin: auto;
+    height: 600px;
+    width: 1000px;
+}
+
+.map-control {
+    background-color: #fff;   
+    box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+    font-family: 'Roboto','sans-serif';
+    margin: 5px;
+    display: none; /*Hide controller till map loads*/
+}
+/* Display the control once it is inside the map. */
+#map-canvas .map-control { 
+    display: block;
+}
+
+.selector-control {
+    font-size: 14px;
+    line-height: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#map-canvas #searchInput{
+    display: block;
+}
+
+#searchInput{
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 0px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 400px;
+    box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+    display: none;
+    color: black;
+    height: 29px;
+    margin-top: 5px;
+}
+
+ #infowindow-content .title {  //for bolding input as you type
+    font-weight: bold;
+}
+
+#infowindow-content {
+    display: none;
+}
+
+#map #infowindow-content {
+    display: inline;
+}
+
+#search-button{
+    margin-top: 5px;
+    
+}
 

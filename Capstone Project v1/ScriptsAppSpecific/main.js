@@ -16,28 +16,29 @@
         {
             templateUrl: "ViewsClient/searchContact.html",
             controller: "searchContactController",
-            controllerAs: "self",
+            controllerAs: "self"
         })
         .when("/searchContact/:param1",
         {
             templateUrl: "ViewsClient/searchContact.html",
             controller: "searchContactController",
-            controllerAs: "self",
+            controllerAs: "self"
         })
         .when("/updateContact/:param1/:param2",
         {
             templateUrl: "ViewsClient/updateContact.html",
             controller: "updateContactController",
-            controllerAs: "self",
-        })
+            controllerAs: "self"
+        })        
         .otherwise(
         {
             redirectTo: "/"
-    });
+         });
 
     $locationProvider.html5Mode({
         enabled: true,
         requiredBase: true
     });
-
 }]);
+
+

@@ -4,9 +4,10 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width" />
     <title>Home</title>
-    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato" rel="stylesheet">   
     @Styles.Render("~/content/css")
     @Scripts.Render("~/bundles/all")
+    <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjPZkkaFZNUcyiFq6Ckyrcb9LVplllhyE&libraries=places"></script>
 </head>
 <body ng-controller="initialController as self" class="body-content">
     <!--Navigation-->
@@ -26,7 +27,7 @@
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="navLinks">Contacts</span></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-item"><a href="/createContact">Create Contact</a></li>
-                                <li class="dropdown-item"><a href="/searchContact">Search Contacts</a></li>                          
+                                <li class="dropdown-item"><a href="/searchContact">Search Contacts</a></li>                       
                             </ul>
                         </li>                     
                     </ul>

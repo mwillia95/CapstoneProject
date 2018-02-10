@@ -129,7 +129,7 @@
                 self.refreshData();
             });
         }
-    }
+    };
     //end self.refreshData()
     if ($routeParams.param1) {
         self.search = $routeParams.param1;
