@@ -25,7 +25,7 @@ textarea {
     max-width: 280px;
 }*/
  
-/*Adam added for for createContact.html*/
+/*Adam added form for createContact.html*/
 .topBorder{
     border-top: 1px solid black;
 }
@@ -126,7 +126,7 @@ nav .container{
     border-radius: 3px;
     color: black;
 }
-/*Search Contact Grid*/
+/*End Search Contact Grid*/
 
 /*Google Maps CSS*/
 #map-canvas{
@@ -186,7 +186,7 @@ nav .container{
 }
 
 #search-button{
-    margin-top: 5px;
-    
+    margin-top: 5px;  
 }
+/*End Google Maps CSS*/
 
