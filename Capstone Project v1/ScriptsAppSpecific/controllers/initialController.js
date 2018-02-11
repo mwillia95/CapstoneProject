@@ -2,5 +2,4 @@
     var self = this;
     $scope.test = "This is coming from initialController";
 
-
 }]);

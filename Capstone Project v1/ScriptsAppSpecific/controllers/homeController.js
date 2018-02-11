@@ -3,6 +3,7 @@
 
     var map;
     var AugustaUniversity = { lat: 33.4759, lng: -82.0230 };
+    var markers = [];
 
     function CenterControl(controlDiv, map) {
         // Set CSS for the control border.
@@ -83,30 +84,32 @@
         var button = document.getElementById('search-button');
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(button);
       
-        var markers = []
-
+        
         // Bias the SearchBox results towards current map's viewport.    
         map.addListener('bounds_changed', function () {
             searchBar.setBounds(map.getBounds());        
         });
 
         button.onclick = function () {
-            displaySearchResults(map, searchBar, markers);
+            displaySearchResults(map, searchBar);
         }
     };
 
-    function displaySearchResults(map, searchBar, markers) {
+    function displaySearchResults(map, searchBar) {      
         var place = searchBar.getPlace();
-        console.log(place);
+        
         if (place.length == 0) {
             return;
         }
 
-        // Clear out the old markers.
+         //Clear out the old markers.
         markers.forEach(function (marker) {
             marker.setMap(null);
+            marker = null;         
         });
+        
         markers = [];
+    
 
         // For each place, get the icon, name and location.
         var bounds = new google.maps.LatLngBounds();
@@ -125,12 +128,17 @@
             };
 
             // Create a marker for each place.
-            markers.push(new google.maps.Marker({
+            var marker = new google.maps.Marker({
                 map: map,
                 icon: icon,
                 title: place.name,
                 position: place.geometry.location
-            }));
+            });
+
+            markers.push(marker);
+            console.log("after push");
+            console.log(markers);
+            console.log(markers.length);
 
             if (place.geometry.viewport) {
                 // Only geocodes have viewport.
