@@ -1,3 +1,14 @@
-﻿<div class="container">
-    This is the home.html
+﻿<div class="container" style="width:100%;">
+    <div id="style-selector-control" class="map-control">
+        <select id="style-selector" class="selector-control">
+            <option value="default">Default</option>        
+            <option value="night">Night mode</option>   
+            <option value="candy">Candy Land</option>       
+        </select>
+    </div>   
+    <input id="searchInput" class="controls" type="text" placeholder="Enter a location">
+    <div id="map-canvas"></div>
+    <div>
+        <button type="button" id="search-button" class="btn btn-primary btn-sm"><span class="fa fa-search"><span style="font-family: 'Lato', sans-serif;">Search</span></span></button>
+    </div>
 </div>
