@@ -206,21 +206,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApiControllers\AppApiController.cs" />
-    <Compile Include="Controllers\ApiControllers\ContactController.cs" />
     <Compile Include="Controllers\ApiControllers\ListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801280247053_InitialCreate.cs" />
-    <Compile Include="Migrations\201801280247053_InitialCreate.Designer.cs">
-      <DependentUpon>201801280247053_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -228,10 +220,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-Capstone Project v1-20180127024052.mdf" />
-    <Content Include="App_Data\aspnet-Capstone Project v1-20180127024052_log.ldf">
-      <DependentUpon>aspnet-Capstone Project v1-20180127024052.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -244,14 +232,13 @@
     <Content Include="Content\ui-grid.css" />
     <Content Include="Content\ui-grid.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="ScriptsAppSpecific\appServices.js" />
     <Content Include="ScriptsAppSpecific\controllers\createContactController.js" />
     <Content Include="ScriptsAppSpecific\controllers\homeController.js" />
     <Content Include="ScriptsAppSpecific\controllers\initialController.js" />
-    <Content Include="ScriptsAppSpecific\controllers\searchContactController.js" />
-    <Content Include="ScriptsAppSpecific\controllers\updateContactController.js" />
     <Content Include="ScriptsAppSpecific\main.js" />
     <Content Include="Scripts\angular\angular-animate.js" />
     <Content Include="Scripts\angular\angular-animate.min.js" />
@@ -332,7 +319,6 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -344,7 +330,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\angular\lodash.js" />
+    <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper-utils.js" />
@@ -364,8 +350,6 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="ViewsClient\createContact.html" />
     <Content Include="ViewsClient\home.html" />
-    <Content Include="ViewsClient\searchContact.html" />
-    <Content Include="ViewsClient\updateContact.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -409,6 +393,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\Mapping\" />
     <Folder Include="Views\AppApi\" />
     <Folder Include="Views\List\" />
   </ItemGroup>
@@ -420,11 +406,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201801280247053_InitialCreate.resx">
-      <DependentUpon>201801280247053_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
