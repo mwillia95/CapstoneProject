@@ -24,13 +24,11 @@ namespace Capstone_Project_v1
                 "~/Scripts/angular/angular-animate.js",
                 "~/Scripts/angular/angular-route.js",
                 "~/Scripts/angular-ui/ui-bootstrap.js",
-                "~/Scripts/angular-ui/ui-bootstrap-tpls.js",           
+                "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
+                "~/Scripts/angular-ui/ui-grid.js",
                 "~/Scripts/jquery-3.3.1.js",
                 "~/Scripts/bootstrap.js",
-                "~/Scripts/angular-ui/ui-grid.js",
                 "~/Scripts/umd/popper.js",
-                //"~/Scripts/angular/lodash.js",
-                //"~/Scripts/angular/angular-google-maps.js",
                 "~/ScriptsAppSpecific/main.js"
                 ));
 

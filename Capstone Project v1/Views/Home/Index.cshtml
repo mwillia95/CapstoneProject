@@ -4,20 +4,19 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width" />
     <title>Home</title>
-    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato" rel="stylesheet">   
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato" rel="stylesheet">
     @Styles.Render("~/content/css")
     @Scripts.Render("~/bundles/all")
-    <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjPZkkaFZNUcyiFq6Ckyrcb9LVplllhyE&libraries=places"></script>
 </head>
 <body ng-controller="initialController as self" class="body-content">
     <!--Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" id="appName" href="/"><span>E</span>mergency <span>N</span>otification <span>S</span>ystem</a>
+            <a class="navbar-brand" id="appName" href="/"><span>P</span>ublic <span>E</span>mergency <span>N</span>otification <span>S</span>ystem</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+            <div class="collapse navbar-collapse">
                 <div>
                     <ul class="navbar-nav" id="itemsLeftNav"> 
                         <li class="nav-item">                           
@@ -27,7 +26,7 @@
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="navLinks">Contacts</span></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-item"><a href="/createContact">Create Contact</a></li>
-                                <li class="dropdown-item"><a href="/searchContact">Search Contacts</a></li>                       
+                                <li class="dropdown-item" href="#">Update Contact Information</li>
                             </ul>
                         </li>                     
                     </ul>
