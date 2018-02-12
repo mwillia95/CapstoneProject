@@ -99,6 +99,8 @@
             appServices.getContactsAll().then(function (response) {
                 self.gridOptions.data = response.data;
                 self.results = self.gridOptions.data;
+                console.log(self.gridOptions.data);
+                console.log(self.results);
                 self.gridOptions.paginationCurrentPage = 1;
             });
         }
