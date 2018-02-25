@@ -1,6 +1,5 @@
-﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', '$routeParams', function ($scope, appServices, $location, uiGridConstants, $routeParams) {
+﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', '$rootScope', function ($scope, appServices, $location, uiGridConstants, $rootScope) {
     var self = this;
-    self.search = "";
     self.gridOptions = {
         rowHeight: 36,
         enableColumnResizing: false,
@@ -95,7 +94,7 @@
     searchValidation = /\S/;
 
     self.refreshData = function () {
-        if (!searchValidation.test(self.search)) {
+        if (!searchValidation.test($rootScope.search)) {
             appServices.getContactsAll().then(function (response) {
                 self.gridOptions.data = response.data;
                 self.results = self.gridOptions.data;
@@ -105,7 +104,7 @@
             });
         }
         else {
-            appServices.getContacts(self.search).then(function (response) { //send search string through to query
+            appServices.getContacts($rootScope.search).then(function (response) { //send search string through to query
                 self.gridOptions.data = response.data;
                 self.results = self.gridOptions.data;
                 self.gridOptions.paginationCurrentPage = 1;
@@ -114,27 +113,25 @@
     };
 
     self.updateContact = function (request) {
-        if (searchValidation.test(self.search)) {
-            $location.path('/updateContact/' + request.ContactId + '/' + self.search);//.search({ param: 'request.ContactId' });
-        }
-        else {
-            self.search = " ";
-            $location.path('/updateContact/' + request.ContactId + '/' + self.search);//.search({ param: 'request.ContactId' });
-        }
-    };
-
-    self.removeContact = function (request) {
-        if (confirm("Are you sure you want to delete this contact?")) {
-            console.log(request);
-            appServices.removeContact(request).then(function (response) {
-                console.log(response);
-                self.refreshData();
-            });
-        }
-    };
-    //end self.refreshData()
-    if ($routeParams.param1) {
-        self.search = $routeParams.param1;
-        self.refreshData();
+        $rootScope.id = request.ContactId;
+        $location.path('/updateContact');//.search({ param: 'request.ContactId' });
     }
+
+
+self.removeContact = function (request) {
+    if (confirm("Are you sure you want to delete this contact?")) {
+        console.log(request);
+        appServices.removeContact(request).then(function (response) {
+            console.log(response);
+            self.refreshData();
+        });
+    }
+};
+//end self.refreshData()
+
+if ($rootScope.search) {
+    self.refreshData();
+
+}
+
 }]);

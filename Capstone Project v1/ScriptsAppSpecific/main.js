@@ -24,7 +24,7 @@
             controller: "searchContactController",
             controllerAs: "self"
         })
-        .when("/updateContact/:param1/:param2",
+        .when("/updateContact",
         {
             templateUrl: "ViewsClient/updateContact.html",
             controller: "updateContactController",
