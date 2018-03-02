@@ -1,5 +1,8 @@
 ﻿angular.module("app").controller("updateContactController", ['$scope', 'AppServices', '$location', '$rootScope', function ($scope, appServices, $location, $rootScope) {
     var self = this;
+    if (!$rootScope.isAuthorized()) {
+        //$location.path("/login");
+    }
     self.contact = {};
     var id = $rootScope.id;
     console.log($rootScope);

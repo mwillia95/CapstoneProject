@@ -1,6 +1,10 @@
-﻿angular.module("app").controller("homeController", ['$scope', 'AppServices', function ($scope, appServices) {
+﻿angular.module("app").controller("homeController", ['$scope', 'AppServices', '$rootScope', '$location', function ($scope, appServices, $rootScope, $location) {
     var self = this;
-
+    $rootScope.authorize();
+    //console.log($rootScope.isAuthorized);
+    if (!($rootScope.isAuthorized)) {
+        //$location.path("/login");
+    }
     var map;
     var AugustaUniversity = { lat: 33.4759, lng: -82.0230 };
     var markers = [];

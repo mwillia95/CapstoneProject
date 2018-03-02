@@ -6,8 +6,8 @@
                 return $http.get("api/PublicEmergencyNotificationSystem/lists/" + listName);
             },
             //ContactController functions
-            getContactById: function (id){  
-               return $http.get("api/PublicEmergencyNotificationSystem/contacts/getContactById?id=" + id);  
+            getContactById: function (id) {
+                return $http.get("api/PublicEmergencyNotificationSystem/contacts/getContactById?id=" + id);
             },
             addNewContact: function (contact) {
                 return $http.post("api/PublicEmergencyNotificationSystem/contacts/addContact", contact);
@@ -23,6 +23,18 @@
             },
             removeContact: function (contact) {
                 return $http.post("api/PublicEmergencyNotificationSystem/contacts/removeContact", contact);
-            }     
+            },
+            register: function (account) {
+                return $http.post("api/PublicEmergencyNotificationSystem/accounts/register", account);
+            },
+            login: function (account) {
+                return $http.post("api/PublicEmergencyNotificationSystem/accounts/login", account);
+            },
+            logout: function () {
+                return $http.post("api/PublicEmergencyNotificationSystem/accounts/logout");
+            },
+            isAuthorized: function () {
+                return $http.get("api/PublicEmergencyNotificationSystem/accounts/isAuthorized");
+            }
         };
     }]);

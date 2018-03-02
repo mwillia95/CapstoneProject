@@ -205,6 +205,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApiControllers\AccountController.cs" />
     <Compile Include="Controllers\ApiControllers\AppApiController.cs" />
     <Compile Include="Controllers\ApiControllers\ContactController.cs" />
     <Compile Include="Controllers\ApiControllers\ListController.cs" />
@@ -218,12 +219,14 @@
       <DependentUpon>201801280247053_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -250,6 +253,7 @@
     <Content Include="ScriptsAppSpecific\controllers\createContactController.js" />
     <Content Include="ScriptsAppSpecific\controllers\homeController.js" />
     <Content Include="ScriptsAppSpecific\controllers\initialController.js" />
+    <Content Include="ScriptsAppSpecific\controllers\loginController.js" />
     <Content Include="ScriptsAppSpecific\controllers\searchContactController.js" />
     <Content Include="ScriptsAppSpecific\controllers\updateContactController.js" />
     <Content Include="ScriptsAppSpecific\main.js" />
@@ -364,6 +368,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="ViewsClient\createContact.html" />
     <Content Include="ViewsClient\home.html" />
+    <Content Include="ViewsClient\login.html" />
     <Content Include="ViewsClient\searchContact.html" />
     <Content Include="ViewsClient\updateContact.html" />
     <Content Include="Web.config" />

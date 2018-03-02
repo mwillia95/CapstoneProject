@@ -1,0 +1,20 @@
+﻿<div class="container" style="text-align: center; width: 750px">
+    <div class="login-box">
+        <h2>Login</h2>
+        <form name="form" style="padding-top:0px">
+            <div class="login-error">
+                <span ng-if="error">Invalid username or password</span>
+            </div>
+            <div style="height: 60px">
+                <input type="text" class="form-control login-input" ng-model="account.email" placeholder="Email" />
+            </div>
+            <div style="height: 60px">
+                <input type="password" class="form-control login-input" ng-model="account.password" placeholder="Password" />
+            </div>
+            <div>
+                <button type="button" class="btn btn-dark" ng-click="submit()">Login</button>
+            </div>
+        </form>
+    </div>
+
+</div>

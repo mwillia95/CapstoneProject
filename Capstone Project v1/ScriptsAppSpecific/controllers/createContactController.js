@@ -1,6 +1,8 @@
 ﻿angular.module("app").controller("createContactController", ['$scope', 'AppServices', '$location', function ($scope, appServices, $location) {
     var self = this;
-   
+    if (!$rootScope.isAuthorized()) {
+        //$location.path("/login");
+    }
     self.contact = {};
     self.error = "";
     var stateList = function () {

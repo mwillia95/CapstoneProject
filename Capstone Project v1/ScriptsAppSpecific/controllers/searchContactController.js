@@ -1,5 +1,8 @@
 ﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', '$rootScope', function ($scope, appServices, $location, uiGridConstants, $rootScope) {
     var self = this;
+    if (!$rootScope.isAuthorized()) {
+        //$location.path("/login");
+    }
     self.gridOptions = {
         rowHeight: 36,
         enableColumnResizing: false,

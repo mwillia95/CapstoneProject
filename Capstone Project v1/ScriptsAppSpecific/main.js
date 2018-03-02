@@ -6,6 +6,12 @@
             controller: "homeController",
             controllerAs: "self"
         })
+        .when("/login",
+        {
+            templateUrl: "ViewsClient/login.html",
+            controller: "loginController",
+            controllerAs: "self"
+        })
         .when("/createContact",
         {
             templateUrl: "ViewsClient/createContact.html",
@@ -29,11 +35,11 @@
             templateUrl: "ViewsClient/updateContact.html",
             controller: "updateContactController",
             controllerAs: "self"
-        })        
+        })
         .otherwise(
         {
             redirectTo: "/"
-         });
+        });
 
     $locationProvider.html5Mode({
         enabled: true,
