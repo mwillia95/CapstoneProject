@@ -64,9 +64,9 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             {
                 return Ok("Error");
             }
-            var result = SignInManager.PasswordSignIn(a.Email, a.Password, true, shouldLockout: false);
             try
             {
+                var result = SignInManager.PasswordSignIn(a.Email, a.Password, true, shouldLockout: false);
                 if (result == SignInStatus.Success)
                 {
                     return Ok("Success");
@@ -76,7 +76,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                     return Ok("Error");
                 }
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return Ok("Error");
             }
@@ -117,7 +117,10 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("isAuthorized")]
         public bool isAuthorized()
         {
-            return HttpContext.Current.Request.IsAuthenticated;
+            //To prevent complications of other development. When authorization is desired, un-comment the line below.
+
+            //return AuthenticationManager.User.Identity.IsAuthenticated;
+            return true;
         }
     }
 }

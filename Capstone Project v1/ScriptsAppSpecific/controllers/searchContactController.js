@@ -1,8 +1,11 @@
-﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', '$rootScope', function ($scope, appServices, $location, uiGridConstants, $rootScope) {
+﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', '$rootScope', '$timeout', function ($scope, appServices, $location, uiGridConstants, $rootScope, $timeout) {
     var self = this;
-    if (!$rootScope.isAuthorized()) {
-        //$location.path("/login");
-    }
+    $timeout($rootScope.authorize, 0).then(function () {
+        if (!$rootScope.isAuthorized) {
+            console.log("not authorized");
+            $location.path("/login");
+        }
+    });
     self.gridOptions = {
         rowHeight: 36,
         enableColumnResizing: false,
@@ -118,7 +121,7 @@
     self.updateContact = function (request) {
         $rootScope.id = request.ContactId;
         $location.path('/updateContact');//.search({ param: 'request.ContactId' });
-    }
+    };
 
 
 self.removeContact = function (request) {

@@ -1,12 +1,15 @@
-﻿angular.module("app").controller("updateContactController", ['$scope', 'AppServices', '$location', '$rootScope', function ($scope, appServices, $location, $rootScope) {
+﻿angular.module("app").controller("updateContactController", ['$scope', 'AppServices', '$location', '$rootScope', '$timeout', function ($scope, appServices, $location, $rootScope, $timeout) {
     var self = this;
-    if (!$rootScope.isAuthorized()) {
-        //$location.path("/login");
-    }
+    $timeout($rootScope.authorize, 0).then(function () {
+        if (!$rootScope.isAuthorized) {
+            console.log("not authorized");
+            $location.path("/login");
+        }
+    });
     self.contact = {};
     var id = $rootScope.id;
     console.log($rootScope);
-    console.log($rootScope.id)
+    console.log($rootScope.id);
    
     var stateList = function () {
         appServices.getList("states").then(function (response) {

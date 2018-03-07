@@ -200,9 +200,6 @@ nav .container{
     border-radius: 15px
 }
 
-/*Make it so that the label and text box appear on the same line*/
-.login-label{
-}
 .login-input{
     display:inline-block;
     max-width: 200px;

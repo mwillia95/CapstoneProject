@@ -1,10 +1,14 @@
-﻿angular.module("app").controller("homeController", ['$scope', 'AppServices', '$rootScope', '$location', function ($scope, appServices, $rootScope, $location) {
+﻿angular.module("app").controller("homeController", ['$scope', 'AppServices', '$rootScope', '$location', '$timeout', function ($scope, appServices, $rootScope, $location, $timeout) {
     var self = this;
-    $rootScope.authorize();
-    //console.log($rootScope.isAuthorized);
-    if (!($rootScope.isAuthorized)) {
-        //$location.path("/login");
-    }
+    $timeout($rootScope.authorize, 0).then(function () {
+        if (!$rootScope.isAuthorized)
+        {
+            console.log("not authorized");
+            $location.path("/login");
+        }
+    });
+        
+    
     var map;
     var AugustaUniversity = { lat: 33.4759, lng: -82.0230 };
     var markers = [];
@@ -36,7 +40,7 @@
         controlUI.addEventListener('click', function () {
             map.setCenter(AugustaUniversity);
         });
-    };
+    }
 
     function initMap() {
         var myLatLng = new google.maps.LatLng(33.4759, -82.0230);
@@ -99,8 +103,8 @@
 
         button.onclick = function () {
             displaySearchResults(map, searchBar);
-        }
-    };
+        };
+    }
 
     function displaySearchResults(map, searchBar) {      
         var place = searchBar.getPlace();
@@ -153,7 +157,7 @@
             } else {
                 bounds.extend(place.geometry.location);
             }
-        };
+        }
         map.fitBounds(bounds);
     }
 
@@ -318,7 +322,7 @@
              elementType: 'labels.text.stroke',
              stylers: [{ color: '#17263c' }]
          }
-        ],
+        ]
     };
 
     initMap();

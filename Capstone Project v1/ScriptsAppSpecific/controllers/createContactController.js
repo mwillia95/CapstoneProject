@@ -1,8 +1,11 @@
-﻿angular.module("app").controller("createContactController", ['$scope', 'AppServices', '$location', function ($scope, appServices, $location) {
+﻿angular.module("app").controller("createContactController", ['$scope', 'AppServices', '$location', '$rootScope', '$timeout', function ($scope, appServices, $location, $rootScope, $timeout) {
     var self = this;
-    if (!$rootScope.isAuthorized()) {
-        //$location.path("/login");
-    }
+    $timeout($rootScope.authorize, 0).then(function () {
+        if (!$rootScope.isAuthorized) {
+            console.log("not authorized");
+            $location.path("/login");
+        }
+    });
     self.contact = {};
     self.error = "";
     var stateList = function () {
