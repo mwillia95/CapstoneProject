@@ -5,9 +5,16 @@ using System.Web;
 using System.Web.Http;
 using System.Configuration;
 using Capstone_Project_v1.Models;
+using System.Net;
+using System.IO;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
     [RoutePrefix("api/" + AppName + "/contacts")]
+    [Authorize]
     public class ContactController : AppApiController
     {
         [HttpPost]
@@ -21,6 +28,8 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 add.Street = a.Street;
                 add.Zip = a.Zip;
                 add.State = a.State;
+                add.Latitude = a.Latitude;
+                add.Longitude = a.Longitude;
             }
 
             var con = new Contact();
@@ -33,15 +42,53 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 con.ServiceType = c.ServiceType;
             }
             List<Address> list = DataContext.Addresses.ToList();
-            List<Address> old = list.Where(x => x.City == add.City && x.Street == add.Street && x.Zip == add.Zip && x.State == add.State).ToList();
+            List<Address> old = list.Where(x => x.City == add.City && x.Street == add.Street && x.Zip == add.Zip && x.State == add.State && x.Latitude == add.Latitude
+                && x.Longitude == add.Longitude).ToList();
             if (old != null && old.Count > 0)
             {
                 con.Address = old[0];
             }
             DataContext.Contacts.Add(con);
             DataContext.SaveChanges();
-
+            
             return Ok(con);
+        }
+
+        //run the lat-long assignment on all addresses
+        //call this method to reassign lat long values to addresses in the database
+        [HttpPost]
+        [Route("verifyLatLong")]
+        public IHttpActionResult LatLongCheck()
+        {
+            List<Address> addresses = DataContext.Addresses.ToList();
+            List<Address> Converted = new List<Address>();
+            foreach(Address a in addresses)
+            {
+                string address = a.Street + ", " + a.City + ", " + a.State;
+                address = address.Replace(' ', '+');
+                string html = "";
+                string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyBjPZkkaFZNUcyiFq6Ckyrcb9LVplllhyE";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.AutomaticDecompression = DecompressionMethods.GZip;
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    html = reader.ReadToEnd();
+                }
+                var result = JsonConvert.DeserializeObject<GeocodeResponse>(html);
+                if (result.status == "ZERO_RESULTS")
+                    continue;
+                var lat = result.results[0].geometry.location.lat;
+                var lng = result.results[0].geometry.location.lng;
+                a.Latitude = lat;
+                a.Longitude = lng;
+                Converted.Add(a);
+            }
+            DataContext.SaveChanges();
+            return Ok(Converted);
+
         }
 
         [HttpGet]

@@ -4,7 +4,7 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width" />
     <title>Home</title>
-    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato" rel="stylesheet">   
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato" rel="stylesheet">
     @Styles.Render("~/content/css")
     @Scripts.Render("~/bundles/all")
     <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjPZkkaFZNUcyiFq6Ckyrcb9LVplllhyE&libraries=places"></script>
@@ -18,21 +18,33 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <div>
-                    <ul class="navbar-nav" id="itemsLeftNav"> 
-                        <li class="nav-item">                           
+                <div ng-show="$root.isAuthorized">
+                    <ul class="navbar-nav" id="itemsLeftNav">
+                        <li class="nav-item">
                             <a class="nav-link" href="/"><span class="navLinks">Home</span></a>
-                        </li>              
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="navLinks">Contacts</span></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-item"><a href="/createContact">Create Contact</a></li>
-                                <li class="dropdown-item"><a href="/searchContact">Search Contacts</a></li>                       
+                                <li class="dropdown-item"><a href="/searchContact">Search Contacts</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login"><span class="navLinks">Logout</span></a>
-                        </li>                     
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="navLinks">Emergency Alerts</span></a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-item"><a href="/emergencyAlert">Update Alert</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true" aria-expanded="false">
+                                <span class="navLinks">Hello, {{$root.fullName}}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-item"><a href="#" ng-click="verifyLogout()">Logout</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

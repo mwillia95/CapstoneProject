@@ -21,6 +21,11 @@ namespace Capstone_Project_v1.Models
         [Column("ZIP")]
         public string Zip { get; set; }
 
+        [Column("LATITUDE")]
+        public decimal Latitude { get; set; }
+        [Column("LONGITUDE")]
+        public decimal Longitude { get; set; }
+
         public string Searchable()
         {
             return Street + " " + Zip + " " + State + " " + City;

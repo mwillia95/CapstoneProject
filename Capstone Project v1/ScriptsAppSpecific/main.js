@@ -36,6 +36,12 @@
             controller: "updateContactController",
             controllerAs: "self"
         })
+        .when("/emergencyAlert",
+        {
+            templateUrl: "ViewsClient/emergencyAlert.html",
+            controller: "emergencyAlertController",
+            controllerAs: "self"
+        })
         .otherwise(
         {
             redirectTo: "/"

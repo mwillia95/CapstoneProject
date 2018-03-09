@@ -36,6 +36,15 @@ namespace Capstone_Project_v1.Models
         [ForeignKey("AddressId")]
         public virtual Address Address { get; set; }
 
+        //used in conjunction with the Contacts property in the Alert class to create a M-N relation
+        //this way, an alert can retrieve all contacts it notified
+        //can also be used to retrieve all the alerts sent to a specific contact
+        public virtual ICollection<Alert> Alerts { get; set; }
+
+        public Contact()
+        {
+            this.Alerts = new HashSet<Alert>();
+        }
         public string Searchable()
         {
             return (FirstName + " " + LastName + " " + Email + " " + PhoneNumber + " " + Address.Searchable()).ToLower();

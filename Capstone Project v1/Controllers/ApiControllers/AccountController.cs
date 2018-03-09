@@ -10,6 +10,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Net.Http;
 
+//DEFAULT LOGIN CREDENTIALS:
+//Email: director@company.com
+//Password: Password1!
+
+//To remove login requirement, find isAuthorized() method below.
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
     [RoutePrefix("api/" + AppName + "/accounts")]
@@ -99,9 +104,11 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
         [HttpPost]
         [Route("register")]
+        [Authorize]
         public IHttpActionResult Register(RegisterModel model)
         {
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            
             var result = UserManager.Create(user, model.Password);
             if (result.Succeeded)
             {
@@ -117,10 +124,23 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("isAuthorized")]
         public bool isAuthorized()
         {
-            //To prevent complications of other development. When authorization is desired, un-comment the line below.
+            //If you want to remove the requirement to login, simply comment out the line of code below and have this method always return true.
 
-            //return AuthenticationManager.User.Identity.IsAuthenticated;
+            return AuthenticationManager.User.Identity.IsAuthenticated;
             return true;
+        }
+
+        [HttpGet]
+        [Route("getName")]
+        public string getFullName()
+        {
+            var userClaim = AuthenticationManager.User.Identity;
+            var user = UserManager.FindById(userClaim.GetUserId());
+            if(user.FullName == "" || user.FullName == null)
+            {
+                user.FullName = "Mitchell Williams";
+            }
+            return user.FullName;
         }
     }
 }

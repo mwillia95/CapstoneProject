@@ -18,6 +18,7 @@ namespace Capstone_Project_v1.Models
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Address> Addresses { get; set; }
 
+        public DbSet<Alert> Alerts { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             

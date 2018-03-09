@@ -16,7 +16,7 @@
 
     stateList();
     var phoneValidation = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
-    
+
     self.validate = function () {
         if (!self.contact.firstName) {
             self.error = "Please enter a first name";
@@ -67,35 +67,46 @@
 
     self.submit = function (valid) {
         //if (!valid)
-         //   return;
-        if (!self.validate())
-        {
+        //   return;
+        if (!self.validate()) {
             return;
         }
         var phonestrip = /[()+-]/g;
         //console.log({ Test: self.contact.phone.replace(phonestrip, '') });
         //return;
-        var contact =
+
+        var geoAddress = self.contact.streetAddress.replace(' ', '+') + ',+' + self.contact.city.replace(' ', '+') + ',+' + self.contact.state;
+        appServices.getGeocode(geoAddress).then(function (response) {
+            if (response.status === "ZERO_RESULTS")
             {
+                self.error = "Please enter a valid addresss";
+                return;
+            }
+            console.log(response);
+            var contact = {
                 FirstName: self.contact.firstName,
                 LastName: self.contact.lastName,
                 PhoneNumber: self.contact.phone.replace(phonestrip, ''),
                 Email: self.contact.email,
                 ServiceType: self.contact.serviceType,
-                Address: 
+                Address:
                 {
                     Street: self.contact.streetAddress,
                     State: self.contact.state,
                     City: self.contact.city,
-                    Zip: self.contact.zipCode
+                    Zip: self.contact.zipCode,
+                    Latitude: response.data.results[0].geometry.location.lat,
+                    Longitude: response.data.results[0].geometry.location.lng
                 }
-                
+
             };
-        console.log(contact);
-        appServices.addNewContact(contact).then(function (response) {
-            console.log(response);
-            self.contact = {};
+            console.log(contact);
+            appServices.addNewContact(contact).then(function (response) {
+                console.log(response);
+                self.contact = {};
+            });
         });
+
     };
 
     self.clear = function () {

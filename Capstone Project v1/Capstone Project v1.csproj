@@ -214,16 +214,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801280247053_InitialCreate.cs" />
-    <Compile Include="Migrations\201801280247053_InitialCreate.Designer.cs">
-      <DependentUpon>201801280247053_InitialCreate.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Alert.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\DataContext.cs" />
+    <Compile Include="Models\GeocodeResponse.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -251,6 +249,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="ScriptsAppSpecific\appServices.js" />
     <Content Include="ScriptsAppSpecific\controllers\createContactController.js" />
+    <Content Include="ScriptsAppSpecific\controllers\emergencyAlertController.js" />
     <Content Include="ScriptsAppSpecific\controllers\homeController.js" />
     <Content Include="ScriptsAppSpecific\controllers\initialController.js" />
     <Content Include="ScriptsAppSpecific\controllers\loginController.js" />
@@ -367,6 +366,7 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ViewsClient\createContact.html" />
+    <Content Include="ViewsClient\emergencyAlert.html" />
     <Content Include="ViewsClient\home.html" />
     <Content Include="ViewsClient\login.html" />
     <Content Include="ViewsClient\searchContact.html" />
@@ -425,11 +425,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201801280247053_InitialCreate.resx">
-      <DependentUpon>201801280247053_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

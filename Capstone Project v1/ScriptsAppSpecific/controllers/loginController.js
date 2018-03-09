@@ -19,13 +19,19 @@
         });
         console.log("test complete");
     };
-
+    var getName = function () {
+        appServices.getName().then(function (response) {
+            $rootScope.fullName = response.data;
+            console.log(response);
+        });
+    };
 
     $scope.submit = function () {
         appServices.login($scope.account).then(function (response) {
             console.log(response);
             if (response.data === "Success") {
-                $rootScope.authorize();
+                $rootScope.isAuthorized = true;
+                getName();
                 $location.path("/");
             }
             else {
