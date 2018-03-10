@@ -14,14 +14,14 @@ using System.Net.Http;
 //Email: director@company.com
 //Password: Password1!
 
-//To remove login requirement, find isAuthorized() method below.
+//To remove login requirement, edit the overrideLogin variable below to true
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
     [RoutePrefix("api/" + AppName + "/accounts")]
 
     public class AccountController : AppApiController
     {
-
+        static readonly bool overrideLogin = false;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private IAuthenticationManager _authenticationManager;
@@ -126,8 +126,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         {
             //If you want to remove the requirement to login, simply comment out the line of code below and have this method always return true.
 
-            return AuthenticationManager.User.Identity.IsAuthenticated;
-            return true;
+            return AuthenticationManager.User.Identity.IsAuthenticated || overrideLogin;
         }
 
         [HttpGet]
