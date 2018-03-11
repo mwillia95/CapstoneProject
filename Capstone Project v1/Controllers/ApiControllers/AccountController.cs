@@ -124,7 +124,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("isAuthorized")]
         public bool isAuthorized()
         {
-            //If you want to remove the requirement to login, simply comment out the line of code below and have this method always return true.
+            //If you want to override authentication, change overrideLogin variable to true (top of class)
 
             return AuthenticationManager.User.Identity.IsAuthenticated || overrideLogin;
         }

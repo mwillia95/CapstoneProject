@@ -7,9 +7,6 @@ using System.Configuration;
 using Capstone_Project_v1.Models;
 using System.Net;
 using System.IO;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
@@ -127,14 +124,9 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 if (valid)
                     items.Add(c);
             }
-
-
-
             //var item = DataContext.Contacts.Include("Address").Where(x => x.FirstName.Contains(search) || x.LastName.Contains(search) || x.PhoneNumber.Contains(search)
             //        || x.Email.Contains(search) || x.ServiceType.Contains(search) || x.Address.City.Contains(search) || x.Address.State.Contains(search) || x.Address.Street.Contains(search)
             //        || x.Address.Zip.Contains(search));
-
-
             return Ok(items);
         }
 
@@ -218,7 +210,8 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         }
         private bool AddressChanged(Address old, Address changed)
         {
-            return old == null || changed == null || old.City != changed.City || old.Street != changed.Street || old.State != changed.State || old.Zip != changed.Zip || old.AddressId != changed.AddressId;
+            return old == null || changed == null || old.City != changed.City || old.Street != changed.Street || 
+                old.State != changed.State || old.Zip != changed.Zip || old.AddressId != changed.AddressId;
         }
     }
 }

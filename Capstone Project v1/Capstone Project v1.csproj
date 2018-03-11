@@ -206,6 +206,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApiControllers\AccountController.cs" />
+    <Compile Include="Controllers\ApiControllers\AlertController.cs" />
     <Compile Include="Controllers\ApiControllers\AppApiController.cs" />
     <Compile Include="Controllers\ApiControllers\ContactController.cs" />
     <Compile Include="Controllers\ApiControllers\ListController.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\UpdateAlert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
