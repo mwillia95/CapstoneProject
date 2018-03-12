@@ -104,7 +104,6 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
         [HttpPost]
         [Route("register")]
-        [Authorize]
         public IHttpActionResult Register(RegisterModel model)
         {
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };

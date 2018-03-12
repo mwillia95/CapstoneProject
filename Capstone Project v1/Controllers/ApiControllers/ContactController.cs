@@ -11,7 +11,6 @@ using Newtonsoft.Json;
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
     [RoutePrefix("api/" + AppName + "/contacts")]
-    [Authorize]
     public class ContactController : AppApiController
     {
         [HttpPost]

@@ -22,7 +22,6 @@ using Microsoft.Owin.Security;
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
     [RoutePrefix("api/" + AppName + "/accounts")]
-    [Authorize]
     public class AlertController : AppApiController
     {
         [HttpGet]
