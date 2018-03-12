@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Capstone_Project_v1.Models
 {
     [Table("CONTACT")]
-    public class Contact
+    public class Contact : IEquatable<Contact>
     {
         [Key]
         [Column("CONTACT_ID")]
@@ -48,6 +48,13 @@ namespace Capstone_Project_v1.Models
         public string Searchable()
         {
             return (FirstName + " " + LastName + " " + Email + " " + PhoneNumber + " " + Address.Searchable()).ToLower();
+        }
+
+        public bool Equals(Contact c)
+        {
+            if (c == null || this == null)
+                return false;
+            return c.ContactId == this.ContactId;
         }
     }
 }

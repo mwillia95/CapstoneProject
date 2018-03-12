@@ -29,14 +29,27 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("getAlerts")]
         public IHttpActionResult getAlerts()
         {
-            return Ok(DataContext.Alerts.Include("RecentUpdate"));
+            var alerts = DataContext.Alerts;
+            foreach(var a in alerts)
+            {
+                var updates = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == a.AlertId);
+                foreach (var u in updates)
+                    a.Updates.Add(u);
+            }
+            return Ok(alerts);
         }
 
         [HttpGet]
         [Route("getAlertById")]
         public IHttpActionResult getAlertById(int id)
         {
-            return Ok(DataContext.Alerts.Include("RecentUpdate").First(x => x.AlertId == id));
+            var alert = DataContext.Alerts.Find(id);
+            var updates = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == alert.AlertId);
+            foreach(var u in updates)
+            {
+                alert.Updates.Add(u);
+            }
+            return Ok(alert);
         }
 
         [HttpGet]
@@ -59,7 +72,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("addAlert")]
         public IHttpActionResult addAlert(Alert a)
         {
-
+            a.Start_Time = DateTime.Now;
             DataContext.Alerts.Add(a);
             DataContext.SaveChanges();
             return Ok(a);
@@ -69,6 +82,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("updateAlert")]
         public IHttpActionResult updateAlert(UpdateAlert a)
         {
+            a.Start_Time = DateTime.Now;
             DataContext.UpdateAlerts.Add(a);
             DataContext.SaveChanges();
             return Ok(a);

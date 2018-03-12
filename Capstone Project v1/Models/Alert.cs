@@ -6,14 +6,19 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Capstone_Project_v1.Models
 {
+    //Variables to make in JS:
+    //Title: Title of the alert (Could be the subject of an email)
+    //Description: This is the message that is to be sent out with the alert.
+    //Contacts: This should be a collection of the contacts that were notified for the alert.
+    //All other variables will be handled by the C# controller
     [Table("ALERT")]
-    public class Alert
+    public class Alert : IEquatable<Alert>
     {
         [Key]
         [Column("ALERT_ID")]
         public int AlertId { get; set; }
 
-        //These variables likely not needed as long as the contacts notified were stored on alert creation
+        //These variables likely not needed as long as the contacts notified can be stored on alert creation
         //====================================================
         //====================================================
         [Column("CENTER_LAT")]
@@ -46,8 +51,9 @@ namespace Capstone_Project_v1.Models
         [Column("RECENT_UPDATE_REF_ID")]
         public int? RecentUpdateRefId { get; set; }
 
-        [ForeignKey("RecentUpdateRefId")]
-        public virtual UpdateAlert RecentUpdate { get; set; }
+        //this property is to be used by the alerts controller to retrieve a specific alert with all of its updates
+        [NotMapped]
+        public ICollection<UpdateAlert> Updates { get; set; }
 
         //to be used as the collection of contacts that were notified in this alert
         public virtual ICollection<Contact> Contacts { get; set; }
@@ -56,6 +62,7 @@ namespace Capstone_Project_v1.Models
         {
             //HashSet has constant time lookups
             this.Contacts = new HashSet<Contact>();
+            this.Updates = new HashSet<UpdateAlert>();
         }
 
         public void Copy(Alert a)
@@ -67,6 +74,11 @@ namespace Capstone_Project_v1.Models
             a.location_lat = this.location_lat;
             a.location_lng = this.location_lng;
             a.Radius = this.Radius;
+        }
+
+        public bool Equals(Alert a)
+        {
+            return a?.AlertId == this?.AlertId;
         }
     }
 

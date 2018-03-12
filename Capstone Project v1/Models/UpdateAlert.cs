@@ -18,9 +18,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Capstone_Project_v1.Models
 {
     [Table("UPDATE_ALERT")]
-    public class UpdateAlert
+    public class UpdateAlert : IEquatable<UpdateAlert>
     {
         [Column("UPDATE_ID")]
+        [Key]
         public int UpdateId { get; set; }
 
         [Column("TITLE")]
@@ -55,6 +56,11 @@ namespace Capstone_Project_v1.Models
 
         public UpdateAlert()
         {
+        }
+
+        public bool Equals(UpdateAlert a)
+        {
+            return a?.UpdateId == this?.UpdateId;
         }
     }
 }
