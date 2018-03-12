@@ -6,11 +6,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Capstone_Project_v1.Models
 {
-    //Variables to make in JS:
+    //Variables to assign in JS:
     //Title: Title of the alert (Could be the subject of an email)
     //Description: This is the message that is to be sent out with the alert.
     //Contacts: This should be a collection of the contacts that were notified for the alert.
     //All other variables will be handled by the C# controller
+    //location_lat, location_lng, and Radius can be assigned, but will likely be removed unless we decide to stick to only circles
     [Table("ALERT")]
     public class Alert : IEquatable<Alert>
     {
@@ -60,9 +61,9 @@ namespace Capstone_Project_v1.Models
 
         public Alert()
         {
-            //HashSet has constant time lookups
-            this.Contacts = new HashSet<Contact>();
-            this.Updates = new HashSet<UpdateAlert>();
+            
+            this.Contacts = new List<Contact>();
+            this.Updates = new List<UpdateAlert>();
         }
 
         public void Copy(Alert a)
@@ -84,6 +85,6 @@ namespace Capstone_Project_v1.Models
 
     public enum AlertStatus
     {
-        Ongiong, Updated, Complete
+        Ongoing, Updated, Complete
     }
 }

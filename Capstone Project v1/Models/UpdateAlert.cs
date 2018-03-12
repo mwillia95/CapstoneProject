@@ -36,6 +36,7 @@ namespace Capstone_Project_v1.Models
         [Column("ORIGIN_ALERT_REF_ID")]
         public int OriginAlertRefId { get; set; }
 
+        //Likely not frequently used, but available if necessary
         [ForeignKey("OriginAlertRefId")]
         public virtual Alert OriginAlert { get; set; }
 

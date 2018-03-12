@@ -1,11 +1,19 @@
 ﻿angular.module("app").controller("loginController", ['$scope', 'AppServices', '$location', '$rootScope', '$timeout', function ($scope, appServices, $location, $rootScope, $timeout) {
 
-    appServices.logout().then(function (response) {
+    /*appServices.logout().then(function (response) {
         $timeout($rootScope.authorize, 0).then(function () {
             $rootScope.id = -1;
             $rootScope.search = "";
             console.log($rootScope.isAuthorized);
         });
+    });*/
+
+    $timeout($rootScope.authorize, 0).then(function () {
+        $timeout(function () {
+            if ($rootScope.isAuthorized) {
+                $location.path("/");
+            }
+        }, 100);
     });
     $scope.error = false;
     $scope.account = {};

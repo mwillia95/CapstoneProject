@@ -11,13 +11,13 @@ using Microsoft.Owin.Security;
 
 
 /*
- * Abstract: AlertController
  * getAlerts: get a list of all alerts
  * getAlertById: get one alert by its id
  * getUpdatesByOriginId: get all updates to one specific alert
  * getUpdateById: get one update by its id
  * addAlert: takes in an alert object, adds it to db
  * updateAlert: takes in an update alert object, adds it to db
+ * TODO: Method for setting an alert as resolved
  */
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
@@ -73,6 +73,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         public IHttpActionResult addAlert(Alert a)
         {
             a.Start_Time = DateTime.Now;
+            a.Status = AlertStatus.Ongoing; //0
             DataContext.Alerts.Add(a);
             DataContext.SaveChanges();
             return Ok(a);
@@ -83,7 +84,19 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         public IHttpActionResult updateAlert(UpdateAlert a)
         {
             a.Start_Time = DateTime.Now;
+            if(a.OriginAlert == null)
+            {
+                a.OriginAlert = DataContext.Alerts.Find(a.OriginAlertRefId);
+                a.OriginAlert.Status = AlertStatus.Updated; //1
+            }
+            else
+            {
+                a.OriginAlert.Status = AlertStatus.Updated; //1
+            }
             DataContext.UpdateAlerts.Add(a);
+            DataContext.SaveChanges();
+            //saving the changes will have the context assign the new update its id
+            a.OriginAlert.RecentUpdateRefId = a.UpdateId;
             DataContext.SaveChanges();
             return Ok(a);
         }
