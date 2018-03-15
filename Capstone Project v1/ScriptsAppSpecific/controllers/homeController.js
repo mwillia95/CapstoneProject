@@ -183,23 +183,19 @@
 
     self.draw = function () {   //also make sure a location is searched!!!!!!!
         if (self.alert.measureType !== 'm' && self.alert.measureType !== 'km') {
-            swal("Error", "You must select a measurement type", "error");
-            //console.log("Select a measurement type");///use sweet alert
+            swal("ERROR", "You must select a measurement type", "error");
             return;
         }
         else if (!self.place) {
-            swal("Error", "You must search for a location first.", "error");
-            //console.log("You need to search for a place first");
+            swal("ERROR", "You must search for a location first.", "error");           
             return;
         }
         else if (isNaN(parseFloat(self.alert.radius))) {
-            swal("Error", "Radius can only be numbers", "error");
-            //console.log("Radius can only be numbers");
+            swal("ERROR", "Radius can only be numbers", "error");
             return;
         }
         if (parseFloat(self.alert.radius) <= 0) {
-            swal("Error", "Radius can only be positive numbers.", "error");
-            //console.log("Radius can only be positive numbers");
+            swal("ERROR", "Radius can only be positive numbers.", "error");
             return;
         };
         drawCircle(map, self.place.results[0].geometry.location.lat, self.place.results[0].geometry.location.lng, self.alert.radius);
@@ -215,7 +211,7 @@
             else if (self.alert.measureType === 'km') {
                 self.marker.circle.radius = (parseFloat(self.alert.radius) * 1000);
             }         
-            self.marker.circle.setMap(map);
+            self.marker.circle.setMap(map); 
             return;
         }
 
@@ -332,7 +328,7 @@
 
     self.submit = function () {
         if (!self.marker.circle) {
-            console.log("You must draw a circle to specify the danger zone");
+            swal("ERROR", "You must draw a circle to specify the danger zone", "error");
             return;
         }
         self.alert.zoom = map.getZoom();
@@ -351,7 +347,10 @@
             self.marker = null;
             self.searchBar = "";
             map.setCenter(AugustaUniversity);
-        });//catch errors with sweetalert
+        }).catch(function (response) {
+            swal("ERROR", "Something went wrong with creating the alert.", "error");
+            return;
+            });
      
     };
 

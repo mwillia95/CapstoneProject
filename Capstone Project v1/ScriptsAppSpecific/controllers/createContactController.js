@@ -104,7 +104,11 @@
             appServices.addNewContact(contact).then(function (response) {
                 console.log(response);
                 self.contact = {};
-            });
+                swal("SUCCESS", "Contact was successfuly created.", "success");
+            }).catch(function (response) {
+                swal("ERROR", "Something went wrong when creating a contact", "error");
+                return;
+                });
         });
 
     };
