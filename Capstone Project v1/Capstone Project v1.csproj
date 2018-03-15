@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -244,6 +245,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\sweetalert.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="Content\ui-grid.css" />
     <Content Include="Content\ui-grid.min.css" />
@@ -252,11 +254,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="ScriptsAppSpecific\appServices.js" />
     <Content Include="ScriptsAppSpecific\controllers\createContactController.js" />
-    <Content Include="ScriptsAppSpecific\controllers\emergencyAlertController.js" />
+    <Content Include="ScriptsAppSpecific\controllers\alertsController.js" />
     <Content Include="ScriptsAppSpecific\controllers\homeController.js" />
     <Content Include="ScriptsAppSpecific\controllers\initialController.js" />
     <Content Include="ScriptsAppSpecific\controllers\loginController.js" />
     <Content Include="ScriptsAppSpecific\controllers\searchContactController.js" />
+    <Content Include="ScriptsAppSpecific\controllers\updateAlertController.js" />
     <Content Include="ScriptsAppSpecific\controllers\updateContactController.js" />
     <Content Include="ScriptsAppSpecific\main.js" />
     <Content Include="Scripts\angular\angular-animate.js" />
@@ -363,16 +366,18 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\angular-ui\ui-grid.js" />
     <Content Include="Scripts\angular-ui\ui-grid.min.js" />
+    <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ViewsClient\createContact.html" />
-    <Content Include="ViewsClient\emergencyAlert.html" />
+    <Content Include="ViewsClient\alerts.html" />
     <Content Include="ViewsClient\home.html" />
     <Content Include="ViewsClient\login.html" />
     <Content Include="ViewsClient\searchContact.html" />
+    <Content Include="ViewsClient\updateAlert.html" />
     <Content Include="ViewsClient\updateContact.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

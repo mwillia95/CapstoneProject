@@ -30,14 +30,22 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("getAlerts")]
         public IHttpActionResult getAlerts()
         {
+            List<Alert> a = new List<Alert>();
             var alerts = DataContext.Alerts;
-            foreach(var a in alerts)
+            //foreach(var a in alerts)
+            //{
+            //    var updates = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == a.AlertId);
+            //    foreach (var u in updates)
+            //        a.Updates.Add(u);
+            //}
+            foreach(var s in alerts)
             {
-                var updates = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == a.AlertId);
-                foreach (var u in updates)
-                    a.Updates.Add(u);
+                if(s.Status != AlertStatus.Complete)  //want to return only active alerts
+                {
+                    a.Add(s);
+                }
             }
-            return Ok(alerts);
+            return Ok(a);
         }
 
         [HttpGet]
@@ -73,6 +81,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("addAlert")]
         public IHttpActionResult addAlert(Alert a)
         {
+            //need a measureType for what the radius is measured in.....it will either be m (for meters) or km (for kilometers)
             a.Start_Time = DateTime.Now;
             a.Status = AlertStatus.Ongoing; //0
             DataContext.Alerts.Add(a);

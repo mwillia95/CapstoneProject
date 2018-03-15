@@ -1,14 +1,73 @@
 ﻿<div class="container" style="width:100%;">
     <div id="style-selector-control" class="map-control">
         <select id="style-selector" class="selector-control">
-            <option value="default">Default</option>        
-            <option value="night">Night mode</option>   
-            <option value="candy">Candy Land</option>       
+            <option value="default">Default</option>
+            <option value="night">Night mode</option>
         </select>
-    </div>   
-    <input id="searchInput" class="controls" type="text" placeholder="Enter a location">
+    </div>
     <div id="map-canvas"></div>
-    <div>
-        <button type="button" id="search-button" class="btn btn-primary btn-sm"><span class="fa fa-search"><span style="font-family: 'Lato', sans-serif;">Search</span></span></button>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6"  style="margin-top: 10px; margin: auto;">
+            <input id="searchInput" ng-model="self.searchBar" class="form-control" type="text" placeholder="Enter a location" style="border-color: black;">
+        </div>
+        <div class="col-md-3">
+            <!--<button type="button" id="search-button" class="btn btn-primary"><span class="fa fa-search"><span style="font-family: 'Lato', sans-serif;">Search</span></span></button>-->
+        </div>
+    </div>
+    <div class="row" style="margin-top: -28px">
+        <div class="col-md-3"></div>
+        <div class="col-md-6" style="text-align: center; margin-top: 10px;">           
+            <button type="button" id="search-button" class="btn btn-primary"><span class="fa fa-search"><span style="font-family: 'Lato', sans-serif;">Search</span></span></button>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 form-cell">
+            <label>Title</label>
+            <input type="text"
+                   class="form-control"
+                   style="background-color: lightgoldenrodyellow; border-color: black;"
+                   placeholder="---" 
+                   ng-model="self.alert.title"/>
+        </div>
+        <div class="col-md-3 form-cell">
+            <label>Radius</label>
+            <input type="text"
+                   class="form-control"
+                   style="background-color: lightgoldenrodyellow; border-color: black;"
+                   placeholder="---" 
+                   ng-model="self.alert.radius"/>
+        </div>
+        <div class="col-md-2 form-cell">
+            <label>km/m</label>
+            <select class="form-control"
+                    style="background-color: lightgoldenrodyellow; border-color: black;"
+                    ng-model="self.alert.measureType">    
+                <option value="" style="color: #ccc !important" disabled> -Select- </option>
+                <option ng-repeat="type in self.measurements" value="{{type}}"> {{type}} </option>
+            </select>
+        </div>
+        <div class="col-md-2 form-cell" style="margin-top: 35px;">
+            <button type="button" ng-click="self.draw();" class="btn btn-warning"><span class="fa fa-pencil"><span style="font-family: 'Lato', sans-serif;">Draw Circle</span></span></button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 form-cell">
+            <label>Description</label>
+            <input type="text"
+                   class="form-control"
+                   style="background-color: lightgoldenrodyellow; border-color: black;"
+                   placeholder="---" 
+                   ng-model="self.alert.description"/>
+        </div>
+        <div class="col-md-2" style="margin-top: 35px; text-align: center;">
+            <button type="button" class="btn btn-success" ng-click="self.submit()" ng-disabled="!self.alert.title || !self.alert.radius || self.alert.measureType === '' || !self.alert.description || !self.geoPlace">
+                <span class="fa fa-share"><span style="font-family: 'Lato', sans-serif;">Create Alert</span></span>
+            </button>
+        </div>
+        <div class="col-md-2 form-cell" style="margin-top: 35px;">
+            <button type="button" class="btn btn-danger" ng-click="self.cancel()"><span class="fa fa-remove"><span style="font-family: 'Lato', sans-serif;">Cancel Alert</span></span></button>
+        </div>
     </div>
 </div>

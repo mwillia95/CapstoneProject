@@ -117,6 +117,7 @@
             });
         }
     };
+    //end self.refreshData()
 
     self.updateContact = function (request) {
         $rootScope.id = request.ContactId;
@@ -124,7 +125,7 @@
     };
 
 
-self.removeContact = function (request) {
+    self.removeContact = function (request) {
     if (confirm("Are you sure you want to delete this contact?")) {
         console.log(request);
         appServices.removeContact(request).then(function (response) {
@@ -133,7 +134,6 @@ self.removeContact = function (request) {
         });
     }
 };
-//end self.refreshData()
 
 if ($rootScope.search) {
     self.refreshData();

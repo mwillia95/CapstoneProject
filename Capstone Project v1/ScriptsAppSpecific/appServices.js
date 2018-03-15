@@ -50,6 +50,16 @@
             //Google API functions
             getGeocode: function (address) {
                 return $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyBjPZkkaFZNUcyiFq6Ckyrcb9LVplllhyE');
+            },
+            //AlertController functions
+            addAlert: function (alert) {
+                return $http.post('api/PublicEmergencyNotificationSystem/alerts/addAlert', alert);
+            },
+            getAlerts: function () {
+                return $http.get('api/PublicEmergencyNotificationSystem/alerts/getAlerts');
+            },
+            getAlertById: function (id) {
+                return $http.get("api/PublicEmergencyNotificationSystem/alerts/getAlertById?id=" + id)
             }
         };
     }]);
