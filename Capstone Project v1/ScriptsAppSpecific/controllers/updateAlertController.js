@@ -1,4 +1,4 @@
-﻿angular.module("app").controller("emergencyAlertController", ['$scope', 'AppServices', '$location', '$rootScope', '$timeout', function ($scope, appServices, $location, $rootScope, $timeout) {
+﻿angular.module("app").controller("updateAlertController", ['$scope', 'AppServices', '$location', '$rootScope', '$timeout', function ($scope, appServices, $location, $rootScope, $timeout) {
     var self = this;
     $timeout($rootScope.authorize, 0).then(function () {
         if (!$rootScope.isAuthorized) {

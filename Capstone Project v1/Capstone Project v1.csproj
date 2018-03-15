@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -251,7 +252,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="ScriptsAppSpecific\appServices.js" />
     <Content Include="ScriptsAppSpecific\controllers\createContactController.js" />
-    <Content Include="ScriptsAppSpecific\controllers\emergencyAlertController.js" />
+    <Content Include="ScriptsAppSpecific\controllers\updateAlertController.js" />
     <Content Include="ScriptsAppSpecific\controllers\homeController.js" />
     <Content Include="ScriptsAppSpecific\controllers\initialController.js" />
     <Content Include="ScriptsAppSpecific\controllers\loginController.js" />
@@ -368,7 +369,7 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ViewsClient\createContact.html" />
-    <Content Include="ViewsClient\emergencyAlert.html" />
+    <Content Include="ViewsClient\updateAlert.html" />
     <Content Include="ViewsClient\home.html" />
     <Content Include="ViewsClient\login.html" />
     <Content Include="ViewsClient\searchContact.html" />

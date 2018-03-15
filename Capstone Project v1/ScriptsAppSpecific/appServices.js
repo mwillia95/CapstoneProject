@@ -46,6 +46,10 @@
             //Google API functions
             getGeocode: function (address) {
                 return $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyBjPZkkaFZNUcyiFq6Ckyrcb9LVplllhyE');
+            },
+            //AlertController functions
+            addAlert: function (alert) {
+                return $http.post('api/PublicEmergencyNotificationSystem/alerts/addAlert', alert)
             }
         };
     }]);

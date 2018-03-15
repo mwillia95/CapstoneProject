@@ -21,7 +21,7 @@ using Microsoft.Owin.Security;
  */
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
-    [RoutePrefix("api/" + AppName + "/accounts")]
+    [RoutePrefix("api/" + AppName + "/alerts")]
     public class AlertController : AppApiController
     {
         [HttpGet]
@@ -71,6 +71,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("addAlert")]
         public IHttpActionResult addAlert(Alert a)
         {
+            //need a measureType for what the radius is measured in.....it will either be m (for meters) or km (for kilometers)
             a.Start_Time = DateTime.Now;
             a.Status = AlertStatus.Ongoing; //0
             DataContext.Alerts.Add(a);

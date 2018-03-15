@@ -1,26 +1,28 @@
 ﻿angular.module("app").controller("homeController", ['$scope', 'AppServices', '$rootScope', '$location', '$timeout', function ($scope, appServices, $rootScope, $location, $timeout) {
     var self = this;
+    self.zoomDistances = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    self.measurements = ['m', 'km'];
+    self.alert = {};
+    var map;
+    var AugustaUniversity = { lat: 33.4759, lng: -82.0230 };
+    var markers = [];
+
+
     $timeout($rootScope.authorize, 0).then(function () {
-        if (!$rootScope.isAuthorized)
-        {
+        if (!$rootScope.isAuthorized) {
             console.log("not authorized");
             $location.path("/login");
         }
     });
-        
-    
-    var map;
-    var AugustaUniversity = { lat: 33.4759, lng: -82.0230 };
-    var markers = [];
 
     function CenterControl(controlDiv, map) {
         // Set CSS for the control border.
         var controlUI = document.createElement('div');
         controlUI.style.backgroundColor = '#007BFF';
         controlUI.style.border = '2px solid #fff';
-        controlUI.style.borderRadius = '5px';       
+        controlUI.style.borderRadius = '5px';
         controlUI.style.cursor = 'pointer';
-        controlUI.style.marginTop = '22px';
+        //controlUI.style.marginTop = '22px';
         controlUI.style.textAlign = 'center';
         controlUI.title = 'Click to recenter the map';
         controlDiv.appendChild(controlUI);
@@ -46,7 +48,7 @@
         var myLatLng = new google.maps.LatLng(33.4759, -82.0230);
         map = new google.maps.Map(document.getElementById('map-canvas'), {
             center: { lat: 33.4759, lng: -82.0230 },
-            zoom: 12,
+            zoom: 15,
             mapTypeControl: true,
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -60,10 +62,10 @@
             map: map,
             title: "Augusta University"
         });
+
         marker.setMap(map);
 
-       
-
+        map.setOptions({ minZoom: 2, maxZoom: 20 });
 
         // Create the DIV to hold the control and call the CenterControl()
         // constructor passing in this DIV.
@@ -71,7 +73,7 @@
         var centerControl = new CenterControl(centerControlDiv, map);
 
         centerControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(centerControlDiv);
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
 
         // Add a style-selector control to the map.
         var styleControl = document.getElementById('style-selector-control');
@@ -79,7 +81,7 @@
 
         // Set the map's style to the initial value of the selector.
         var styleSelector = document.getElementById('style-selector');
-        map.setOptions({styles: styles[styleSelector.value]});
+        map.setOptions({ styles: styles[styleSelector.value] });
 
         // Apply new JSON when the user selects a different style.
         styleSelector.addEventListener('change', function () {
@@ -89,42 +91,54 @@
         //creating searchbar with autocomplete from the Google Places Web Services Libraries
         var input = document.getElementById('searchInput');
         var searchBar = new google.maps.places.Autocomplete(input);
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+        //map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
         //making button for searchbar
         var button = document.getElementById('search-button');
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(button);
-      
-        
+        //map.controls[google.maps.ControlPosition.TOP_CENTER].push(button);
+
+
         // Bias the SearchBox results towards current map's viewport.    
         map.addListener('bounds_changed', function () {
-            searchBar.setBounds(map.getBounds());        
+            searchBar.setBounds(map.getBounds());
         });
 
         button.onclick = function () {
             displaySearchResults(map, searchBar);
         };
+
     }
 
-    function displaySearchResults(map, searchBar) {      
+    function displaySearchResults(map, searchBar) {
         var place = searchBar.getPlace();
-        
+
+        self.geoPlace = place.formatted_address.split(' ').join('+');    //formatted address to send to geocodes
+
         if (place.length === 0) {
             return;
         }
 
-         //Clear out the old markers.
-        markers.forEach(function (marker) {
-            marker.setMap(null);
-            marker = null;         
+        //catch if error on geocode call
+        appServices.getGeocode(self.geoPlace).then(function (response) {
+            self.place = response.data;            
         });
-        
+
+        //Clear out the old markers, and circles bound to them
+        markers.forEach(function (marker) {
+            if (Object.keys(marker).length > 15) {             
+                marker.circle.setMap(null);
+            }
+            marker.setMap(null);
+            marker = null;
+        });
+
         markers = [];
-    
+
 
         // For each place, get the icon, name and location.
         var bounds = new google.maps.LatLngBounds();
         createMarkers(place);
+
         function createMarkers(place) {
             if (!place.geometry) {
                 console.log("Returned place contains no geometry");
@@ -138,18 +152,24 @@
                 scaledSize: new google.maps.Size(25, 25)
             };
 
+            //changes title of marker when search based on that is in the title input field
+            titleValid = /\S/;
+            if (titleValid.test(self.alert.title)) {
+                var placeTitle = self.alert.title;
+            }
+            else {
+                var placeTitle = place.name;
+            }
+
             // Create a marker for each place.
-            var marker = new google.maps.Marker({
+            self.marker = new google.maps.Marker({
                 map: map,
                 icon: icon,
-                title: place.name,
+                title: placeTitle,
                 position: place.geometry.location
             });
 
-            markers.push(marker);
-            console.log("after push");
-            console.log(markers);
-            console.log(markers.length);
+            markers.push(self.marker);
 
             if (place.geometry.viewport) {
                 // Only geocodes have viewport.
@@ -160,6 +180,67 @@
         }
         map.fitBounds(bounds);
     }
+
+    self.draw = function () {   //also make sure a location is searched!!!!!!!
+        if (self.alert.measureType !== 'm' && self.alert.measureType !== 'km') {
+            console.log("Select a measurement type");///use sweet alert
+            return;
+        }
+        else if (!self.place) {
+            console.log("You need to search for a place first");
+            return;
+        }
+        else if (isNaN(parseFloat(self.alert.radius))) {
+            console.log("Radius can only be numbers");
+            return;
+        }
+        if (parseFloat(self.alert.radius) <= 0) {
+            console.log("Radius can only be positive numbers");
+            return;
+        };
+        drawCircle(map, self.place.results[0].geometry.location.lat, self.place.results[0].geometry.location.lng, self.alert.radius);
+    };
+    //draws a circle on the map with radius of input on form. If there is already a circle, 
+    //it checks to see what the new radius is, removes old, changes radius, and redraws a new one ont he same marker
+    function drawCircle(map, lat, lng) {
+        if (Object.keys(self.marker).length > 14) {
+            self.marker.circle.setMap(null);
+            if (self.alert.measureType === 'm') {
+                self.marker.circle.radius = parseFloat(self.alert.radius);
+            }
+            else if (self.alert.measureType === 'km') {
+                self.marker.circle.radius = (parseFloat(self.alert.radius) * 1000);
+            }         
+            self.marker.circle.setMap(map);
+            return;
+        }
+
+        self.alert.lat = lat;
+        self.alert.lng = lng;
+
+        //checking if measuring in kilometers or meters then adjusting radius of circle
+        if (self.alert.measureType === 'm') {
+            var radiusDistance = parseFloat(self.alert.radius);
+        }
+        else if (self.alert.measureType === 'km') {
+            var radiusDistance = parseFloat(self.alert.radius) * 1000;
+        }
+
+        var circle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            radius: radiusDistance,
+            draggable: false
+        });
+
+        circle.bindTo('center', self.marker, 'position');  //makes circle property of self.marker (marker created on searching of an address);
+        self.marker.circle = circle;
+        self.marker.setMap(map); 
+    };
 
     var styles = {
         default: null,
@@ -242,87 +323,45 @@
               elementType: 'labels.text.stroke',
               stylers: [{ color: '#17263c' }]
           }
-        ],
-        candy: [
-         { elementType: 'geometry', stylers: [{ color: '#ade88b' }] },  //soft green
-         { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
-         { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
-         {
-             featureType: 'administrative.locality',
-             elementType: 'labels.text.fill',
-             stylers: [{ color: '#d59563' }]
-         },
-         {
-             featureType: 'poi',
-             elementType: 'labels.text.fill',
-             stylers: [{ color: '#d59563' }]
-         },
-         {
-             featureType: 'poi.park',
-             elementType: 'geometry',
-             stylers: [{ color: '#263c3f' }]
-         },
-         {
-             featureType: 'poi.park',
-             elementType: 'labels.text.fill',
-             stylers: [{ color: '#6b9a76' }]
-         },
-         {
-             featureType: 'road',
-             elementType: 'geometry',
-             stylers: [{ color: '#9a2daf' }]   //purple
-         },
-         {
-             featureType: 'road',
-             elementType: 'geometry.stroke',
-             stylers: [{ color: '#f2aeb4' }]  //pink
-         },
-         {
-             featureType: 'road',
-             elementType: 'labels.text.fill',
-             stylers: [{ color: '#9ca5b3' }]
-         },
-         {
-             featureType: 'road.highway',
-             elementType: 'geometry',
-             stylers: [{ color: '#ea3545' }]  //salmon
-         },
-         {
-             featureType: 'road.highway',
-             elementType: 'geometry.stroke',
-             stylers: [{ color: '#6dcde8' }]   //baby blue
-         },
-         {
-             featureType: 'road.highway',
-             elementType: 'labels.text.fill',
-             stylers: [{ color: '#f3d19c' }]
-         },
-         {
-             featureType: 'transit',
-             elementType: 'geometry',
-             stylers: [{ color: '#2f3948' }]
-         },
-         {
-             featureType: 'transit.station',
-             elementType: 'labels.text.fill',
-             stylers: [{ color: '#d59563' }]
-         },
-         {
-             featureType: 'water',
-             elementType: 'geometry',
-             stylers: [{ color: '#efac40' }]  //soft yellow
-         },
-         {
-             featureType: 'water',
-             elementType: 'labels.text.fill',
-             stylers: [{ color: '#515c6d' }]
-         },
-         {
-             featureType: 'water',
-             elementType: 'labels.text.stroke',
-             stylers: [{ color: '#17263c' }]
-         }
-        ]
+        ],       
+    };
+
+    self.submit = function () {
+        if (!self.marker.circle) {
+            console.log("You must draw a circle to specify the danger zone");
+            return;
+        }
+        self.alert.zoom = map.getZoom();
+        var alert = {
+            location_lat: self.alert.lat,
+            location_lng: self.alert.lng,
+            Description: self.alert.description,
+            Title: self.alert.title,
+            Radius: self.alert.radius,           
+        };
+        appServices.addAlert(alert).then(function (response) {
+            //clears form data
+            self.alert = {};
+            self.marker.setMap(null);
+            self.marker.circle.setMap(null);
+            self.marker = null;
+            self.searchBar = "";
+            map.setCenter(AugustaUniversity);
+        });//catch errors with sweetalert
+     
+    };
+
+    self.cancel = function () {
+        self.alert = {};
+        if (self.marker) {
+            self.marker.setMap(null);
+            if (Object.keys(self.marker).length > 15) {        
+                self.marker.circle.setMap(null);
+            }            
+        }   
+        self.marker = null;
+        self.searchBar = "";
+        map.setCenter(AugustaUniversity);
     };
 
     initMap();
