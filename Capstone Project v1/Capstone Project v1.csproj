@@ -364,11 +364,14 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\angular-ui\ui-grid.js" />
     <Content Include="Scripts\angular-ui\ui-grid.min.js" />
+    <Content Include="Scripts\sweetalert-dev.js" />
+    <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Content\sweetalert.css" />
     <Content Include="ViewsClient\createContact.html" />
     <Content Include="ViewsClient\alerts.html" />
     <Content Include="ViewsClient\home.html" />

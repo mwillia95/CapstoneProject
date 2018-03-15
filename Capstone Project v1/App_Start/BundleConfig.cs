@@ -16,7 +16,8 @@ namespace Capstone_Project_v1
                 "~/Content/ui-grid.css",
                 "~/Content/bootstrap.css",
                 "~/Content/Site.css",
-                "~/Content/font-awesome.css"
+                "~/Content/font-awesome.css",
+                "~/Content/sweetalert.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/all").Include(
@@ -29,6 +30,7 @@ namespace Capstone_Project_v1
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/angular-ui/ui-grid.js",
                 "~/Scripts/umd/popper.js",
+                "~/Scripts/sweetalert-dev.js",
                 //"~/Scripts/angular/lodash.js",
                 //"~/Scripts/angular/angular-google-maps.js",
                 "~/ScriptsAppSpecific/main.js"
