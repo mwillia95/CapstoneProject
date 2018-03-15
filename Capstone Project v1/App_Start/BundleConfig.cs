@@ -30,7 +30,7 @@ namespace Capstone_Project_v1
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/angular-ui/ui-grid.js",
                 "~/Scripts/umd/popper.js",
-                "~/Scripts/sweetalert-dev.js",
+                "~/Scripts/sweetalert.min.js",
                 //"~/Scripts/angular/lodash.js",
                 //"~/Scripts/angular/angular-google-maps.js",
                 "~/ScriptsAppSpecific/main.js"
