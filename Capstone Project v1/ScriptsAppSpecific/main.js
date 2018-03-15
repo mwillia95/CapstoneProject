@@ -42,8 +42,14 @@
             controller: "updateContactController",
             controllerAs: "self"
         })
-        .when("/emergencyAlert",
+        .when("/activeAlerts",
         {
+            title: "Active Alerts",
+            templateUrl: "ViewsClient/alerts.html",
+            controller: "alertsController",
+            controllerAs: "self"
+        })
+        .when("/updateAlert", {
             title: "Update Alert",
             templateUrl: "ViewsClient/updateAlert.html",
             controller: "updateAlertController",

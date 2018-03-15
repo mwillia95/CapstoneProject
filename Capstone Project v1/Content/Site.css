@@ -126,6 +126,23 @@ nav .container{
     border-radius: 3px;
     color: black;
 }
+
+.grid-align{
+    text-align: center;
+}
+
+.grid-label-warning{
+    background-color: #f0ad4e;
+}
+
+.grid-label-success{
+    background-color: green;
+}
+
+.grid-label-danger{
+    background-color: red;
+}
+
 /*End Search Contact Grid*/
 
 /*/////////////////////// Google Maps CSS ///////////////////////////////*/

@@ -49,7 +49,13 @@
             },
             //AlertController functions
             addAlert: function (alert) {
-                return $http.post('api/PublicEmergencyNotificationSystem/alerts/addAlert', alert)
+                return $http.post('api/PublicEmergencyNotificationSystem/alerts/addAlert', alert);
+            },
+            getAlerts: function () {
+                return $http.get('api/PublicEmergencyNotificationSystem/alerts/getAlerts');
+            },
+            getAlertById: function (id) {
+                return $http.get("api/PublicEmergencyNotificationSystem/alerts/getAlertById?id=" + id)
             }
         };
     }]);
