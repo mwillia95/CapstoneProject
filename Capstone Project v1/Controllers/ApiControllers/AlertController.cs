@@ -8,8 +8,10 @@ using Capstone_Project_v1.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-
-
+using System.Net;
+using System.IO;
+using Newtonsoft.Json;
+using System.Drawing;
 /*
  * getAlerts: get a list of all alerts
  * getAlertById: get one alert by its id
@@ -21,7 +23,7 @@ using Microsoft.Owin.Security;
  */
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
-    [RoutePrefix("api/" + AppName + "/accounts")]
+    [RoutePrefix("api/" + AppName + "/alerts")]
     public class AlertController : AppApiController
     {
         [HttpGet]
@@ -98,6 +100,26 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             a.OriginAlert.RecentUpdateRefId = a.UpdateId;
             DataContext.SaveChanges();
             return Ok(a);
+        }
+
+        [HttpPost]
+        [Route("sendAlert")]
+        public IHttpActionResult sendAlert(StaticMapRequest s)
+        {
+            s = new StaticMapRequest();
+            Bitmap image;
+            string url = s.toUrlRequest();
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            {
+                string path = @"../Images/StaticMap.png";
+                image = new Bitmap(stream);
+                image.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+            }
+            return Ok(image);
         }
     }
 }

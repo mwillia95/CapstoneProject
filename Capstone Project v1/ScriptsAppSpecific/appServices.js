@@ -19,13 +19,13 @@
                 return $http.get("api/PublicEmergencyNotificationSystem/contacts/getContactsAll");
             },
             updateContact: function (contact) {
-                return $http.post("api/PublicEmergencyNotificationSystem/contacts/updateContact", contact);
+                return $http.put("api/PublicEmergencyNotificationSystem/contacts/updateContact", contact);
             },
             removeContact: function (contact) {
-                return $http.post("api/PublicEmergencyNotificationSystem/contacts/removeContact", contact);
+                return $http.delete("api/PublicEmergencyNotificationSystem/contacts/removeContact", contact);
             },
             verifyLatLong: function () {
-                return $http.post("api/PublicEmergencyNotificationSystem/contacts/verifyLatLong");
+                return $http.put("api/PublicEmergencyNotificationSystem/contacts/verifyLatLong");
             },
             //AccountController functions
             register: function (account) {
@@ -42,6 +42,10 @@
             },
             getName: function () {
                 return $http.get('api/PublicEmergencyNotificationSystem/accounts/getName');
+            },
+            //AlertController functions
+            sendAlert: function (request) {
+                return $http.post("api/PublicEmergencyNotificationSystem/alerts/sendAlert");
             },
             //Google API functions
             getGeocode: function (address) {

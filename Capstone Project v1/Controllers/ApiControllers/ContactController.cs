@@ -139,7 +139,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         }
 
         //As of now, fully functioning
-        [HttpPost]
+        [HttpPut]
         [Route("updateContact")]
         public IHttpActionResult UpdateContact(Contact c)
         {
@@ -186,7 +186,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             DataContext.SaveChanges();
             return Ok(oldContact);
         }
-        [HttpPost]
+        [HttpDelete]
         [Route("removeContact")]
         public IHttpActionResult RemoveContact(Contact c)
         {

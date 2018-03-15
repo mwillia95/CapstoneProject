@@ -31,4 +31,13 @@
             });
         }
     };
+    var v = {};
+    v.Lat = 33.49;
+    v.Lng = -82.07;
+    v.Zoom = 8;
+    v.Radius = 10;
+    appServices.sendAlert(v).then(function(response)
+    {
+        console.log(response);
+    });
 }]);
