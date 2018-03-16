@@ -49,7 +49,8 @@ namespace Capstone_Project_v1.Models
         [Column("MEASUREMENT_TYPE")]
         public string MeasureType { get; set; }
 
-
+        [Column("IMAGE_NAME")]
+        public string ImageName { get; set; }
         //Foreign key to the most recent update
         //We could forego this and instead find the update with the most recent timestamp
         [Column("RECENT_UPDATE_REF_ID")]

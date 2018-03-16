@@ -90,6 +90,8 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             DataContext.SaveChanges();
             string appPath = HttpContext.Current.Server.MapPath("~");
             string path = sendAlert(new StaticMapRequest(a.location_lat, a.location_lng, a.Zoom, a.Radius, a.AlertId), appPath);
+            a.ImageName = path;
+            DataContext.SaveChanges();
             return Ok(path);
         }
 
@@ -135,7 +137,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             }
             response.Dispose();
             stream.Dispose();
-            return path;
+            return s.Id + "_map.png";
         }
     }
 }
