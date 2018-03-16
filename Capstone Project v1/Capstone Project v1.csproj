@@ -247,6 +247,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\Loading.gif" />
     <Content Include="Content\images\Shrek.jpeg" />
     <Content Include="Content\sweetalert.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />

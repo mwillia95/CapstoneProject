@@ -1,5 +1,6 @@
 ﻿angular.module("app").controller("alertsController", ['$scope', 'AppServices', '$location', '$rootScope', '$timeout', 'uiGridConstants', function ($scope, appServices, $location, $rootScope, $timeout, uiGridConstants) {
     var self = this;
+    self.load = true;
     $timeout($rootScope.authorize, 0).then(function () {
         if (!$rootScope.isAuthorized) {
             console.log("not authorized");
@@ -84,6 +85,7 @@
             console.log(response);
             self.gridOptions.data = response.data;          
             self.gridOptions.paginationCurrentPage = 1;
+            self.load = false;
         }).catch(function (response) {
             swal("ERROR", response.data.ExceptionMessage, "error");
             return;
