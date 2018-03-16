@@ -31,9 +31,9 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("getAlerts")]
         public IHttpActionResult getAlerts()
         {
-            
-            List<Alert> a = new List<Alert>();
-            var alerts = DataContext.Alerts.ToList();
+
+            List<AlertDto> a = new List<AlertDto>();
+            var alerts = DataContext.Alerts.Include("Contacts").ToList();
 
             //foreach(var a in alerts)
             //{
@@ -43,20 +43,20 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             //}
             foreach (var s in alerts)
             {
-                if(s.Status != AlertStatus.Complete)  //want to return only active alerts
+                if (s.Status != AlertStatus.Complete)  //want to return only active alerts
                 {
                     var aDto = new AlertDto()
                     {
                         AlertId = s.AlertId,
                         Description = s.Description,
                         Status = s.Status.ToString().ToUpper(),
-                        Start_Time = String.Format("{0:d/M/yyyy hh:mm:ss tt}", s.Start_Time),
+                        Start_Time = s.Status != AlertStatus.Pending ? String.Format("{0:d/M/yyyy hh:mm:ss tt}", s.Start_Time) : "STILL PENDING",
                         Title = s.Title,
                         location_lat = s.location_lat,
                         location_lng = s.location_lng,
                         Radius = s.Radius
                     };
-                        
+
                     a.Add(aDto);
                 }
             }
@@ -69,6 +69,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         {
             List<object> request = new List<object>();
             var alert = DataContext.Alerts.Find(id);
+            alert.Contacts = DataContext.Contacts.Where(x => x.Alerts.Any(y => y.AlertId == id)).ToList();
             var updates = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == alert.AlertId);
             if (updates != null)
             {
@@ -115,15 +116,20 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         public IHttpActionResult addAlert(Alert a)
         {
             //need a measureType for what the radius is measured in.....it will either be m (for meters) or km (for kilometers)
-            a.Start_Time = DateTime.Now;
             a.Status = AlertStatus.Pending; //3
+            a.Start_Time = DateTime.Now;
             DataContext.Alerts.Add(a);
             DataContext.SaveChanges();
             string appPath = HttpContext.Current.Server.MapPath("~");
             string path = sendAlert(new StaticMapRequest(a.location_lat, a.location_lng, a.Zoom, a.Radius, a.AlertId), appPath);
             a.ImageName = path;
             DataContext.SaveChanges();
-            return Ok(path);
+            var contacts = DataContext.Contacts.Include("Address").ToList();
+            var contactsToAlert = ContactsInRange(contacts, a.location_lat, a.location_lng, a.Radius);
+            a.Contacts = contactsToAlert;
+            DataContext.SaveChanges();
+
+            return Ok();
         }
 
         [HttpPost]
@@ -131,7 +137,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         public IHttpActionResult updateAlert(UpdateAlert a)
         {
             a.Start_Time = DateTime.Now;
-            if(a.OriginAlert == null)
+            if (a.OriginAlert == null)
             {
                 a.OriginAlert = DataContext.Alerts.Find(a.OriginAlertRefId);
                 a.OriginAlert.Status = AlertStatus.Updated; //1
@@ -148,7 +154,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             return Ok(a);
         }
 
-        public string sendAlert(StaticMapRequest s, string rootPath)
+        private string sendAlert(StaticMapRequest s, string rootPath)
         {
             Bitmap image;
             string url = s.toUrlRequest();
@@ -158,17 +164,48 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream stream = response.GetResponseStream();
             image = new Bitmap(stream);
-            try
-            {
-                image.Save(path);   
-            }
-            catch(Exception e)
-            {
-                return "";
-            }
+            image.Save(path);
+
             response.Dispose();
             stream.Dispose();
             return s.Id + "_map.png";
+        }
+
+        private List<Contact> ContactsInRange(List<Contact> contacts, decimal lat, decimal lng, decimal radius)
+        {
+            List<Contact> newList = new List<Contact>();
+            foreach (Contact c in contacts)
+            {
+                if (InRange(c, lat, lng, radius))
+                {
+                    newList.Add(c);
+                }
+            }
+            return newList;
+        }
+
+        private bool InRange(Contact c, decimal lat, decimal lng, decimal radius)
+        {
+            var x = c.Address.Latitude;
+            var y = c.Address.Longitude;
+
+            var distance = measure((double)x, (double)y, (double)lat, (double)lng);
+
+            return (decimal)distance <= radius;
+        }
+
+        private double measure(double lat1, double lon1, double lat2, double lon2)
+        {  // generally used geo measurement function
+
+            var R = 6378.137; // Radius of earth in KM
+            var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
+            var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
+            var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+            Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) *
+            Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var d = R * c;
+            return d * 1000; // meters
         }
     }
 }

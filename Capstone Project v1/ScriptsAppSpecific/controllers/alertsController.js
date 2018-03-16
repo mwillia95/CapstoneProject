@@ -59,7 +59,7 @@
                 field: "Description",
                 displayName: "Description",
                 enableColumnMenu: false,
-                width: "30%",
+                width: "27%",
                 cellClass: 'grid-align',
                 headerCellClass: 'grid-align',
                 filter: {
@@ -81,6 +81,7 @@
 
     self.refreshData = function () {
         appServices.getAlerts().then(function (response) {
+            console.log(response);
             self.gridOptions.data = response.data;          
             self.gridOptions.paginationCurrentPage = 1;
         }).catch(function (response) {
