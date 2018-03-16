@@ -224,6 +224,7 @@
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\DataTransferObjects\AlertDto.cs" />
+    <Compile Include="Models\DataTransferObjects\UpdateAlertDto.cs" />
     <Compile Include="Models\GeocodeResponse.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -246,6 +247,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\Shrek.jpeg" />
     <Content Include="Content\sweetalert.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="Content\ui-grid.css" />

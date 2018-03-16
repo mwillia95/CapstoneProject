@@ -15,7 +15,9 @@
         appServices.getAlertById(self.id).then(function (response) {
             self.form = response.data;
             console.log(self.form);
-        });//catch errors with sweetalert
+        }).catch(function (response) {
+            swal("ERROR", "Something went wrong", "error");
+        });
     };
 
 

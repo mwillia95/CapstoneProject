@@ -26,7 +26,7 @@
                 displayName: "Status",
                 enableColumnMenu: false,
                 width: "17%",
-                cellTemplate: "<span class=\"grid-label\" ng-class=\"{'grid-label-pending: row.entity.Status == 'PENDING', 'grid-label-danger': row.entity.Status == 'ONGOING', 'grid-label-warning': row.entity.Status == 'UPDATED', 'grid-label-success': row.entity.Status == 'COMPLETE'}\">{{ COL_FIELD }}</span>",
+                cellTemplate: "<span class=\"grid-label\" ng-class=\"{'grid-label-danger': row.entity.Status == 'ONGOING', 'grid-label-warning': row.entity.Status == 'UPDATED', 'grid-label-success': row.entity.Status == 'COMPLETE', 'grid-label-pending': row.entity.Status == 'PENDING'}\">{{ COL_FIELD }}</span>",
                 cellClass: 'grid-align',
                 headerCellClass: 'grid-align',
                 filter: {

@@ -33,12 +33,6 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         {
             List<AlertDto> a = new List<AlertDto>();
             var alerts = DataContext.Alerts;
-            //foreach(var a in alerts)
-            //{
-            //    var updates = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == a.AlertId);
-            //    foreach (var u in updates)
-            //        a.Updates.Add(u);
-            //}
             foreach(var s in alerts)
             {
                 if(s.Status != AlertStatus.Complete)  //want to return only active alerts
@@ -65,13 +59,31 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("getAlertById")]
         public IHttpActionResult getAlertById(int id)
         {
+            List<object> request = new List<object>();
             var alert = DataContext.Alerts.Find(id);
             var updates = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == alert.AlertId);
-            foreach(var u in updates)
+            if (updates != null)
             {
-                alert.Updates.Add(u);
+                foreach (var u in updates)
+                {
+                    alert.Updates.Add(u);
+                }
             }
-            return Ok(alert);
+            var aDto = new AlertDto()
+            {
+                AlertId = alert.AlertId,
+                Description = alert.Description,
+                Status = alert.Status.ToString().ToUpper(),
+                Start_Time = String.Format("{0:d/M/yyyy hh:mm:ss tt}", alert.Start_Time),
+                Title = alert.Title,
+                location_lat = alert.location_lat,
+                location_lng = alert.location_lng,
+                Radius = alert.Radius
+            };
+
+            request.Add(alert);
+            request.Add(aDto);
+            return Ok(request);
         }
 
         [HttpGet]

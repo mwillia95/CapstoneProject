@@ -183,19 +183,19 @@
 
     self.draw = function () {   //also make sure a location is searched!!!!!!!
         if (self.alert.measureType !== 'm' && self.alert.measureType !== 'km') {
-            swal("ERROR", "You must select a measurement type", "error");
+            swal("WARNING", "You must select a measurement type", "warning");
             return;
         }
         else if (!self.place) {
-            swal("ERROR", "You must search for a location first.", "error");           
+            swal("WARNING", "You must search for a location first.", "warning");           
             return;
         }
         else if (isNaN(parseFloat(self.alert.radius))) {
-            swal("ERROR", "Radius can only be numbers", "error");
+            swal("WARNING", "Radius can only be numbers", "warning");
             return;
         }
         if (parseFloat(self.alert.radius) <= 0) {
-            swal("ERROR", "Radius can only be positive numbers.", "error");
+            swal("WARNING", "Radius can only be positive numbers.", "warning");
             return;
         };
         drawCircle(map, self.place.results[0].geometry.location.lat, self.place.results[0].geometry.location.lng, self.alert.radius);
