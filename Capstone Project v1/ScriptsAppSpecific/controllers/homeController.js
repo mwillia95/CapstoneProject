@@ -338,10 +338,12 @@
             Description: self.alert.description,
             Title: self.alert.title,
             Radius: self.alert.radius,  
-            MeasurementType: self.alert.measureType
+            MeasurementType: self.alert.measureType,
+            Zoom: self.alert.zoom
         };
         appServices.addAlert(alert).then(function (response) {
             //clears form data
+            console.log(response);
             self.alert = {};
             self.marker.setMap(null);
             self.marker.circle.setMap(null);

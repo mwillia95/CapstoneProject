@@ -30,15 +30,17 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("getAlerts")]
         public IHttpActionResult getAlerts()
         {
+            
             List<Alert> a = new List<Alert>();
-            var alerts = DataContext.Alerts;
+            var alerts = DataContext.Alerts.ToList();
+
             //foreach(var a in alerts)
             //{
             //    var updates = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == a.AlertId);
             //    foreach (var u in updates)
             //        a.Updates.Add(u);
             //}
-            foreach(var s in alerts)
+            foreach (var s in alerts)
             {
                 if(s.Status != AlertStatus.Complete)  //want to return only active alerts
                 {
@@ -83,10 +85,12 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         {
             //need a measureType for what the radius is measured in.....it will either be m (for meters) or km (for kilometers)
             a.Start_Time = DateTime.Now;
-            a.Status = AlertStatus.Ongoing; //0
+            a.Status = AlertStatus.Pending; //3
             DataContext.Alerts.Add(a);
             DataContext.SaveChanges();
-            return Ok(a);
+            string appPath = HttpContext.Current.Server.MapPath("~");
+            string path = sendAlert(new StaticMapRequest(a.location_lat, a.location_lng, a.Zoom, a.Radius, a.AlertId), appPath);
+            return Ok(path);
         }
 
         [HttpPost]
@@ -111,24 +115,27 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             return Ok(a);
         }
 
-        [HttpPost]
-        [Route("sendAlert")]
-        public IHttpActionResult sendAlert(StaticMapRequest s)
+        public string sendAlert(StaticMapRequest s, string rootPath)
         {
-            s = new StaticMapRequest();
             Bitmap image;
             string url = s.toUrlRequest();
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.AutomaticDecompression = DecompressionMethods.GZip;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
+            string path = rootPath + @"StaticMaps\" + s.Id + "_map.png";
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            image = new Bitmap(stream);
+            try
             {
-                string path = @"../Images/StaticMap.png";
-                image = new Bitmap(stream);
-                image.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+                image.Save(path);   
             }
-            return Ok(image);
+            catch(Exception e)
+            {
+                return "";
+            }
+            response.Dispose();
+            stream.Dispose();
+            return path;
         }
     }
 }

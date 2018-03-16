@@ -14,20 +14,20 @@ namespace Capstone_Project_v1.Models
         private static readonly string url = "https://maps.googleapis.com/maps/api/staticmap?";
         public decimal Lat { get; set; }
         public decimal Lng { get; set; }
-        public decimal Zoom { get; set; }
+        public int Zoom { get; set; }
         public decimal Radius { get; set; }
+        public int Id { get; set; }
 
-
-        public StaticMapRequest()
+        public StaticMapRequest(decimal lat, decimal lng, int zoom, decimal radius, int id)
         {
-            Lat = 33.49m;
-            Lng = -82.07m;
-            Zoom = 8;
-            Radius = 10;
+            Lat = lat;
+            Lng = lng;
+            Zoom = zoom;
+            Radius = radius;
+            Id = id;
         }
         public string toUrlRequest()
         {
-            return "https://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=12&size=400x400&maptype=satellite" + key;
             StringBuilder sb = new StringBuilder();
             sb.Append(url);
             sb.Append("center=");
@@ -38,6 +38,8 @@ namespace Capstone_Project_v1.Models
             sb.Append(Height + "x" + Width);
             sb.Append("&maptype=");
             sb.Append(MapType);
+            sb.Append("&markers=color:red|");
+            sb.Append(Lat + "," + Lng);
             sb.Append(key);
             return sb.ToString();
         }

@@ -59,6 +59,9 @@ namespace Capstone_Project_v1.Models
         [NotMapped]
         public ICollection<UpdateAlert> Updates { get; set; }
 
+        [NotMapped]
+        public int Zoom { get; set; }
+
         //to be used as the collection of contacts that were notified in this alert
         public virtual ICollection<Contact> Contacts { get; set; }
 
@@ -88,6 +91,6 @@ namespace Capstone_Project_v1.Models
 
     public enum AlertStatus
     {
-        Ongoing, Updated, Complete
+        Ongoing, Updated, Complete, Pending
     }
 }
