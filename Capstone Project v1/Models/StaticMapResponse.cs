@@ -11,7 +11,7 @@ namespace Capstone_Project_v1.Models
         public static readonly int Width = 500;
         public static readonly string MapType = "roadmap";
         private static readonly string key = "&key=AIzaSyBjPZkkaFZNUcyiFq6Ckyrcb9LVplllhyE";
-        private static readonly string url = "http://maps.googleapis.com/maps/api/staticmap?";
+        private static readonly string url = "https://maps.googleapis.com/maps/api/staticmap?";
         public decimal Lat { get; set; }
         public decimal Lng { get; set; }
         public decimal Zoom { get; set; }
@@ -27,6 +27,7 @@ namespace Capstone_Project_v1.Models
         }
         public string toUrlRequest()
         {
+            return "https://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=12&size=400x400&maptype=satellite" + key;
             StringBuilder sb = new StringBuilder();
             sb.Append(url);
             sb.Append("center=");
