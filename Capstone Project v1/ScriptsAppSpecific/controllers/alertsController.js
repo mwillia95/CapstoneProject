@@ -26,7 +26,7 @@
                 displayName: "Status",
                 enableColumnMenu: false,
                 width: "17%",
-                cellTemplate: "<span class=\"grid-label\" ng-class=\"{'grid-label-danger': row.entity.Status == 'ONGOING', 'grid-label-warning': row.entity.Status == 'UPDATED', 'grid-label-success': row.entity.Status == 'COMPLETE'}\">{{ COL_FIELD }}</span>",
+                cellTemplate: "<span class=\"grid-label\" ng-class=\"{'grid-label-pending: row.entity.Status == 'PENDING', 'grid-label-danger': row.entity.Status == 'ONGOING', 'grid-label-warning': row.entity.Status == 'UPDATED', 'grid-label-success': row.entity.Status == 'COMPLETE'}\">{{ COL_FIELD }}</span>",
                 cellClass: 'grid-align',
                 headerCellClass: 'grid-align',
                 filter: {
@@ -81,20 +81,7 @@
 
     self.refreshData = function () {
         appServices.getAlerts().then(function (response) {
-            self.gridOptions.data = response.data;
-            //for (var i = 0; i < self.gridOptions.data.length; i++) {
-            //    if (self.gridOptions.data[i].Status === 0) {
-            //        self.gridOptions.data[i].StatusText = "ONGOING";
-            //    }
-            //    else if (self.gridOptions.data[i].Status === 1) {
-            //        self.gridOptions.data[i].StatusText = "UPDATED";
-            //    }
-            //    else if (self.gridOptions.data[i].Status === 2) {      //this wont be necessary. Just have it here for testing when we starting actually updating
-            //        self.gridOptions.data[i].StatusText = "COMPLETE";
-            //    }   
-            //    console.log(self.gridOptions.data[i]);
-            //}    
-            console.log(self.gridOptions.data);
+            self.gridOptions.data = response.data;          
             self.gridOptions.paginationCurrentPage = 1;
         }).catch(function (response) {
             swal("ERROR", response.data.ExceptionMessage, "error");
