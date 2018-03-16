@@ -43,7 +43,6 @@ namespace Capstone_Project_v1.Models
         //retrieve the list of contacts from the original alert
         public ICollection<Contact> getContacts()
         {
-
             return OriginAlert?.Contacts;
         }
 

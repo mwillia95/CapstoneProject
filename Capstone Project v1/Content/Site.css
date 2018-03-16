@@ -143,6 +143,10 @@ nav .container{
     background-color: red;
 }
 
+.grid-label-pending{
+    background-color: cyan;
+}
+
 /*End Search Contact Grid*/
 
 /*/////////////////////// Google Maps CSS ///////////////////////////////*/
