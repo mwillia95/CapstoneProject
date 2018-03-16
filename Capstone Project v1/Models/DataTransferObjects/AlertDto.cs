@@ -17,5 +17,7 @@ namespace Capstone_Project_v1.Models.DataTransferObjects
         public string Status { get; set; }
         public string MeasureType { get; set; }
         public string ImagePath { get; set; }
+        public List<Contact> Contacts { get; set; }
+
     }
 }

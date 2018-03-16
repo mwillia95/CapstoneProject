@@ -368,6 +368,7 @@
         }   
         self.marker = null;
         self.searchBar = "";
+        self.place = null;
         map.setCenter(AugustaUniversity);
     };
 
