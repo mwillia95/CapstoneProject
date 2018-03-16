@@ -1,101 +1,58 @@
 ﻿<div class="container" style="width:100%; min-width: 960px;">
     <h1 style="text-align: center;">Update Alert</h1>
         <!--New Contact Row 1-->
-        <div class="container" style="text-align: center; color: red; padding-bottom: 10px;">{{self.error}}</div>
-        <div class="row topBorder" style="text-align: left;">
-            <div class="col-3 rightBorder form-cell">
-                <label>First Name</label>
-                <input type="text"
-                       class="form-control"
-                       maxlength="50"
-                       style="background-color: lightgoldenrodyellow"
-                       placeholder="---"
-                       ng-model="self.contact.firstName" />
-            </div>
-            <div class="col-3 rightBorder form-cell">
-                <label>Last Name</label>
-                <input type="text"
-                       class="form-control"
-                       maxlength="50"
-                       style="background-color: lightgoldenrodyellow"
-                       placeholder="---"
-                       ng-model="self.contact.lastName" />
-            </div>
-            <div class="col-3 rightBorder form-cell">
-                <label>Mobile Phone Number</label>
-                <input type="text"
-                       class="form-control"
-                       maxlength="13"
-                       style="background-color: lightgoldenrodyellow"
-                       placeholder="---"
-                       ng-model="self.contact.phone" />
-            </div>
-            <div class="col-3 form-cell form-group" style="padding-left: 20px">
-                <label>Email Address</label>
-                <input type="email"
-                       class="form-control"
-                       maxlength="50"
-                       style="background-color: lightgoldenrodyellow"
-                       placeholder="---"
-                       ng-model="self.contact.email" />
-            </div>
-        </div>
-        <!--New Contact Row 2-->
-        <div class="row topBorder" style="text-align: left">
-            <div class="col-4 rightBorder form-cell">
-                <label>Street Address</label>
-                <input type="text"
-                       class="form-control "
-                       maxlength="50"
-                       style="background-color: lightgoldenrodyellow"
-                       placeholder="---"
-                       ng-model="self.contact.streetAddress" />
-            </div>
-            <div class="col-3 rightBorder form-cell">
-                <label>City</label>
-                <input type="text"
-                       class="form-control"
-                       maxlength="30"
-                       style="background-color: lightgoldenrodyellow"
-                       placeholder="---"
-                       ng-model="self.contact.city" />
-            </div>
-            <div class="col-3 rightBorder form-cell">
-                <label>State</label>
-                <select class="form-control"
-                        style="background-color: lightgoldenrodyellow"
-                        ng-model="self.contact.state">
-                    <option value="" style="color: #ccc !important" disabled> -Select State- </option>
-                    <option ng-repeat="state in self.states" value="{{state.substring(0,2)}}"> {{state}} </option>
-                </select>
-            </div>
-            <div class="col-2 form-group form-cell">
-                <label>Zip Code</label>
-                <input type="text"
-                       class="form-control"
-                       maxlength="15"
-                       style="background-color: lightgoldenrodyellow"
-                       placeholder="---"
-                       ng-model="self.contact.zipCode" />
-            </div>
-        </div>
-        <!--New Contact Row 3-->
-        <div class="row topBorder">
-            <div class="col-3 rightBorder form-cell">
-                <label>Type of Service</label>
-                <select class="form-control"
-                        style="background-color: lightgoldenrodyellow"
-                        ng-model="self.contact.serviceType">
-                    <option value="" style="color: #ccc !important" disabled> -Select Service- </option>
-                    <option value="mobile"> Mobile </option>
-                    <option value="email"> Email </option>
-                    <option value="both"> Mobile and Email </option>
-                </select>
-            </div>
-            <div class="col-9" style="text-align: center;">
-                <button type="button" class="btn btn-success" style="margin-top: 20px;" ng-click="self.submit(form.$valid)">Submit <span class="fa fa-plus"></span></button>
-                <button type="button" class="btn btn-danger" style="margin-top: 20px; margin-left: 20px;" ng-click="self.clear()">Cancel <span class="fa fa-minus"></span></button>
-            </div>
-        </div>
-        <div class="topBorder"></div>
+     <div class="container" style="width: 100%;">
+         <div class="row" style="height: 505px; width: 100%;">
+             <div class="col-md-6">
+                 <img src="{{self.image}}"/>
+             </div>         
+             <div class="col-md-6">
+                 <!--Original Alert Information-->
+                 <div class="row topBorder">
+                     <div class="form-cell col-sm-6 rightBorder" style="text-align: center;">
+                         <label>Title</label>
+                         <p>{{self.form[0].Title}}</p>
+                     </div>
+                     <div class="form-cell col-sm-6" style="text-align: center;">
+                         <label>Start Time</label>
+                         <p>{{self.form[1].Start_Time}}</p>
+                     </div>
+                 </div>
+                 <div class="row topBorder">
+                     <div class="form-cell col-sm-12" style="text-align: center;">
+                         <label>Description</label>
+                         <p>{{self.form[0].Description}}</p>
+                     </div>
+                 </div>
+                 <!--Update inputs-->
+                 <div class="row topBorder" style="height: 215px;">
+                     <div class="form-textCell col-sm-12" style="text-align: center;">
+                         <label>Update Description</label>
+                         <textarea class="form-control"
+                                style="background-color: lightgoldenrodyellow; border-color: black; resize: none;"
+                                rows="6"
+                                ng-model="self.updateAlert.Description">        
+                         </textarea>
+                     </div>
+                 </div>
+                 <div class="row topBorder">
+                     <div class="col-sm-4 form-cell" style="text-align: center; padding-top: 25px;">
+                         <button type="button" class="btn btn-success"><span class="fa fa-plus"><span style="font-family: 'Lato', sans-serif;">Update Alert</span></span></button>
+                     </div>
+                     <div class="col-sm-4 form-cell" style="text-align: center; padding-top: 25px; padding-right: 20px;">
+                         <button type="button" class="btn btn-danger"><span class="fa fa-remove"><span style="font-family: 'Lato', sans-serif;">Cancel Update</span></span></button>
+                     </div>
+                     <div class="col-sm-4 form-cell" style="text-align: center; padding-top: 25px;">
+                         <button type="button" class="btn btn-primary"><span class="fa fa-share"><span style="font-family: 'Lato', sans-serif;">Resolve Alert</span></span></button>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <!--grid-->
+         <div class="row updateGrid">
+             <div class="updateGrid" style="cursor: default;" ui-grid-pagination ui-grid-selection ui-grid-exporter
+                  ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid="self.gridOptions">
+             </div>
+         </div>
+     </div>  
 </div>

@@ -16,5 +16,6 @@ namespace Capstone_Project_v1.Models.DataTransferObjects
         public string Start_Time { get; set; }
         public string Status { get; set; }
         public string MeasureType { get; set; }
+        public string ImagePath { get; set; }
     }
 }

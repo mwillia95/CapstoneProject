@@ -59,7 +59,7 @@
                 field: "Description",
                 displayName: "Description",
                 enableColumnMenu: false,
-                width: "30%",
+                width: "27%",
                 cellClass: 'grid-align',
                 headerCellClass: 'grid-align',
                 filter: {

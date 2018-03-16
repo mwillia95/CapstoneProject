@@ -32,7 +32,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         public IHttpActionResult getAlerts()
         {
             
-            List<Alert> a = new List<Alert>();
+            List<AlertDto> a = new List<AlertDto>();
             var alerts = DataContext.Alerts.ToList();
 
             //foreach(var a in alerts)
@@ -70,6 +70,16 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             List<object> request = new List<object>();
             var alert = DataContext.Alerts.Find(id);
             var updates = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == alert.AlertId);
+            string path;
+            if (string.IsNullOrEmpty(alert.ImageName))            //TODO: uncomment when done
+            {
+                path = "Shrek.jpeg";
+            }
+            else
+            {
+                path = alert.ImageName;
+            }
+
             if (updates != null)
             {
                 foreach (var u in updates)
@@ -86,7 +96,8 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 Title = alert.Title,
                 location_lat = alert.location_lat,
                 location_lng = alert.location_lng,
-                Radius = alert.Radius
+                Radius = alert.Radius,
+                ImagePath = path
             };
 
             request.Add(alert);
@@ -164,7 +175,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             }
             catch(Exception e)
             {
-                return "";
+                return e.Message;
             }
             response.Dispose();
             stream.Dispose();

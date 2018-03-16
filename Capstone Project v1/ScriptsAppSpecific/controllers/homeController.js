@@ -328,7 +328,7 @@
 
     self.submit = function () {
         if (!self.marker.circle) {
-            swal("ERROR", "You must draw a circle to specify the danger zone", "error");
+            swal("WARNING", "You must draw a circle to specify the danger zone", "warning");
             return;
         }
         self.alert.zoom = map.getZoom();
@@ -350,6 +350,7 @@
             self.marker = null;
             self.searchBar = "";
             map.setCenter(AugustaUniversity);
+            swal("SUCCESS", "An alert was created successully!", "success");
         }).catch(function (response) {
             swal("ERROR", "Something went wrong with creating the alert.", "error");
             return;

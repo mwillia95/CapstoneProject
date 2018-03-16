@@ -69,8 +69,8 @@
         function (event, next, previous, current) {
             if (!$location.$$absUrl && location.pathname === "/") {
                 $location.path("/");
-            } else if (next.$$route != null) {
-                if (typeof next.$$route.title == "function") {
+            } else if (next.$$route !== null) {
+                if (typeof next.$$route.title === "function") {
                     $rootScope.title = next.$$route.title(next.params);
                 } else {
                     $rootScope.title = next.$$route.title;

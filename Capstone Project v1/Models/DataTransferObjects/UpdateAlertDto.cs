@@ -13,7 +13,7 @@ namespace Capstone_Project_v1.Models.DataTransferObjects
         public decimal Radius { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public string Start_Time { get; set; }
+        public string Update_Time { get; set; }
         public string Status { get; set; }
         public string MeasureType { get; set; }
     }

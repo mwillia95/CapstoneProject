@@ -186,7 +186,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             DataContext.SaveChanges();
             return Ok(oldContact);
         }
-        [HttpDelete]
+        [HttpPost]
         [Route("removeContact")]
         public IHttpActionResult RemoveContact(Contact c)
         {
