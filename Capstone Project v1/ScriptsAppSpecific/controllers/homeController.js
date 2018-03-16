@@ -337,7 +337,8 @@
             location_lng: self.alert.lng,
             Description: self.alert.description,
             Title: self.alert.title,
-            Radius: self.alert.radius,           
+            Radius: self.alert.radius,  
+            MeasurementType: self.alert.measureType
         };
         appServices.addAlert(alert).then(function (response) {
             //clears form data

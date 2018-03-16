@@ -46,6 +46,9 @@ namespace Capstone_Project_v1.Models
         [Column("ALERT_STATUS")]
         public AlertStatus Status { get; set; }
 
+        [Column("MEASUREMENT_TYPE")]
+        public string MeasureType { get; set; }
+
 
         //Foreign key to the most recent update
         //We could forego this and instead find the update with the most recent timestamp
