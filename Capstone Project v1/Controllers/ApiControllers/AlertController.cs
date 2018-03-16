@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Configuration;
 using Capstone_Project_v1.Models;
+using Capstone_Project_v1.Models.DataTransferObjects;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -30,7 +31,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("getAlerts")]
         public IHttpActionResult getAlerts()
         {
-            List<Alert> a = new List<Alert>();
+            List<AlertDto> a = new List<AlertDto>();
             var alerts = DataContext.Alerts;
             //foreach(var a in alerts)
             //{
@@ -42,7 +43,19 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             {
                 if(s.Status != AlertStatus.Complete)  //want to return only active alerts
                 {
-                    a.Add(s);
+                    var aDto = new AlertDto()
+                    {
+                        AlertId = s.AlertId,
+                        Description = s.Description,
+                        Status = s.Status.ToString().ToUpper(),
+                        Start_Time = String.Format("{0:d/M/yyyy hh:mm:ss tt}", s.Start_Time),
+                        Title = s.Title,
+                        location_lat = s.location_lat,
+                        location_lng = s.location_lng,
+                        Radius = s.Radius
+                    };
+                        
+                    a.Add(aDto);
                 }
             }
             return Ok(a);
