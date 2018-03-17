@@ -139,7 +139,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         }
 
         //As of now, fully functioning
-        [HttpPut]
+        [HttpPost]
         [Route("updateContact")]
         public IHttpActionResult UpdateContact(Contact c)
         {
@@ -178,6 +178,8 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                     newAdd.State = a.State;
                     newAdd.Street = a.Street;
                     newAdd.Zip = a.Zip;
+                    newAdd.Latitude = a.Latitude;
+                    newAdd.Longitude = a.Longitude;
 
                 }
                 oldContact.Address = newAdd;

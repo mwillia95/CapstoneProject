@@ -23,6 +23,7 @@
             self.contact = response.data;
             self.oldAdd = response.data.Address;
             console.log(self.contact);
+            console.log('test');
         });
         var service = document.getElementsByClassName("serviceUpdate");
 
@@ -91,41 +92,45 @@
         }
         var phonestrip = /[()+-]/g;
         var newAdd = self.contact.Address;
-        //if (newAdd.Street !== self.oldAdd.Street || newAdd.State !== self.oldAdd.Street || newAdd.City !== self.oldAdd.City || newAdd.Zip !== self.oldAdd.Zip) {
-        //    var geoAddress = self.contact.Address.Street.split(' ').join('+') + ',+' + self.contact.Address.City.split(' ').join('+') + ',+' + self.contact.Address.State;
-        //    appServices.getGeocode(geoAddress).then(function (response) {
-        //        if (response.status === "ZERO_RESULTS") {
-        //            self.error = "Please enter a valid addresss";
-        //            return;
-        //        }
-        //        console.log(response);
-        //        var contact = {
-        //            FirstName: self.contact.FirstName,
-        //            LastName: self.contact.LastName,
-        //            PhoneNumber: self.contact.PhoneNumber.replace(phonestrip, ''),
-        //            Email: self.contact.Email,
-        //            ServiceType: self.contact.ServiceType,
-        //            Address:
-        //            {
-        //                Street: self.contact.Address.Street,
-        //                State: self.contact.Address.State,
-        //                City: self.contact.Address.City,
-        //                Zip: self.contact.Address.Zip,
-        //                Latitude: response.data.results[0].geometry.location.lat,
-        //                Longitude: response.data.results[0].geometry.location.lng
-        //            }
+        if (newAdd.Street !== self.oldAdd.Street || newAdd.State !== self.oldAdd.State || newAdd.City !== self.oldAdd.City || newAdd.Zip !== self.oldAdd.Zip) {
+            console.log("These are the addresses");
+            console.log(newAdd);
+            console.log(self.oldAdd);
+            var geoAddress = self.contact.Address.Street.split(' ').join('+') + ',+' + self.contact.Address.City.split(' ').join('+') + ',+' + self.contact.Address.State;
+            appServices.getGeocode(geoAddress).then(function (response) {
+                if (response.status === "ZERO_RESULTS") {
+                    self.error = "Please enter a valid addresss";
+                    return;
+                }
+                console.log(response);
+                var contact = {
+                    ContactId: self.contact.ContactId,
+                    FirstName: self.contact.FirstName,
+                    LastName: self.contact.LastName,
+                    PhoneNumber: self.contact.PhoneNumber.replace(phonestrip, ''),
+                    Email: self.contact.Email,
+                    ServiceType: self.contact.ServiceType,
+                    Address:
+                    {
+                        Street: self.contact.Address.Street,
+                        State: self.contact.Address.State,
+                        City: self.contact.Address.City,
+                        Zip: self.contact.Address.Zip,
+                        Latitude: response.data.results[0].geometry.location.lat,
+                        Longitude: response.data.results[0].geometry.location.lng
+                    }
 
-        //        };
-        //        console.log(contact);
-        //        appServices.addNewContact(contact).then(function (response) {
-        //            console.log(response);
-        //            self.contact = {};
-        //            swal("SUCCESS", "The contact was updated!", "success");
-        //            $location.path('/searchContact');
-        //        });
-        //    });
-        //}
-        //else {
+                };
+                console.log(contact);
+                appServices.updateContact(contact).then(function (response) {
+                    console.log(response);
+                    self.contact = {};
+                    swal("SUCCESS", "The contact was updated!", "success");
+                    $location.path('/searchContact');
+                });
+            });
+        }
+        else {
             var contact =
                 {
                     FirstName: self.contact.FirstName,
@@ -152,7 +157,7 @@
                 self.contact = {}; ///test for update info
                 $location.path('/searchContact');
             });
-        //}
+        }
     };
 
     self.clear = function () {    // needs to redirect back to table with searchString as search input

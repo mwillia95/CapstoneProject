@@ -1,5 +1,8 @@
 ﻿<div class="container" style="text-align: center; width: 750px">
-    <div class="login-box">
+    <div style="text-align: center" ng-if="self.loading === true">
+        <img src="Content/images/Loading.gif" />
+    </div>
+    <div class="login-box" ng-if="self.loading === false">
         <h2>Login</h2>
         <form name="form" style="padding-top:0px">
             <div class="login-error">

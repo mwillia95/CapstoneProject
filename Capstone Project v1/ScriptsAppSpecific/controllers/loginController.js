@@ -1,5 +1,5 @@
 ﻿angular.module("app").controller("loginController", ['$scope', 'AppServices', '$location', '$rootScope', '$timeout', function ($scope, appServices, $location, $rootScope, $timeout) {
-
+    var self = this;
     /*appServices.logout().then(function (response) {
         $timeout($rootScope.authorize, 0).then(function () {
             $rootScope.id = -1;
@@ -7,7 +7,7 @@
             console.log($rootScope.isAuthorized);
         });
     });*/
-
+    self.loading = false;
     $timeout($rootScope.authorize, 0).then(function () {
         $timeout(function () {
             if ($rootScope.isAuthorized) {
@@ -17,6 +17,7 @@
     });
     $scope.error = false;
     $scope.account = {};
+    //Not sure if we need this anymore
     $scope.register = function () {
         console.log("starting test");
         var account = {};
@@ -35,6 +36,7 @@
     };
 
     $scope.submit = function () {
+        self.loading = true;
         appServices.login($scope.account).then(function (response) {
             console.log(response);
             if (response.data === "Success") {
@@ -44,6 +46,7 @@
             }
             else {
                 $scope.error = true;
+                self.loading = false;
             }
         });
     };

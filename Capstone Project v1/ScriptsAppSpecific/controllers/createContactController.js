@@ -77,11 +77,12 @@
 
         var geoAddress = self.contact.streetAddress.replace(' ', '+') + ',+' + self.contact.city.replace(' ', '+') + ',+' + self.contact.state;
         appServices.getGeocode(geoAddress).then(function (response) {
-            if (response.status === "ZERO_RESULTS")
+            if (response.data.status === "ZERO_RESULTS")
             {
                 self.error = "Please enter a valid addresss";
                 return;
             }
+            
             console.log(response);
             var contact = {
                 FirstName: self.contact.firstName,
