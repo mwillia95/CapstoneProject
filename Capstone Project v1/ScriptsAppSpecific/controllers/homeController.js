@@ -9,7 +9,6 @@
     self.showButton = false;
     self.showForm = false;
 
-
     $timeout($rootScope.authorize, 0).then(function () {
         if (!$rootScope.isAuthorized) {
             console.log("not authorized");
@@ -379,6 +378,7 @@
         self.marker = null;
         self.searchBar = "";
         map.setCenter(AugustaUniversity);
+        swal("Successful Cancel", "Your alert was canceled successfully.", "success");
     };
 
     self.buttonShow = function () {
