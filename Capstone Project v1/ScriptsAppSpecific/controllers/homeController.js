@@ -6,6 +6,8 @@
     var map;
     var AugustaUniversity = { lat: 33.4759, lng: -82.0230 };
     var markers = [];
+    self.showButton = false;
+    self.showForm = false;
 
 
     $timeout($rootScope.authorize, 0).then(function () {
@@ -120,8 +122,13 @@
 
         //catch if error on geocode call
         appServices.getGeocode(self.geoPlace).then(function (response) {
-            self.place = response.data;            
-        });
+            self.place = response.data;   
+            self.showButton = true;
+        }).catch(function (response) {
+            swal("Error", "This is not a real place!", "error");
+            return;
+            });
+
 
         //Clear out the old markers, and circles bound to them
         markers.forEach(function (marker) {
@@ -342,14 +349,16 @@
             Zoom: self.alert.zoom
         };
         appServices.addAlert(alert).then(function (response) {
-            //clears form data
-            console.log(response);
+            //clears form data         
             self.alert = {};
             self.marker.setMap(null);
             self.marker.circle.setMap(null);
             self.marker = null;
             self.searchBar = "";
             map.setCenter(AugustaUniversity);
+            self.showButton = false;
+            self.showForm = false;
+            self.place = null;
             swal("SUCCESS", "An alert was created successully!", "success");
         }).catch(function (response) {
             swal("ERROR", "Something went wrong with creating the alert.", "error");
@@ -359,6 +368,7 @@
     };
 
     self.cancel = function () {
+        self.place = null;
         self.alert = {};
         if (self.marker) {
             self.marker.setMap(null);
@@ -368,9 +378,18 @@
         }   
         self.marker = null;
         self.searchBar = "";
-        self.place = null;
         map.setCenter(AugustaUniversity);
     };
+
+    self.buttonShow = function () {
+        self.showButton = !self.showButton;
+    };
+
+    self.formShow = function () {
+        self.showForm = !self.showForm;
+    };
+
+
 
     initMap();
 }]);

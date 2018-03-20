@@ -8,66 +8,202 @@
     <div id="map-canvas"></div>
     <div class="row">
         <div class="col-md-3"></div>
-        <div class="col-md-6"  style="margin-top: 10px; margin: auto;">
+        <div class="col-md-6" style="margin-top: 10px; margin: auto;">
             <input id="searchInput" ng-model="self.searchBar" class="form-control" type="text" placeholder="Enter a location" style="border-color: black;">
         </div>
-        <div class="col-md-3">
-            <!--<button type="button" id="search-button" class="btn btn-primary"><span class="fa fa-search"><span style="font-family: 'Lato', sans-serif;">Search</span></span></button>-->
-        </div>
+        <div class="col-md-3"></div>
     </div>
     <div class="row" style="margin-top: -28px">
         <div class="col-md-3"></div>
-        <div class="col-md-6" style="text-align: center; margin-top: 10px;">           
+        <div class="col-md-6" style="text-align: center; margin-top: 10px;">
             <button type="button" id="search-button" class="btn btn-primary"><span class="fa fa-search"><span style="font-family: 'Lato', sans-serif;">Search</span></span></button>
         </div>
         <div class="col-md-3"></div>
     </div>
-    <div class="row">
-        <div class="col-md-5 form-cell">
-            <label>Title</label>
-            <input type="text"
-                   class="form-control"
-                   style="background-color: lightgoldenrodyellow; border-color: black;"
-                   placeholder="---" 
-                   ng-model="self.alert.title"/>
+    <!--hidden form to show when info has been filled out-->
+    <div class="row" ng-show="self.showForm" style="margin-top: -30px;">
+        <div class="col-sm-6">
+            <div class="row" style="height: 70px;">
+                <div class="col-sm-12">
+                    <label>Title</label>
+                    <input type="text"
+                           class="form-control"
+                           style="background-color: lightgoldenrodyellow; border-color: black;"
+                           placeholder="---"                      
+                           ng-model="self.alert.title" />
+                </div>
+            </div>
+            <div class="row" style="height: 70px;">
+                <div class="col-sm-12">
+                    <label>km/m</label>
+                    <select class="form-control"
+                            style="background-color: lightgoldenrodyellow; border-color: black;"
+                            ng-model="self.alert.measureType">
+                        <option value="" style="color: #ccc !important" disabled> -Select- </option>
+                        <option ng-repeat="type in self.measurements" value="{{type}}"> {{type}} </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" style="height: 70px;">
+                <div class="col-sm-12">
+                    <label>Radius</label>
+                    <input type="text"
+                           class="form-control"
+                           style="background-color: lightgoldenrodyellow; border-color: black;"
+                           placeholder="---"
+                           ng-model="self.alert.radius" />
+                </div>
+            </div>
         </div>
-        <div class="col-md-3 form-cell">
-            <label>Radius</label>
-            <input type="text"
-                   class="form-control"
-                   style="background-color: lightgoldenrodyellow; border-color: black;"
-                   placeholder="---" 
-                   ng-model="self.alert.radius"/>
-        </div>
-        <div class="col-md-2 form-cell">
-            <label>km/m</label>
-            <select class="form-control"
-                    style="background-color: lightgoldenrodyellow; border-color: black;"
-                    ng-model="self.alert.measureType">    
-                <option value="" style="color: #ccc !important" disabled> -Select- </option>
-                <option ng-repeat="type in self.measurements" value="{{type}}"> {{type}} </option>
-            </select>
-        </div>
-        <div class="col-md-2 form-cell" style="margin-top: 35px;">
-            <button type="button" ng-click="self.draw();" class="btn btn-warning"><span class="fa fa-pencil"><span style="font-family: 'Lato', sans-serif;">Draw Circle</span></span></button>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>Alert Description</label>
+                    <textarea class="form-control"
+                              style="background-color: lightgoldenrodyellow; border-color: black; resize: none;"
+                              rows="4"
+                              ng-model="self.alert.description">       
+                    </textarea>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 90px;">
+                <div class="col-sm-4" style="text-align: center;">
+                    <button type="button" class="btn btn-secondary" ng-click="self.draw()" ng-disabled="!self.alert.radius || !self.alert.measureType">
+                        <span class="fa fa-pencil"><span style="font-family: 'Lato', sans-serif;">Draw Circle</span></span>
+                    </button>
+                </div>
+                <div class="col-sm-4" style="text-align: center;">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ConfirmModal" ng-disabled="!self.alert.radius || !self.alert.measureType || !self.alert.title || !self.alert.measureType">
+                        <span class="fa fa-share"><span style="font-family: 'Lato', sans-serif;">Submit</span></span>
+                    </button>
+                </div>
+                <div class="col-sm-4" style="text-align: center;">
+                    <button type="button" class="btn btn-danger" ng-click="self.cancel(); self.formShow()">
+                        <span class="fa fa-remove"><span style="font-family: 'Lato', sans-serif;">Cancel Alert</span></span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 form-cell">
-            <label>Description</label>
-            <input type="text"
-                   class="form-control"
-                   style="background-color: lightgoldenrodyellow; border-color: black;"
-                   placeholder="---" 
-                   ng-model="self.alert.description"/>
-        </div>
-        <div class="col-md-2" style="margin-top: 35px; text-align: center;">
-            <button type="button" class="btn btn-success" ng-click="self.submit()" ng-disabled="!self.alert.title || !self.alert.radius || self.alert.measureType === '' || !self.alert.description || !self.geoPlace">
-                <span class="fa fa-share"><span style="font-family: 'Lato', sans-serif;">Create Alert</span></span>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4" style="text-align: center;">
+            <button type="button" class="btn btn-warning" ng-if="self.showButton" ng-click="self.buttonShow()" data-target="#AlertInfoModal" data-toggle="modal" style="height: 60px;">
+                <span class="fa fa-share"><span style="font-family: 'Lato', sans-serif; font-weight: bold;">Create Alert</span></span>
             </button>
+            <p style="font-weight: bold;" ng-if="!self.place">
+                To start creating an alert, search for the location of the alert.
+            </p>
         </div>
-        <div class="col-md-2 form-cell" style="margin-top: 35px;">
-            <button type="button" class="btn btn-danger" ng-click="self.cancel()"><span class="fa fa-remove"><span style="font-family: 'Lato', sans-serif;">Cancel Alert</span></span></button>
+        <div class="col-sm-4"></div>
+    </div>
+    <!--Tite and Description Modal-->
+    <div class="modal fade" id="AlertInfoModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title text-center" id="ModalTitle">Alert Title and Description</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 form-cell" style="text-align: center;">
+                            <label>Title</label>
+                            <input type="text"
+                                   class="form-control"
+                                   style="background-color: lightgoldenrodyellow; border-color: black;"
+                                   placeholder="---"
+                                   ng-model="self.alert.title" />
+                        </div>
+                    </div>
+
+                    <div class="row" style="height: 215px;">
+                        <div class="form-textCell col-sm-12" style="text-align: center;">
+                            <label>Alert Description</label>
+                            <textarea class="form-control"
+                                      style="background-color: lightgoldenrodyellow; border-color: black; resize: none;"
+                                      rows="6"
+                                      ng-model="self.alert.description">        
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="!self.alert.title || !self.alert.description" data-dismiss="modal" data-target="#DrawCircleModal" data-toggle="modal">
+                        <span class="fa fa-share"><span style="font-family: 'Lato', sans-serif;">Next</span></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" ng-click="self.cancel()" data-dismiss="modal">
+                        <span class="fa fa-remove"><span style="font-family: 'Lato', sans-serif;">Cancel Alert</span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Draw Circle Modal-->
+    <div class="modal fade" id="DrawCircleModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title text-center" id="ModalTitle">Danger Area Information</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-12 form-cell">
+                        <label>Radius</label>
+                        <input type="text"
+                               class="form-control"
+                               style="background-color: lightgoldenrodyellow; border-color: black;"
+                               placeholder="---"
+                               ng-model="self.alert.radius" />
+                    </div>
+                    <div class="col-sm-12 form-cell">
+                        <label>km/m</label>
+                        <select class="form-control"
+                                style="background-color: lightgoldenrodyellow; border-color: black;"
+                                ng-model="self.alert.measureType">
+                            <option value="" style="color: #ccc !important" disabled> -Select- </option>
+                            <option ng-repeat="type in self.measurements" value="{{type}}"> {{type}} </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" data-target="#AlertInfoModal" data-toggle="modal">
+                        <span class="fa fa-reply"><span style="font-family: 'Lato', sans-serif;">Previous</span></span>
+                    </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="self.draw(); self.formShow()" ng-disabled="!self.alert.radius || !self.alert.measureType">
+                        <span class="fa fa-share"><span style="font-family: 'Lato', sans-serif;">Next</span></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" ng-click="self.cancel()" data-dismiss="modal">
+                        <span class="fa fa-remove"><span style="font-family: 'Lato', sans-serif;">Cancel Alert</span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Confirmation modal-->
+    <div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title text-center" id="ModalTitle">Alert Confirmation</h5>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    <p>Make sure to zoom in on alert to desired distance. This image is what will be sent to our contacts in the danger area.</p>
+                </div>
+                <div style="text-align: center;">
+                    <p>Are you sure you want to submit?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <span style="font-family: 'Lato', sans-serif;">Back</span>
+                    </button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="self.submit()">
+                        <span class="fa fa-share"><span style="font-family: 'Lato', sans-serif;">Yes</span></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="self.cancel(); self.formShow()">
+                        <span class="fa fa-remove"><span style="font-family: 'Lato', sans-serif;">Cancel Alert</span></span>
+                    </button>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

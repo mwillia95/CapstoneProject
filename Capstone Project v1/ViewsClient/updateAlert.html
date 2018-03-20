@@ -8,33 +8,33 @@
              </div>         
              <div class="col-md-6">
                  <!--Original Alert Information-->
-                 <div class="row topBorder">
-                     <div class="form-cell col-sm-6 rightBorder" style="text-align: center;">
-                         <label>Title</label>
-                         <p>{{self.form[0].Title}}</p>
-                     </div>
-                     <div class="form-cell col-sm-6" style="text-align: center;">
-                         <label>Start Time</label>
-                         <p>{{self.form[1].Start_Time}}</p>
-                     </div>
-                 </div>
-                 <div class="row topBorder">
-                     <div class="form-cell col-sm-12" style="text-align: center;">
-                         <label>Description</label>
-                         <p>{{self.form[0].Description}}</p>
-                     </div>
-                 </div>
-                 <!--Update inputs-->
-                 <div class="row topBorder" style="height: 215px;">
-                     <div class="form-textCell col-sm-12" style="text-align: center;">
-                         <label>Update Description</label>
-                         <textarea class="form-control"
-                                style="background-color: lightgoldenrodyellow; border-color: black; resize: none;"
-                                rows="6"
-                                ng-model="self.updateAlert.Description">        
-                         </textarea>
-                     </div>
-                 </div>
+                <div class="row topBorder">
+                    <div class="form-cell col-sm-6 rightBorder" style="text-align: center;">
+                        <label>Title</label>
+                        <p>{{self.form[0].Title}}</p>
+                    </div>
+                    <div class="form-cell col-sm-6" style="text-align: center;">
+                        <label>Start Time</label>
+                        <p>{{self.form[1].Start_Time}}</p>
+                    </div>
+                </div>
+                <div class="row topBorder">
+                    <div class="form-cell col-sm-12" style="text-align: center;">
+                        <label>Description</label>
+                        <p>{{self.form[0].Description}}</p>
+                    </div>
+                </div>
+                <!--Update inputs-->
+                <div class="row topBorder" style="height: 215px;">
+                    <div class="form-textCell col-sm-12" style="text-align: center;">
+                        <label>Update Description</label>
+                        <textarea class="form-control"
+                            style="background-color: lightgoldenrodyellow; border-color: black; resize: none;"
+                            rows="6"
+                            ng-model="self.updateAlert.Description">        
+                        </textarea>
+                    </div>
+                </div>
                  <div class="row topBorder">
                      <div class="col-sm-4 form-cell" style="text-align: center; padding-top: 25px;">
                          <button type="button" class="btn btn-success"><span class="fa fa-plus"><span style="font-family: 'Lato', sans-serif;">Update Alert</span></span></button>

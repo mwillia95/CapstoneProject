@@ -237,3 +237,9 @@ nav .container{
 
 /*//////////End Login Page/////////////////////*/
 
+/*modal designs*/
+#ModalTitle{
+    /*padding-left: 75px;*/
+    margin: auto;
+    text-align: center;
+}
