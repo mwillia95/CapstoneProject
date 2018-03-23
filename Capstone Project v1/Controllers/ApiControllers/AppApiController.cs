@@ -35,8 +35,8 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         /// <returns></returns>
         public Alert SendNotification(string toEmail, string subj, string msg, string fullName, Alert a, string statusType)
         {
-            var fromAddress = new MailAddress("publicemergencysystem@gmail.com", "From ENS");
-            var toAddress = new MailAddress($"{toEmail}", $"To {fullName}");
+            var fromAddress = new MailAddress("publicemergencysystem@gmail.com", "ENS");
+            var toAddress = new MailAddress($"{toEmail}", $"{fullName}");
             const string fromPassword = "shrekemergency";
             string subject = subj;
             string body = msg;
@@ -85,8 +85,8 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
         //public void SendEmailTest()
         //{
-        //    var fromAddress = new MailAddress("publicemergencysystem@gmail.com", "From ENS");
-        //    var toAddress = new MailAddress($"abomb1210@gmail.com", $"To Adam Perry");
+        //    var fromAddress = new MailAddress("publicemergencysystem@gmail.com", "ENS");
+        //    var toAddress = new MailAddress($"abomb1210@gmail.com", $"Adam Perry");
         //    const string fromPassword = "shrekemergency";
         //    string subject = "This is a test subject.";
         //    string body = "This is the test body.";
