@@ -55,7 +55,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             message.Subject = subject;
             message.Body = body;
             message.IsBodyHtml = true;
-            message.AlternateViews.Add(getEmbeddedImage(HttpContext.Current.Server.MapPath("~//StaticMaps//" + a.ImageName)));
+            message.AlternateViews.Add(getEmbeddedImage(HttpContext.Current.Server.MapPath("~//StaticMaps//" + a.ImageName), body));
 
             try
             {
@@ -105,23 +105,23 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         //    message.Subject = subject;
         //    message.Body = body;
         //    message.IsBodyHtml = true;
-        //    message.AlternateViews.Add(getEmbeddedImage(HttpContext.Current.Server.MapPath("~//StaticMaps//40_map.png")));
+        //    message.AlternateViews.Add(getEmbeddedImage(HttpContext.Current.Server.MapPath("~//StaticMaps//40_map.png"), body));
 
         //    try
         //    {
-        //            smtp.Send(message);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            throw ex;
-        //        }
+        //        smtp.Send(message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
         //}
 
-        private AlternateView getEmbeddedImage(string filePath)
+        private AlternateView getEmbeddedImage(string filePath, string body)
         {
             LinkedResource res = new LinkedResource(filePath);
             res.ContentId = Guid.NewGuid().ToString();
-            string htmlBody = @"<img src='cid:" + res.ContentId + @"'/>";
+            string htmlBody = @"<img src='cid:" + res.ContentId + @"'/><br/><p>" + body + "</p>";
             AlternateView alternateView = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
             alternateView.LinkedResources.Add(res);
             return alternateView;
