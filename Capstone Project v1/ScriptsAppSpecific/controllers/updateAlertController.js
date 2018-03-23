@@ -101,6 +101,15 @@
     //change status of alert from ongoing to updated if first update
     //change status of alert from updated to complete if resolved.
     //on update or resolve....send notifications out to contacts
+
+    //self.testEmail = function () {
+    //    appServices.getUpdatesByOriginId(1).then(function (response) {
+    //        console.log(response.data);
+    //        swal("Success", "Email Sent", "success");
+    //    }).catch(function (response) {
+    //        swal("Error", "Something went wrong", "error");
+    //        });
+    //}
    
 
     self.getForm(self.id);  

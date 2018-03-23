@@ -112,6 +112,9 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         {
             List<UpdateAlert> list = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == id).ToList();
             return Ok(list);
+
+            //SendEmailTest();
+            //return Ok();
         }
 
         [HttpGet]
@@ -188,7 +191,6 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             }
 
            // image.Save(path);
-
 
             response.Dispose();
             stream.Dispose();

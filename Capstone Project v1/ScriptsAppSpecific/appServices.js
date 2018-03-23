@@ -60,6 +60,9 @@
             },
             getAlertById: function (id) {
                 return $http.get("api/PublicEmergencyNotificationSystem/alerts/getAlertById?id=" + id)
+            },
+            getUpdatesByOriginId: function (id) {
+                return $http.get("api/PublicEmergencyNotificationSystem/alerts/getUpdatesByOriginId?id=" + id)
             }
         };
     }]);
