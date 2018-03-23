@@ -8,6 +8,7 @@ using Capstone_Project_v1.Models;
 using System.Configuration;
 using System.Net.Mail;
 using System.Net;
+using System.Net.Mime;
 
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
@@ -29,7 +30,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         /// <param name="subj"> Subject of the Email</param>
         /// <param name="msg"> Body of the Email</param>
         /// <param name="fullName"> concat First and Last name to be something like "Adam Perry" </param>
-        /// <param name="a"> the alert object that is being used...to update the status </param>
+        /// <param name="a"> the alert object that is being used...to update the status and get image name</param>
         /// <param name="statusType"> to know what to make the status....just past the string "UPDATE" if status needs to be update....etc</param>
         /// <returns></returns>
         public Alert SendNotification(string toEmail, string subj, string msg, string fullName, Alert a, string statusType)
@@ -49,21 +50,22 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
             };
-            using (var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = subject,
-                Body = body
-            })
 
-                try
-                {
-                    smtp.Send(message);
-                }
-                catch
-                {
-                    a.Status = AlertStatus.Pending;
-                    return a;
-                }
+            var message = new MailMessage(fromAddress, toAddress);
+            message.Subject = subject;
+            message.Body = body;
+            message.IsBodyHtml = true;
+            message.AlternateViews.Add(getEmbeddedImage(HttpContext.Current.Server.MapPath("~//StaticMaps//" + a.ImageName)));
+
+            try
+            {
+                smtp.Send(message);
+            }
+            catch
+            {
+                a.Status = AlertStatus.Pending;
+                return a;
+            }
 
             if (statusType == "UPDATE")
             {
@@ -98,20 +100,31 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         //        UseDefaultCredentials = false,
         //        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
         //    };
-        //    using (var message = new MailMessage(fromAddress, toAddress)
-        //    {
-        //        Subject = subject,
-        //        Body = body
-        //    })
 
-        //        try
-        //        {
+        //    var message = new MailMessage(fromAddress, toAddress);
+        //    message.Subject = subject;
+        //    message.Body = body;
+        //    message.IsBodyHtml = true;
+        //    message.AlternateViews.Add(getEmbeddedImage(HttpContext.Current.Server.MapPath("~//StaticMaps//40_map.png")));
+
+        //    try
+        //    {
         //            smtp.Send(message);
         //        }
-        //        catch(Exception ex)
+        //        catch (Exception ex)
         //        {
         //            throw ex;
         //        }
         //}
+
+        private AlternateView getEmbeddedImage(string filePath)
+        {
+            LinkedResource res = new LinkedResource(filePath);
+            res.ContentId = Guid.NewGuid().ToString();
+            string htmlBody = @"<img src='cid:" + res.ContentId + @"'/>";
+            AlternateView alternateView = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
+            alternateView.LinkedResources.Add(res);
+            return alternateView;
+        }
     }
 }
