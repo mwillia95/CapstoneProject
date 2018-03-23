@@ -63,6 +63,12 @@
             },
             getUpdatesByOriginId: function (id) {
                 return $http.get("api/PublicEmergencyNotificationSystem/alerts/getUpdatesByOriginId?id=" + id)
+            },
+            verifyContacts: function () {
+                return $http.post('api/PublicEmergencyNotificationSystem/alerts/VerifyContacts');
+            },
+            updateAlert: function (update) {
+                return $http.post('api/PublicEmergencyNotificationSystem/alerts/updateAlert', update);
             }
         };
     }]);

@@ -81,13 +81,13 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 path = alert.ImageName;
             }
 
-            if (updates != null)
-            {
-                foreach (var u in updates)
-                {
-                    alert.Updates.Add(u);
-                }
-            }
+            //if (updates != null)
+            //{
+            //    foreach (var u in updates)
+            //    {
+            //        alert.Updates.Add(u);
+            //    }
+            //}
             var aDto = new AlertDto()
             {
                 AlertId = alert.AlertId,
@@ -98,7 +98,8 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 location_lat = alert.location_lat,
                 location_lng = alert.location_lng,
                 Radius = alert.Radius,
-                ImagePath = path
+                ImagePath = path,
+                Contacts = alert.Contacts.ToList()
             };
 
             request.Add(alert);
@@ -137,14 +138,29 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             DataContext.Alerts.Add(a);
             DataContext.SaveChanges();
             string appPath = HttpContext.Current.Server.MapPath("~");
-            string path = sendAlert(new StaticMapRequest(a.location_lat, a.location_lng, a.Zoom, a.Radius, a.AlertId), appPath);
+            string path = createImage(new StaticMapRequest(a.location_lat, a.location_lng, a.Zoom, a.Radius, a.AlertId), appPath);
             a.ImageName = path;
             DataContext.SaveChanges();
+
+
             var contacts = DataContext.Contacts.Include("Address").ToList();
             var contactsToAlert = ContactsInRange(contacts, a.location_lat, a.location_lng, a.Radius);
             a.Contacts = contactsToAlert;
             DataContext.SaveChanges();
 
+            foreach(var c in a.Contacts)
+            {
+                if (c.ServiceType == "email"  || c.ServiceType == "both")
+                {
+                    SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName, 
+                        a, AlertStatus.Ongoing);
+                }
+            }
+            if(a.Status == AlertStatus.Pending)
+            {
+                return Ok("Error sending notifications");
+            }
+            DataContext.SaveChanges(); //changes the alert status if it was changed
             return Ok();
         }
 
@@ -155,7 +171,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             a.Start_Time = DateTime.Now;
             if (a.OriginAlert == null)
             {
-                a.OriginAlert = DataContext.Alerts.Find(a.OriginAlertRefId);
+                a.OriginAlert = DataContext.Alerts.Include("Contacts").First(x => x.AlertId == a.OriginAlertRefId);
                 a.OriginAlert.Status = AlertStatus.Updated; //1
             }
             else
@@ -167,10 +183,22 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             //saving the changes will have the context assign the new update its id
             a.OriginAlert.RecentUpdateRefId = a.UpdateId;
             DataContext.SaveChanges();
-            return Ok(a);
+
+            var contacts = a.getContacts();
+
+            foreach (var c in contacts)
+            {
+                if (c.ServiceType == "email" || c.ServiceType == "both")
+                {
+                    SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName,
+                        a.OriginAlert, AlertStatus.Updated);
+                }
+            }
+
+            return Ok();
         }
 
-        private string sendAlert(StaticMapRequest s, string rootPath)
+        private string createImage(StaticMapRequest s, string rootPath)
         {
             Bitmap image;
             string url = s.toUrlRequest();
@@ -232,6 +260,24 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
             var d = R * c;
             return d * 1000; // meters
+        }
+
+        [HttpPost]
+        [Route("VerifyContacts")]
+        public IHttpActionResult verifyContacts()
+        {
+            var alerts = DataContext.Alerts.ToList();
+            var contacts = DataContext.Contacts.Include("Address").ToList();
+            foreach (var a in alerts)
+            {
+                var contactsToAlert = ContactsInRange(contacts, a.location_lat, a.location_lng, a.Radius);
+                DataContext.Alerts.Find(a.AlertId).Contacts = contactsToAlert;
+                DataContext.SaveChanges();
+            }
+            alerts = DataContext.Alerts.ToList();
+            foreach(var alert in alerts)
+                alert.Contacts = DataContext.Contacts.Where(x => x.Alerts.Any(y => y.AlertId == alert.AlertId)).ToList();
+            return Ok(alerts);
         }
     }
 }

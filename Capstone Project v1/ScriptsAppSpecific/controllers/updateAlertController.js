@@ -111,6 +111,19 @@
     //        });
     //}
    
+    self.submitUpdate = function () {
+        var Update =
+            {
+                Title: self.form[0].Title + " [Update]",
+                Description: self.updateAlert.Description,
+                OriginAlertRefId: self.id
+            };
+        appServices.updateAlert(Update).then(function (response) {
+            console.log(response)
+            swal("SUCCESS", "An update was created and sent successully!", "success");
+
+        });
+    };
 
     self.getForm(self.id);  
 }]);

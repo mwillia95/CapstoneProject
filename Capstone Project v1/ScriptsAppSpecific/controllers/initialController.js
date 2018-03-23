@@ -31,6 +31,9 @@
             });
         }
     };
+    //appServices.verifyContacts().then(function (response) {
+    //    console.log(response)
+    //});
     var v = {};
     v.Lat = 33.49;
     v.Lng = -82.07;

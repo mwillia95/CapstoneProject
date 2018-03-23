@@ -33,7 +33,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         /// <param name="a"> the alert object that is being used...to update the status and get image name</param>
         /// <param name="statusType"> to know what to make the status....just past the string "UPDATE" if status needs to be update....etc</param>
         /// <returns></returns>
-        public Alert SendNotification(string toEmail, string subj, string msg, string fullName, Alert a, string statusType)
+        public Alert SendNotification(string toEmail, string subj, string msg, string fullName, Alert a, AlertStatus statusType)
         {
             var fromAddress = new MailAddress("publicemergencysystem@gmail.com", "ENS");
             var toAddress = new MailAddress($"{toEmail}", $"{fullName}");
@@ -67,19 +67,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 return a;
             }
 
-            if (statusType == "UPDATE")
-            {
-                a.Status = AlertStatus.Updated;
-            }
-            else if (statusType == "COMPLETE")
-            {
-                a.Status = AlertStatus.Complete;
-            }
-            else if (statusType == "ONGOING")
-            {
-                a.Status = AlertStatus.Ongoing;
-            }
-
+            a.Status = statusType;
             return a;
         }
 

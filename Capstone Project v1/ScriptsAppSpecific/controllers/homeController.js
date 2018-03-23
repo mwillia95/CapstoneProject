@@ -348,6 +348,7 @@
             Zoom: self.alert.zoom
         };
         appServices.addAlert(alert).then(function (response) {
+            console.log(response);
             //clears form data         
             self.alert = {};
             self.marker.setMap(null);
