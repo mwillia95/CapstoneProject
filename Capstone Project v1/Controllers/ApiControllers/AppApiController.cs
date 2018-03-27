@@ -9,6 +9,8 @@ using System.Configuration;
 using System.Net.Mail;
 using System.Net;
 using System.Net.Mime;
+using TextmagicRest;
+using TextmagicRest.Model;
 
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
@@ -71,40 +73,6 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             return a;
         }
 
-        //public void SendEmailTest()
-        //{
-        //    var fromAddress = new MailAddress("publicemergencysystem@gmail.com", "ENS");
-        //    var toAddress = new MailAddress($"abomb1210@gmail.com", $"Adam Perry");
-        //    const string fromPassword = "shrekemergency";
-        //    string subject = "This is a test subject.";
-        //    string body = "This is the test body.";
-
-        //    var smtp = new SmtpClient
-        //    {
-        //        Host = "smtp.gmail.com",
-        //        Port = 587,
-        //        EnableSsl = true,
-        //        DeliveryMethod = SmtpDeliveryMethod.Network,
-        //        UseDefaultCredentials = false,
-        //        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-        //    };
-
-        //    var message = new MailMessage(fromAddress, toAddress);
-        //    message.Subject = subject;
-        //    message.Body = body;
-        //    message.IsBodyHtml = true;
-        //    message.AlternateViews.Add(getEmbeddedImage(HttpContext.Current.Server.MapPath("~//StaticMaps//40_map.png"), body));
-
-        //    try
-        //    {
-        //        smtp.Send(message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-
         private AlternateView getEmbeddedImage(string filePath, string body)
         {
             LinkedResource res = new LinkedResource(filePath);
@@ -113,6 +81,37 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             AlternateView alternateView = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
             alternateView.LinkedResources.Add(res);
             return alternateView;
+        }
+
+        public Alert SendText(Alert a, string phone, AlertStatus statusType)
+        {
+            var client = new Client("adamperry1", "2RT8BaXnn2RU1zRimtUxe9gTndZuJn"); //this is the username of the account and the api key....dont mess with this
+            var link = client.SendMessage(a.Title + Environment.NewLine + a.Description, "1" + phone); //message, then phonenumber with Country Code and area code.....1 is the US country code
+
+            //somewhere in here is where we adjust the AlertStatus
+            if(link.Success)
+            {
+                if(statusType == AlertStatus.Updated)
+                {
+                    a.Status = AlertStatus.Updated;
+                }
+                else if(statusType == AlertStatus.Complete)
+                {
+                    a.Status = AlertStatus.Complete;
+                }
+                else if(statusType == AlertStatus.Ongoing)
+                {
+                    a.Status = AlertStatus.Ongoing;
+                }
+                //Message successfully sent
+            }
+            else
+            {
+                a.Status = AlertStatus.Pending;
+                //message not sent due to following exception......can access with      link.ClientException.Message
+            }
+
+            return a; 
         }
     }
 }

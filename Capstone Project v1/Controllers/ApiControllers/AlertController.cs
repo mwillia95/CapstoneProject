@@ -150,10 +150,21 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
             foreach(var c in a.Contacts)
             {
-                if (c.ServiceType == "email"  || c.ServiceType == "both")
+                if (c.ServiceType == "email")
                 {
                     SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName, 
                         a, AlertStatus.Ongoing);
+                }
+                else if(c.ServiceType == "mobile")
+                {
+                    SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
+                }
+                else if(c.ServiceType == "both")
+                {
+                    //need to figure out how to set up the changing of the alertstatus when servicetype is "both"
+                    SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName,
+                       a, AlertStatus.Ongoing);
+                    SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
                 }
             }
             if(a.Status == AlertStatus.Pending)
