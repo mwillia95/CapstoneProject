@@ -48,6 +48,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             DataContext.SaveChanges();
             
             return Ok(con);
+           
         }
 
         //run the lat-long assignment on all addresses

@@ -343,7 +343,7 @@
             location_lng: self.alert.lng,
             Description: self.alert.description,
             Title: self.alert.title,
-            Radius: self.alert.radius,  
+            Radius: (self.alert.measureType === "km" ? self.alert.radius * 1000 : self.alert.radius),  
             MeasurementType: self.alert.measureType,
             Zoom: self.alert.zoom
         };

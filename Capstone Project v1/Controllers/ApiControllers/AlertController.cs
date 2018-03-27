@@ -81,13 +81,14 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 path = alert.ImageName;
             }
 
-            //if (updates != null)
-            //{
-            //    foreach (var u in updates)
-            //    {
-            //        alert.Updates.Add(u);
-            //    }
-            //}
+            if (updates != null)
+           {
+               foreach (var u in updates)
+                {
+                    u.OriginAlert = null;
+                    alert.Updates.Add(u);
+                }
+            }
             var aDto = new AlertDto()
             {
                 AlertId = alert.AlertId,

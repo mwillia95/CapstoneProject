@@ -18,19 +18,23 @@
                         <p>{{self.form[1].Start_Time}}</p>
                     </div>
                 </div>
-                <div class="row topBorder">
+                <div class="row topBorder" style="height: 150px;">
                     <div class="form-cell col-sm-12" style="text-align: center;">
-                        <label>Description</label>
-                        <p>{{self.form[0].Description}}</p>
+                        <label>Description</label>              
+                        <textarea class="form-control"
+                                  readonly
+                                  style="background-color: white; resize: none; overflow: auto;"
+                                  rows="3"
+                                  ng-model="self.form[0].Description"/>     
                     </div>
                 </div>
                 <!--Update inputs-->
-                <div class="row topBorder" style="height: 215px;">
+                <div class="row topBorder" style="height: 185px;">
                     <div class="form-textCell col-sm-12" style="text-align: center;">
                         <label>Update Description</label>
                         <textarea class="form-control"
                             style="background-color: lightgoldenrodyellow; border-color: black; resize: none;"
-                            rows="6"
+                            rows="4"
                             ng-model="self.updateAlert.Description">        
                         </textarea>
                     </div>

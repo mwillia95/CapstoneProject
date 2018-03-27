@@ -119,9 +119,9 @@
                 OriginAlertRefId: self.id
             };
         appServices.updateAlert(Update).then(function (response) {
-            console.log(response)
+            console.log(response);
             swal("SUCCESS", "An update was created and sent successully!", "success");
-
+            self.updateAlert.Description = "";
         });
     };
 

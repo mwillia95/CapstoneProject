@@ -43,7 +43,7 @@ namespace Capstone_Project_v1.Models
 
         public Contact()
         {
-            this.Alerts = new HashSet<Alert>();
+            this.Alerts = new List<Alert>();
         }
         public string Searchable()
         {
