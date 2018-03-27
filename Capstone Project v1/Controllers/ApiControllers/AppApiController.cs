@@ -63,6 +63,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             }
             catch
             {
+
                 a.Status = AlertStatus.Pending;
                 return a;
             }
