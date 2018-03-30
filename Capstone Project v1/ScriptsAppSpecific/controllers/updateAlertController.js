@@ -142,15 +142,32 @@
             {
                 Title: self.form.Title + " [Update]",
                 Description: self.updateAlert.Description,
-                OriginAlertRefId: self.id
+                OriginAlertRefId: self.id,
+                Status = "UPDATE"
             };
         appServices.updateAlert(Update).then(function (response) {
             console.log(response);
-            swal("SUCCESS", "An update was created and sent successully!", "success");
+            swal("SUCCESS", "An update was created and sent successfully!", "success");
             self.refreshData();
             self.updateAlert.Description = "";
         });
     };
+
+    self.submitResolve = function () {
+        var Update =
+            {
+                Title: self.form.Title + " [Resolved]",
+                Description: self.updateAlert.Description,
+                OriginAlertRefId: self.id,
+                Status = "RESOLVED"
+            };
+        appServices.updateAlert(Update).then(function (response) {
+            console.log(response);
+            swal("SUCCESS", "Resolution was created and sent successfully!", "success");
+            self.refreshData();
+            self.updateAlert.Description = "";
+        });
+    }
 
     self.cancelUpdate = function () {
         $location.path("/activeAlerts");

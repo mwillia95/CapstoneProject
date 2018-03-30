@@ -21,7 +21,10 @@ namespace Capstone_Project_v1.Models
         public DbSet<UpdateAlert> UpdateAlerts { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Address>().Property(x => x.Longitude).HasPrecision(13, 10);
+            modelBuilder.Entity<Address>().Property(x => x.Latitude).HasPrecision(13, 10);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

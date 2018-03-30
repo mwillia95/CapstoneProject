@@ -25,7 +25,7 @@
                 return $http.post("api/PublicEmergencyNotificationSystem/contacts/removeContact", contact);
             },
             verifyLatLong: function () {
-                return $http.put("api/PublicEmergencyNotificationSystem/contacts/verifyLatLong");
+                return $http.post("api/PublicEmergencyNotificationSystem/contacts/verifyLatLong");
             },
             //AccountController functions
             register: function (account) {

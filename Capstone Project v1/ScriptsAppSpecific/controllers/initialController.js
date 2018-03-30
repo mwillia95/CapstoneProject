@@ -43,5 +43,8 @@
     //{
     //    console.log(response);
     //});
-
+    appServices.verifyLatLong().then(function (response) {
+        console.log("Done");
+        console.log(response.data)
+    })
 }]);

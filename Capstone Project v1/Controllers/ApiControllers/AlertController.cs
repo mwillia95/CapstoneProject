@@ -70,7 +70,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             List<UpdateAlertDto> updateList = new List<UpdateAlertDto>(); //for update DTOS for formatting stuff for table
             List<object> request = new List<object>();
             var alert = DataContext.Alerts.Find(id);
-            alert.Contacts = DataContext.Contacts.Where(x => x.Alerts.Any(y => y.AlertId == id)).ToList();
+            alert.Contacts = DataContext.Contacts.Include("Address").Where(x => x.Alerts.Any(y => y.AlertId == id)).ToList();
             var updates = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == alert.AlertId);
             string path;
             if (string.IsNullOrEmpty(alert.ImageName))            //TODO: uncomment when done
@@ -162,31 +162,33 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             a.Contacts = contactsToAlert;
             DataContext.SaveChanges();
 
-            foreach(var c in a.Contacts)
-            {
-                if (c.ServiceType == "email")
-                {
-                    SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName, 
-                        a, AlertStatus.Ongoing);
-                }
-                else if(c.ServiceType == "mobile")
-                {
-                    //SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
-                }
-                else if(c.ServiceType == "both")
-                {
-                    //need to figure out how to set up the changing of the alertstatus when servicetype is "both"
-                    SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName,
-                       a, AlertStatus.Ongoing);
-                    //SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
-                }
-            }
-            if(a.Status == AlertStatus.Pending)
-            {
-                return Ok("Error sending notifications");
-            }
+            int count = SendNotifications(a.Contacts.ToList(), a);
+
+            //foreach(var c in a.Contacts)
+            //{
+            //    if (c.ServiceType == "email")
+            //    {
+            //        SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName, 
+            //            a, AlertStatus.Ongoing);
+            //    }
+            //    else if(c.ServiceType == "mobile")
+            //    {
+            //        //SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
+            //    }
+            //    else if(c.ServiceType == "both")
+            //    {
+            //        //need to figure out how to set up the changing of the alertstatus when servicetype is "both"
+            //        SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName,
+            //           a, AlertStatus.Ongoing);
+            //        //SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
+            //    }
+            //}
+
+            if(count > 0)
+                a.Status = AlertStatus.Ongoing;
+
             DataContext.SaveChanges(); //changes the alert status if it was changed
-            return Ok();
+            return Ok(count);
         }
 
         [HttpPost]
@@ -197,41 +199,47 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             if (a.OriginAlert == null)
             {
                 a.OriginAlert = DataContext.Alerts.Include("Contacts").First(x => x.AlertId == a.OriginAlertRefId);
-                a.OriginAlert.Status = AlertStatus.Updated; //1
-                a.Status = AlertStatus.Updated.ToString();
             }
+            AlertStatus type;
+            if (a.Status == "UPDATE")
+                type = AlertStatus.Updated;
+            else if (a.Status == "RESOLVED")
+                type = AlertStatus.Complete;
             else
-            {
-                a.OriginAlert.Status = AlertStatus.Updated; //1
-                a.Status = AlertStatus.Updated.ToString();
-            }
+                type = AlertStatus.Ongoing; //should not be hit typically, error handling
+
             DataContext.UpdateAlerts.Add(a);
             DataContext.SaveChanges();
             //saving the changes will have the context assign the new update its id
             a.OriginAlert.RecentUpdateRefId = a.UpdateId;
             DataContext.SaveChanges();
+            var contacts = a.getContacts().ToList();
+            int count = SendNotifications(a.getContacts().ToList(), a);
 
-            var contacts = a.getContacts();
+            //foreach (var c in contacts)
+            //{
+            //    if (c.ServiceType == "email")
+            //    {
+            //        SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName, a);
+            //    }
+            //    else if (c.ServiceType == "mobile")
+            //    {
+            //        //SendText(a, c.PhoneNumber);
+            //    }
+            //    else if (c.ServiceType == "both")
+            //    {
+            //        //need to figure out how to set up the changing of the alertstatus when servicetype is "both"
+            //        SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName,
+            //           a);
+            //        //SendText(a, c.PhoneNumber);
+            //    }
+            //}
 
-            foreach (var c in contacts)
-            {
-                if (c.ServiceType == "email")
-                {
-                    SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName, a);
-                }
-                else if (c.ServiceType == "mobile")
-                {
-                    //SendText(a, c.PhoneNumber);
-                }
-                else if (c.ServiceType == "both")
-                {
-                    //need to figure out how to set up the changing of the alertstatus when servicetype is "both"
-                    SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName,
-                       a);
-                    //SendText(a, c.PhoneNumber);
-                }
-            }
-            return Ok();
+            if (count > 0)
+                a.OriginAlert.Status = type;
+
+            DataContext.SaveChanges(); //changes the alert status if it was changed
+            return Ok(count);
         }
 
         private string createImage(StaticMapRequest s, string rootPath)
@@ -295,7 +303,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             var a = z + w;               
             var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
             var d = R * c; // Distance in km
-            return (d * 1000) - 773; //773 meters is roughly the difference when making an alert on an address in the system
+            return (d * 1000);
         }
 
         private double ToRadians(double deg)
