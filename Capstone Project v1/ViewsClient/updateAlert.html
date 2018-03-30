@@ -11,11 +11,11 @@
                 <div class="row topBorder">
                     <div class="form-cell col-sm-6 rightBorder" style="text-align: center;">
                         <label>Title</label>
-                        <p>{{self.form[0].Title}}</p>
+                        <p>{{self.form.Title}}</p>
                     </div>
                     <div class="form-cell col-sm-6" style="text-align: center;">
                         <label>Start Time</label>
-                        <p>{{self.form[1].Start_Time}}</p>
+                        <p>{{self.form.Start_Time}}</p>
                     </div>
                 </div>
                 <div class="row topBorder" style="height: 150px;">
@@ -25,7 +25,7 @@
                                   readonly
                                   style="background-color: white; resize: none; overflow: auto;"
                                   rows="3"
-                                  ng-model="self.form[0].Description"/>     
+                                  ng-model="self.form.Description"/>     
                     </div>
                 </div>
                 <!--Update inputs-->
@@ -44,7 +44,7 @@
                          <button type="button" class="btn btn-success" ng-click="self.submitUpdate()"><span class="fa fa-plus"><span style="font-family: 'Lato', sans-serif;">Update Alert</span></span></button>
                      </div>
                      <div class="col-sm-4 form-cell" style="text-align: center; padding-top: 25px; padding-right: 20px;">
-                         <button type="button" class="btn btn-danger"><span class="fa fa-remove"><span style="font-family: 'Lato', sans-serif;">Cancel Update</span></span></button>
+                         <button type="button" class="btn btn-danger" ng-click="self.cancelUpdate()"><span class="fa fa-remove"><span style="font-family: 'Lato', sans-serif;">Cancel Update</span></span></button>
                      </div>
                      <div class="col-sm-4 form-cell" style="text-align: center; padding-top: 25px;">
                          <button type="button" class="btn btn-primary"><span class="fa fa-share"><span style="font-family: 'Lato', sans-serif;">Resolve Alert</span></span></button>
@@ -53,7 +53,7 @@
              </div>
          </div>
          <!--grid-->
-         <div class="row updateGrid">
+         <div class="row updateGrid" ng-if="self.gridOptions.data">
              <div class="updateGrid" style="cursor: default;" ui-grid-pagination ui-grid-selection ui-grid-exporter
                   ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid="self.gridOptions">
              </div>

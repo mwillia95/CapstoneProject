@@ -65,8 +65,9 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
         [HttpGet]
         [Route("getAlertById")]
-        public IHttpActionResult getAlertById(int id)
+        public IHttpActionResult getAlertById(int id)       //this is for the update page. Finds the correct alert to display
         {
+            List<UpdateAlertDto> updateList = new List<UpdateAlertDto>(); //for update DTOS for formatting stuff for table
             List<object> request = new List<object>();
             var alert = DataContext.Alerts.Find(id);
             alert.Contacts = DataContext.Contacts.Where(x => x.Alerts.Any(y => y.AlertId == id)).ToList();
@@ -87,6 +88,17 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 {
                     u.OriginAlert = null;
                     alert.Updates.Add(u);
+
+                    var updateDto = new UpdateAlertDto()
+                    {
+                        UpdateId = u.UpdateId,
+                        Title = u.Title,
+                        Description = u.Description,
+                        Update_Time = String.Format("{0:d/M/yyyy hh:mm:ss tt}", u.Start_Time),
+                        Status = u.Status == null ? "UPDATED" : u.Status.ToUpper()                                                               
+                     };
+
+                    updateList.Add(updateDto);
                 }
             }
             var aDto = new AlertDto()
@@ -101,10 +113,14 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 Radius = alert.Radius,
                 ImagePath = path,
                 Contacts = alert.Contacts.ToList()
-            };
+            };       
 
             request.Add(alert);
             request.Add(aDto);
+            if(updateList.Count > 0)
+            {
+                request.Add(updateList);
+            }
             return Ok(request);
         }
 
@@ -114,9 +130,6 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         {
             List<UpdateAlert> list = DataContext.UpdateAlerts.Where(x => x.OriginAlertRefId == id).ToList();
             return Ok(list);
-
-            //SendEmailTest();
-            //return Ok();
         }
 
         [HttpGet]
@@ -158,14 +171,14 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 }
                 else if(c.ServiceType == "mobile")
                 {
-                    SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
+                    //SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
                 }
                 else if(c.ServiceType == "both")
                 {
                     //need to figure out how to set up the changing of the alertstatus when servicetype is "both"
                     SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName,
                        a, AlertStatus.Ongoing);
-                    SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
+                    //SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
                 }
             }
             if(a.Status == AlertStatus.Pending)
@@ -185,10 +198,12 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             {
                 a.OriginAlert = DataContext.Alerts.Include("Contacts").First(x => x.AlertId == a.OriginAlertRefId);
                 a.OriginAlert.Status = AlertStatus.Updated; //1
+                a.Status = AlertStatus.Updated.ToString();
             }
             else
             {
                 a.OriginAlert.Status = AlertStatus.Updated; //1
+                a.Status = AlertStatus.Updated.ToString();
             }
             DataContext.UpdateAlerts.Add(a);
             DataContext.SaveChanges();
@@ -200,13 +215,22 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
             foreach (var c in contacts)
             {
-                if (c.ServiceType == "email" || c.ServiceType == "both")
+                if (c.ServiceType == "email")
                 {
+                    SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName, a);
+                }
+                else if (c.ServiceType == "mobile")
+                {
+                    //SendText(a, c.PhoneNumber);
+                }
+                else if (c.ServiceType == "both")
+                {
+                    //need to figure out how to set up the changing of the alertstatus when servicetype is "both"
                     SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName,
-                        a.OriginAlert, AlertStatus.Updated);
+                       a);
+                    //SendText(a, c.PhoneNumber);
                 }
             }
-
             return Ok();
         }
 
@@ -255,23 +279,28 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             var x = c.Address.Latitude;
             var y = c.Address.Longitude;
 
-            var distance = measure((double)x, (double)y, (double)lat, (double)lng);
+            var distance = measure((double)x, (double)y, (double)lat, (double)lng);                                                                
 
             return (decimal)distance <= radius;
         }
 
         private double measure(double lat1, double lon1, double lat2, double lon2)
         {  // generally used geo measurement function
-
-            var R = 6378.137; // Radius of earth in KM
-            var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
-            var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
-            var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
-            Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) *
-            Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            var R = 6371; // Radius of the earth in km
+            var dLat = ToRadians(lat2 - lat1);  // deg2rad below
+            var dLon = ToRadians(lon2 - lon1);
+            var z = Math.Sin(dLat / 2) * Math.Sin(dLat / 2);
+            var w = Math.Cos(ToRadians(lat1)) * Math.Cos(ToRadians(lat2)) *
+                Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            var a = z + w;               
             var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            var d = R * c;
-            return d * 1000; // meters
+            var d = R * c; // Distance in km
+            return (d * 1000) - 773; //773 meters is roughly the difference when making an alert on an address in the system
+        }
+
+        private double ToRadians(double deg)
+        {
+            return deg * (Math.PI / 180);
         }
 
         [HttpPost]

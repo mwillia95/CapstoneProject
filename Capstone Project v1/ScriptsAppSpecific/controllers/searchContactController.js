@@ -135,9 +135,8 @@
     }
 };
 
-if ($rootScope.search) {
-    self.refreshData();
-
-}
+    if ($rootScope.search) {
+        self.refreshData();
+    }
 
 }]);

@@ -33,6 +33,9 @@ namespace Capstone_Project_v1.Models
         [Column("START_TIME")]
         public DateTime Start_Time { get; set; }
 
+        [Column("STATUS")]
+        public string Status { get; set; }
+
         [Column("ORIGIN_ALERT_REF_ID")]
         public int OriginAlertRefId { get; set; }
 

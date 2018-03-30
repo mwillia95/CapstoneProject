@@ -108,11 +108,70 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             }
             else
             {
+                if(a.Status == AlertStatus.Updated || a.Status == AlertStatus.Ongoing || a.Status == AlertStatus.Complete)
+                {
+                    return a;
+                }
                 a.Status = AlertStatus.Pending;
                 //message not sent due to following exception......can access with      link.ClientException.Message
             }
 
             return a; 
+        }
+
+        //update email notification
+        public UpdateAlert SendNotification(string toEmail, string subj, string msg, string fullName, UpdateAlert a)
+        {
+            var fromAddress = new MailAddress("publicemergencysystem@gmail.com", "ENS");
+            var toAddress = new MailAddress($"{toEmail}", $"{fullName}");
+            const string fromPassword = "shrekemergency";
+            string subject = subj;
+            string body = msg;        
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+
+            var message = new MailMessage(fromAddress, toAddress);
+            message.Subject = subject;
+            message.Body = body;
+            message.IsBodyHtml = true;
+            message.AlternateViews.Add(getEmbeddedImage(HttpContext.Current.Server.MapPath("~//StaticMaps//" + a.OriginAlertRefId + "_map.png"), body));
+
+            try
+            {
+                smtp.Send(message);
+            }
+            catch
+            {               
+                return a;
+            }       
+            return a;
+        }
+
+        //text for update
+        public UpdateAlert SendText(UpdateAlert a, string phone)
+        {
+            var client = new Client("adamperry1", "2RT8BaXnn2RU1zRimtUxe9gTndZuJn"); //this is the username of the account and the api key....dont mess with this
+            var link = client.SendMessage(a.Title + Environment.NewLine + a.Description, "1" + phone); //message, then phonenumber with Country Code and area code.....1 is the US country code
+
+            //somewhere in here is where we adjust the AlertStatus
+            if (link.Success)
+            {               
+                //Message successfully sent
+            }
+            else
+            {
+                //message not sent due to following exception......can access with      link.ClientException.Message
+            }
+
+            return a;
         }
     }
 }
