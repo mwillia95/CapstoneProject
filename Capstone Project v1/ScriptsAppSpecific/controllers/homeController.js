@@ -1,7 +1,10 @@
 ﻿angular.module("app").controller("homeController", ['$scope', 'AppServices', '$rootScope', '$location', '$timeout', function ($scope, appServices, $rootScope, $location, $timeout) {
     var self = this;
     self.zoomDistances = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-    self.measurements = ['m', 'km'];
+    self.measurements = [
+        { type: "Meters", abbreviation: "m" },
+        {type: "Kilometers", abbreviation: "km"}
+    ];
     self.alert = {};
     var map;
     var AugustaUniversity = { lat: 33.4759, lng: -82.0230 };

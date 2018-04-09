@@ -1,0 +1,11 @@
+﻿<div class="container" style="width:100%; min-width: 960px;">
+    <h1 style="text-align: center">Resolved Alerts</h1>
+    <br />
+    <div ng-if="self.load === true" style="text-align: center;">
+        <img src="Content/images/Loading.gif" />
+    </div>
+    <!--Grid Table-->
+    <div class="myGrid" ng-if="self.gridOptions.data.length > 0 && self.load === false" style="cursor: default;" ui-grid-pagination ui-grid-selection ui-grid-exporter
+         ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid="self.gridOptions">
+    </div>
+</div>

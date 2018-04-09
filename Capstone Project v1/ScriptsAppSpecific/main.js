@@ -55,6 +55,18 @@
             controller: "updateAlertController",
             controllerAs: "self"
         })
+        .when("/activityLog", {
+            title: "Activity Log",
+            templateUrl: "ViewsClient/activityLog.html",
+            controller: "activityLogController",
+            controllerAs: "self"
+        })
+        .when("/resolvedAlerts", {
+            title: "Resolved Alerts",
+            templateUrl: "ViewsClient/resolvedAlerts.html",
+            controller: "resolvedAlertsController",
+            controllerAs: "self"
+        })
         .otherwise(
         {
             redirectTo: "/"

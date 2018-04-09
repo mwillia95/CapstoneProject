@@ -46,7 +46,11 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             }
             DataContext.Contacts.Add(con);
             DataContext.SaveChanges();
-            
+
+            var activity = new Activity(c, Module.Created_Contact);
+            DataContext.Activities.Add(activity);
+            DataContext.SaveChanges();
+
             return Ok(con);
            
         }
@@ -187,6 +191,11 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             }
 
             DataContext.SaveChanges();
+
+            var activity = new Activity(c, Module.Updated_Contact);
+            DataContext.Activities.Add(activity);
+            DataContext.SaveChanges();
+
             return Ok(oldContact);
         }
         [HttpPost]
@@ -208,6 +217,11 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             }
             
             DataContext.SaveChanges();
+
+            var activity = new Activity(c, Module.Deleted_Contact);
+            DataContext.Activities.Add(activity);
+            DataContext.SaveChanges();
+
             return Ok(message);
         }
         private bool AddressChanged(Address old, Address changed)

@@ -59,12 +59,12 @@
         <div class="col-sm-6">
             <div class="row">
                 <div class="col-sm-12">
-                    <label>km/m</label>
+                    <label>Meters or Kilometers</label>
                     <select class="form-control"
                             style="background-color: lightgoldenrodyellow; border-color: black;"
                             ng-model="self.alert.measureType">
                         <option value="" style="color: #ccc !important" disabled> -Select- </option>
-                        <option ng-repeat="type in self.measurements" value="{{type}}"> {{type}} </option>
+                        <option ng-repeat="entry in self.measurements" value="{{entry.abbreviation}}"> {{entry.type}} </option>
                     </select>
                 </div>
             </div>
@@ -155,12 +155,12 @@
                                ng-model="self.alert.radius" />
                     </div>
                     <div class="col-sm-12 form-cell">
-                        <label>km/m</label>
+                        <label>Meters or Kilometers</label>
                         <select class="form-control"
                                 style="background-color: lightgoldenrodyellow; border-color: black;"
                                 ng-model="self.alert.measureType">
                             <option value="" style="color: #ccc !important" disabled> -Select- </option>
-                            <option ng-repeat="type in self.measurements" value="{{type}}"> {{type}} </option>
+                            <option ng-repeat="entry in self.measurements" value="{{entry.abbreviation}}"> {{entry.type}} </option>
                         </select>
                     </div>
                 </div>

@@ -32,6 +32,7 @@
 
     self.gridOptions = {
         rowHeight: 36,
+        enableRowSelection: false,
         enableColumnResizing: false,
         enableGridMenu: true,
         exporterMenuAllData: false,
@@ -143,7 +144,7 @@
                 Title: self.form.Title + " [Update]",
                 Description: self.updateAlert.Description,
                 OriginAlertRefId: self.id,
-                Status = "UPDATE"
+                Status: "UPDATE"
             };
         appServices.updateAlert(Update).then(function (response) {
             console.log(response);
@@ -159,13 +160,12 @@
                 Title: self.form.Title + " [Resolved]",
                 Description: self.updateAlert.Description,
                 OriginAlertRefId: self.id,
-                Status = "RESOLVED"
+                Status: "RESOLVED"
             };
         appServices.updateAlert(Update).then(function (response) {
             console.log(response);
             swal("SUCCESS", "Resolution was created and sent successfully!", "success");
-            self.refreshData();
-            self.updateAlert.Description = "";
+            $location.path("/activeAlerts");
         });
     }
 

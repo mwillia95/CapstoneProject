@@ -59,16 +59,22 @@
                 return $http.get('api/PublicEmergencyNotificationSystem/alerts/getAlerts');
             },
             getAlertById: function (id) {
-                return $http.get("api/PublicEmergencyNotificationSystem/alerts/getAlertById?id=" + id)
+                return $http.get("api/PublicEmergencyNotificationSystem/alerts/getAlertById?id=" + id);
             },
             getUpdatesByOriginId: function (id) {
-                return $http.get("api/PublicEmergencyNotificationSystem/alerts/getUpdatesByOriginId?id=" + id)
+                return $http.get("api/PublicEmergencyNotificationSystem/alerts/getUpdatesByOriginId?id=" + id);
             },
             verifyContacts: function () {
                 return $http.post('api/PublicEmergencyNotificationSystem/alerts/VerifyContacts');
             },
             updateAlert: function (update) {
                 return $http.post('api/PublicEmergencyNotificationSystem/alerts/updateAlert', update);
+            },
+            getResolvedAlerts: function () {
+                return $http.get('api/PublicEmergencyNotificationSystem/alerts/getResolvedAlerts');
+            },
+            getActivities: function () {
+                return $http.get('api/PublicEmergencyNotificationSystem/alerts/activityLog');
             }
         };
     }]);

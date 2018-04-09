@@ -8,6 +8,7 @@
     });
     self.gridOptions = {
         rowHeight: 36,
+        enableRowSelection: false,
         enableColumnResizing: false,
         enableGridMenu: true,
         exporterMenuAllData: false,

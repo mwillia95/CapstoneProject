@@ -50,7 +50,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                         AlertId = s.AlertId,
                         Description = s.Description,
                         Status = s.Status.ToString().ToUpper(),
-                        Start_Time = s.Status != AlertStatus.Pending ? String.Format("{0:d/M/yyyy hh:mm:ss tt}", s.Start_Time) : "STILL PENDING",
+                        Start_Time = s.Status != AlertStatus.Pending ? String.Format("{0:MM/dd/yyyy hh:mm tt}", s.Start_Time) : "STILL PENDING",
                         Title = s.Title,
                         location_lat = s.location_lat,
                         location_lng = s.location_lng,
@@ -61,6 +61,35 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 }
             }
             return Ok(a);
+        }
+
+        [HttpGet]
+        [Route("getResolvedAlerts")]
+        public IHttpActionResult getResolvedAlerts()
+        {
+            var alerts = DataContext.Alerts;
+            var updates = DataContext.UpdateAlerts;
+
+            var uQuery = (from u in updates
+                          from a in alerts
+                          where u.UpdateId == a.UpdateId
+                          select new { a.AlertId, a.Start_Time, End = u.Start_Time, a.Title }).ToList();
+           
+            var resAlerts = new List<ResolvedAlertDto>();
+            foreach (var a in uQuery)
+            {
+                var r = new ResolvedAlertDto()
+                {
+                    AlertId = a.AlertId,
+                    Start_Time = a.Start_Time.ToString(),
+                    End_Time = a.End.ToString(),
+                    Title = a.Title
+                };
+
+                resAlerts.Add(r);
+
+            }
+            return Ok(resAlerts);
         }
 
         [HttpGet]
@@ -94,7 +123,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                         UpdateId = u.UpdateId,
                         Title = u.Title,
                         Description = u.Description,
-                        Update_Time = String.Format("{0:d/M/yyyy hh:mm:ss tt}", u.Start_Time),
+                        Update_Time = String.Format("{0:MM/dd/yyyy hh:mm tt}", u.Start_Time),
                         Status = u.Status == null ? "UPDATED" : u.Status.ToUpper()                                                               
                      };
 
@@ -106,7 +135,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 AlertId = alert.AlertId,
                 Description = alert.Description,
                 Status = alert.Status.ToString().ToUpper(),
-                Start_Time = String.Format("{0:d/M/yyyy hh:mm:ss tt}", alert.Start_Time),
+                Start_Time = String.Format("{0:MM/dd/yyyy hh:mm tt}", alert.Start_Time),
                 Title = alert.Title,
                 location_lat = alert.location_lat,
                 location_lng = alert.location_lng,
@@ -188,6 +217,12 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 a.Status = AlertStatus.Ongoing;
 
             DataContext.SaveChanges(); //changes the alert status if it was changed
+
+            //adds this activiy to activity log
+            var activity = new Activity(a, Module.Created_Alert);
+            DataContext.Activities.Add(activity);
+            DataContext.SaveChanges();
+
             return Ok(count);
         }
 
@@ -211,7 +246,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             DataContext.UpdateAlerts.Add(a);
             DataContext.SaveChanges();
             //saving the changes will have the context assign the new update its id
-            a.OriginAlert.RecentUpdateRefId = a.UpdateId;
+            a.OriginAlert.UpdateId = a.UpdateId;
             DataContext.SaveChanges();
             var contacts = a.getContacts().ToList();
             int count = SendNotifications(a.getContacts().ToList(), a);
@@ -239,7 +274,30 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 a.OriginAlert.Status = type;
 
             DataContext.SaveChanges(); //changes the alert status if it was changed
+
+            //Adds this activity to action log
+            if (a.Status == "UPDATED")
+            {
+                var activity = new Activity(a, Module.Updated_Alert);
+                DataContext.Activities.Add(activity);
+                DataContext.SaveChanges();
+            }
+            else if (a.Status == "RESOLVED")
+            {
+                var activity = new Activity(a, Module.Resolved_Alert);
+                DataContext.Activities.Add(activity);
+                DataContext.SaveChanges();
+            }
+
             return Ok(count);
+        }
+
+        [HttpGet]
+        [Route("activityLog")]
+        public IHttpActionResult GetActivityLog()
+        {
+            var activities = DataContext.Activities.ToList();
+            return Ok(activities);
         }
 
         private string createImage(StaticMapRequest s, string rootPath)

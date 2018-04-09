@@ -54,7 +54,7 @@ namespace Capstone_Project_v1.Models
         //Foreign key to the most recent update
         //We could forego this and instead find the update with the most recent timestamp
         [Column("RECENT_UPDATE_REF_ID")]
-        public int? RecentUpdateRefId { get; set; }
+        public int? UpdateId { get; set; }
 
         //this property is to be used by the alerts controller to retrieve a specific alert with all of its updates
         [NotMapped]
