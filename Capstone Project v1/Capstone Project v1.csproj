@@ -270,6 +270,7 @@
     <Content Include="ScriptsAppSpecific\controllers\homeController.js" />
     <Content Include="ScriptsAppSpecific\controllers\initialController.js" />
     <Content Include="ScriptsAppSpecific\controllers\loginController.js" />
+    <Content Include="ScriptsAppSpecific\controllers\resolvedAlertReviewController.js" />
     <Content Include="ScriptsAppSpecific\controllers\resolvedAlertsController.js" />
     <Content Include="ScriptsAppSpecific\controllers\searchContactController.js" />
     <Content Include="ScriptsAppSpecific\controllers\updateAlertController.js" />
@@ -396,6 +397,7 @@
     <Content Include="ViewsClient\alerts.html" />
     <Content Include="ViewsClient\home.html" />
     <Content Include="ViewsClient\login.html" />
+    <Content Include="ViewsClient\resolvedAlertReview.html" />
     <Content Include="ViewsClient\resolvedAlerts.html" />
     <Content Include="ViewsClient\searchContact.html" />
     <Content Include="ViewsClient\updateAlert.html" />

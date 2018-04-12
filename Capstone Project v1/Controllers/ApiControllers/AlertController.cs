@@ -72,7 +72,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
             var uQuery = (from u in updates
                           from a in alerts
-                          where u.UpdateId == a.UpdateId
+                          where u.UpdateId == a.UpdateId && u.Status == "RESOLVED"
                           select new { a.AlertId, a.Start_Time, End = u.Start_Time, a.Title }).ToList();
            
             var resAlerts = new List<ResolvedAlertDto>();

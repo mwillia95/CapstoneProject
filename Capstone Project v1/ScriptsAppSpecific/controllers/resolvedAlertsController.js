@@ -1,4 +1,4 @@
-﻿angular.module("app").controller("resolvedAlertsController", ['$scope', 'AppServices', '$rootScope', '$timeout', 'uiGridConstants', function ($scope, appServices, $rootScope, $timeout, uiGridConstants) {
+﻿angular.module("app").controller("resolvedAlertsController", ['$scope', 'AppServices', '$rootScope', '$timeout', 'uiGridConstants', '$location', function ($scope, appServices, $rootScope, $timeout, uiGridConstants, $location) {
     var self = this;
     self.load = true;
     $timeout($rootScope.authorize, 0).then(function () {
@@ -82,8 +82,8 @@
     };
     //end self.refreshData()
 
-    self.showAlert = function () {
-        console.log("This is where the alert page loads");
+    self.showAlert = function (item) {
+        $location.path("/resolvedAlertReview/" + item.AlertId);
     };
 
 

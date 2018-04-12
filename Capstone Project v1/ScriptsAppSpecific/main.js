@@ -67,6 +67,12 @@
             controller: "resolvedAlertsController",
             controllerAs: "self"
         })
+        .when("/resolvedAlertReview/:Id", {
+            title: "Resolved Alert Review",
+            templateUrl: "ViewsClient/resolvedAlertReview.html",
+            controller: "resolvedAlertReviewController",
+            controllerAs: "self"
+        })
         .otherwise(
         {
             redirectTo: "/"

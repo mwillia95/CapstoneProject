@@ -1,0 +1,47 @@
+﻿<div class="container" style="width:100%; min-width: 960px;">
+    <h1 style="text-align: center;">Resolved Alert Review</h1>
+    <!--New Contact Row 1-->
+    <div class="container" style="width: 100%;">
+        <div class="row" style="height: 505px; width: 100%;">
+            <div class="col-md-6">
+                <img src="{{self.image}}" />
+            </div>
+            <div class="col-md-6">
+                <!--Original Alert Information-->
+                <div class="row topBorder">
+                    <div class="form-cell col-sm-6 rightBorder" style="text-align: center;">
+                        <label>Title</label>
+                        <p>{{self.form.Title}}</p>
+                    </div>
+                    <div class="form-cell col-sm-6" style="text-align: center;">
+                        <label>Start Time</label>
+                        <p>{{self.form.Start_Time}}</p>
+                    </div>
+                </div>
+                <div class="row topBorder" style="height: 150px;">
+                    <div class="form-cell col-sm-12" style="text-align: center;">
+                        <label>Description</label>
+                        <p>
+                            {{self.form.Description}}
+                        </p>
+                    </div>
+                </div>
+                <!--Update inputs-->             
+                <div class="row" style="text-align: center;">
+                    <div class="col-md-4"></div>   
+                    <div class="col-md-4">
+                        <button type="button" class="btn-lg btn-primary" ng-click="self.back()"><span class="fa fa-share"><span style="font-family: 'Lato', sans-serif;">Back</span></span></button>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+           
+            </div>
+        </div>
+        <!--grid-->
+        <div class="row updateGrid" ng-if="self.gridOptions.data">
+            <div class="updateGrid" style="cursor: default;" ui-grid-pagination ui-grid-selection ui-grid-exporter
+                 ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid="self.gridOptions">
+            </div>
+        </div>
+    </div>
+</div>
