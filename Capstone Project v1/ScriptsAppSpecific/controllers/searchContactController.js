@@ -125,13 +125,21 @@
 
 
     self.removeContact = function (request) {
-    if (confirm("Are you sure you want to delete this contact?")) {
-        appServices.removeContact(request).then(function (response) {
-            console.log(response);
-            self.refreshData();
+        swal({
+            title: "WARNING",
+            text: "Are you sure you wish to delete this contact?",
+            type: "warning",
+            showCancelButton: true
+        },
+        function () {
+            appServices.removeContact(request).then(function (response) {
+                self.refreshData();
+                swal("SUCCESS", "The contact was successfully removed", "success");
+            });
         });
-    }
-};
+   
+    };
+
 
     if ($rootScope.search) {
         self.refreshData();
