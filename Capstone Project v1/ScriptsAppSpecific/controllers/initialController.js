@@ -22,14 +22,22 @@
     });
 
     $scope.verifyLogout = function () {
-        if(confirm("Logout?"))
-        {
+        swal({
+            title: "WARNING",
+            text: "Are you sure you wish to logout?",
+            type: "warning",
+            showCancelButton: true
+        },
+        function () {
             appServices.logout().then(function () {
                 $rootScope.fullName = "";
                 $location.path("/login");
                 $rootScope.isAuthorized = false;
+                swal("SUCCESS", "The contact was successfully removed", "success");
+
             });
-        }
+
+        });
     };
 
     var v = {};
