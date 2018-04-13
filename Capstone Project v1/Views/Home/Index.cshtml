@@ -48,14 +48,21 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                            aria-haspopup="true" aria-expanded="false">
-                            <span class="navLinks">Hello, {{$root.fullName}}</span>
+                            <span class="navLinks">Hello, {{$root.fullName}}</span> 
                         </a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-item"><a href="#" ng-click="verifyLogout()">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
-            </div>
+            </div>          
+           <a class="btn-sm btn-warning"
+                    style="width: 30px; height: 30px; margin-left: 40px; text-align: center; cursor: pointer; margin-top: 5px;"      
+                    href="~/PDFs/ENS_User_Manual.pdf"
+                    target="_blank"
+                    ng-if="$root.isAuthorized">
+                   <span class="fa fa-book" style="margin-left: -2px; margin-top: -2px;"></span>
+            </a>
         </div>
     </nav>
     <!--End Navigation-->

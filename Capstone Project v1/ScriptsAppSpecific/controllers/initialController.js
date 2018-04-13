@@ -30,10 +30,10 @@
         },
         function () {
             appServices.logout().then(function () {
-                $rootScope.fullName = "";
+                $rootScope.fullName = "";          
+                swal("SUCCESS", "You have successfully logged out!", "success");
                 $location.path("/login");
                 $rootScope.isAuthorized = false;
-                swal("SUCCESS", "The contact was successfully removed", "success");
 
             });
 
