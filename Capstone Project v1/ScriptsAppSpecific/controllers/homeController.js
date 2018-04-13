@@ -362,7 +362,7 @@
             self.showButton = false;
             self.showForm = false;
             self.place = null;
-            swal("SUCCESS", "An alert was created successully!", "success");
+            swal("SUCCESS", "An alert was created successfully!", "success");
         }).catch(function (response) {
             swal("ERROR", "Something went wrong with creating the alert.", "error");
             return;

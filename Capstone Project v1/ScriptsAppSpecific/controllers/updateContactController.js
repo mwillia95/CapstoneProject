@@ -9,8 +9,6 @@
     self.contact = {};
     self.oldAdd = {};
     var id = $rootScope.id;
-    console.log($rootScope);
-    console.log($rootScope.id);
 
     var stateList = function () {
         appServices.getList("states").then(function (response) {
@@ -22,8 +20,6 @@
         appServices.getContactById(id).then(function (response) {
             self.contact = response.data;
             self.oldAdd = response.data.Address;
-            console.log(self.contact);
-            console.log('test');
         });
         var service = document.getElementsByClassName("serviceUpdate");
 
@@ -85,17 +81,12 @@
     //end self.validate
 
     self.submit = function (valid) {
-        //if (!valid)
-        //   return;
         if (!self.validate()) {
             return;
         }
         var phonestrip = /[()+-]/g;
         var newAdd = self.contact.Address;
         if (newAdd.Street !== self.oldAdd.Street || newAdd.State !== self.oldAdd.State || newAdd.City !== self.oldAdd.City || newAdd.Zip !== self.oldAdd.Zip) {
-            console.log("These are the addresses");
-            console.log(newAdd);
-            console.log(self.oldAdd);
             var geoAddress = self.contact.Address.Street.split(' ').join('+') + ',+' + self.contact.Address.City.split(' ').join('+') + ',+' + self.contact.Address.State;
             appServices.getGeocode(geoAddress).then(function (response) {
                 if (response.status === "ZERO_RESULTS") {
@@ -123,7 +114,6 @@
                 };
                 console.log(contact);
                 appServices.updateContact(contact).then(function (response) {
-                    console.log(response);
                     self.contact = {};
                     swal("SUCCESS", "The contact was updated!", "success");
                     $location.path('/searchContact');
@@ -151,8 +141,6 @@
 
                 };
             appServices.updateContact(contact).then(function (response) {
-                console.log("Updated information");
-                console.log(response.data);
                 swal("SUCCESS", "The contact was updated!", "success");
                 self.contact = {}; ///test for update info
                 $location.path('/searchContact');

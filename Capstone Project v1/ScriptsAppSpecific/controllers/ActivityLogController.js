@@ -62,7 +62,6 @@
     self.refreshData = function () {
         appServices.getActivities().then(function (response) {           
             self.gridOptions.data = response.data;
-            console.log(self.gridOptions.data);
             self.gridOptions.paginationCurrentPage = 1;
             self.load = false;
         }).catch(function (response) {

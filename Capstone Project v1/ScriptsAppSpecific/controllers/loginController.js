@@ -19,7 +19,6 @@
     $scope.account = {};
     //Not sure if we need this anymore
     $scope.register = function () {
-        console.log("starting test");
         var account = {};
         account.Email = "director@company.com";
         account.Password = "Password1!";
@@ -31,14 +30,12 @@
     var getName = function () {
         appServices.getName().then(function (response) {
             $rootScope.fullName = response.data;
-            console.log(response);
         });
     };
 
     $scope.submit = function () {
         self.loading = true;
         appServices.login($scope.account).then(function (response) {
-            console.log(response);
             if (response.data === "Success") {
                 $rootScope.isAuthorized = true;
                 getName();

@@ -66,14 +66,10 @@
     //end self.validate
 
     self.submit = function (valid) {
-        //if (!valid)
-        //   return;
         if (!self.validate()) {
             return;
         }
-        var phonestrip = /[()+-]/g;
-        //console.log({ Test: self.contact.phone.replace(phonestrip, '') });
-        //return;
+        var phonestrip = /[()+-]/g;      
 
         var geoAddress = self.contact.streetAddress.replace(' ', '+') + ',+' + self.contact.city.replace(' ', '+') + ',+' + self.contact.state;
         appServices.getGeocode(geoAddress).then(function (response) {
@@ -117,6 +113,7 @@
     self.clear = function () {
         self.contact = {};
     };
+
     //code for testing updates
     //var Contact = {
     //    ContactId: 1,

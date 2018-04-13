@@ -31,20 +31,12 @@
             });
         }
     };
-    //appServices.verifyContacts().then(function (response) {
-    //    console.log(response)
-    //});
+
     var v = {};
     v.Lat = 33.49;
     v.Lng = -82.07;
     v.Zoom = 8;
     v.Radius = 10;
-    //appServices.sendAlert(v).then(function(response)
-    //{
-    //    console.log(response);
-    //});
-    appServices.verifyLatLong().then(function (response) {
-        console.log("Done");
-        console.log(response.data)
-    })
+  
+    appServices.verifyLatLong().then(function (response) {})
 }]);

@@ -105,8 +105,6 @@
             appServices.getContactsAll().then(function (response) {
                 self.gridOptions.data = response.data;
                 self.results = self.gridOptions.data;
-                console.log(self.gridOptions.data);
-                console.log(self.results);
                 self.gridOptions.paginationCurrentPage = 1;
             });
         }
@@ -122,13 +120,12 @@
 
     self.updateContact = function (request) {
         $rootScope.id = request.ContactId;
-        $location.path('/updateContact');//.search({ param: 'request.ContactId' });
+        $location.path('/updateContact'); //this should be using parameters instead of global variable
     };
 
 
     self.removeContact = function (request) {
     if (confirm("Are you sure you want to delete this contact?")) {
-        console.log(request);
         appServices.removeContact(request).then(function (response) {
             console.log(response);
             self.refreshData();
