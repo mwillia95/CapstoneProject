@@ -11,6 +11,7 @@
     var markers = [];
     self.showButton = false;
     self.showForm = false;
+    self.activeSearch = false;
 
     $timeout($rootScope.authorize, 0).then(function () {
         if (!$rootScope.isAuthorized) {
@@ -383,10 +384,12 @@
         self.searchBar = "";
         map.setCenter(AugustaUniversity);
         swal("Successful Cancel", "Your alert was canceled successfully.", "success");
+        self.activeSearch = false;
     };
 
     self.buttonShow = function () {
         self.showButton = !self.showButton;
+        self.activeSearch = true;
     };
 
     self.formShow = function () {

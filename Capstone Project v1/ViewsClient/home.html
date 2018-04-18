@@ -6,16 +6,18 @@
         </select>
     </div>
     <div id="map-canvas"></div>
+    <!--search bar-->
     <div class="row">
         <div class="col-md-3"></div>
-        <div class="col-md-6" style="margin-top: 10px; margin: auto;">
+        <div class="col-md-6" style="margin-top: 10px; margin: auto;" ng-show="self.activeSearch === false">
             <input id="searchInput" ng-model="self.searchBar" class="form-control" type="text" placeholder="Enter a location" style="border-color: black;">
         </div>
         <div class="col-md-3"></div>
     </div>
+    <!--Search Button-->
     <div class="row" style="margin-top: -28px">
         <div class="col-md-3"></div>
-        <div class="col-md-6" style="text-align: center; margin-top: 10px;">
+        <div class="col-md-6" style="text-align: center; margin-top: 10px;" ng-show="self.activeSearch === false">
             <button type="button" id="search-button" class="btn btn-primary"><span class="fa fa-search"><span style="font-family: 'Lato', sans-serif;">Search</span></span></button>
         </div>
         <div class="col-md-3"></div>
