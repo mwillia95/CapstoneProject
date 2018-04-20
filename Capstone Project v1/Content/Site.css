@@ -18,6 +18,18 @@
     white-space: normal;
 }
 
+/*.modal {
+    display: block;
+}*/
+
+.loading-modal {
+    width: 325px;
+    height: 325px;
+    top: 30%;
+    position: fixed;
+    z-index: 1050;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 /*input,
 select,

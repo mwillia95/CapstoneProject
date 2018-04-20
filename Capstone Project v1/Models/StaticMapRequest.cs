@@ -32,8 +32,8 @@ namespace Capstone_Project_v1.Models
             sb.Append(url);
             sb.Append("center=");
             sb.Append(Lat + "," + Lng);
-            sb.Append("&zoom=");
-            sb.Append(Zoom);
+            //sb.Append("&zoom=");
+            //sb.Append(Zoom);
             sb.Append("&size=");
             sb.Append(Height + "x" + Width);
             sb.Append("&maptype=");

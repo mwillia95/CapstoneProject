@@ -1,13 +1,13 @@
 ﻿angular.module("app", ["ngRoute", "ngAnimate", "ui.bootstrap", "ui.grid", "ui.grid.pagination", "ui.grid.selection", "ui.grid.resizeColumns", "ui.grid.exporter", "ui.grid.moveColumns"]).config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
     $routeProvider
-        .when("/",
+        .when("/home",
         {        
             title: "E.N.S.",
             templateUrl: "ViewsClient/home.html",
             controller: "homeController",
             controllerAs: "self"
         })
-        .when("/login",
+        .when("/",
         {
             title: "Login",
             templateUrl: "ViewsClient/login.html",

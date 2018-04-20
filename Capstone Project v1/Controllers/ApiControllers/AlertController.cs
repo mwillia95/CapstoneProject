@@ -176,7 +176,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             //Pending should only be set if notification doesnt get sent
             //this should be set to Ongoing. Notification should be sent on alert creation
             //still need this functionality
-            a.Status = AlertStatus.Pending; //3
+            a.Status = AlertStatus.Ongoing; //3
             a.Start_Time = DateTime.Now;
             DataContext.Alerts.Add(a);
             DataContext.SaveChanges();
@@ -192,29 +192,6 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             DataContext.SaveChanges();
 
             int count = SendNotifications(a.Contacts.ToList(), a);
-
-            //foreach(var c in a.Contacts)
-            //{
-            //    if (c.ServiceType == "email")
-            //    {
-            //        SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName, 
-            //            a, AlertStatus.Ongoing);
-            //    }
-            //    else if(c.ServiceType == "mobile")
-            //    {
-            //        //SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
-            //    }
-            //    else if(c.ServiceType == "both")
-            //    {
-            //        //need to figure out how to set up the changing of the alertstatus when servicetype is "both"
-            //        SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName,
-            //           a, AlertStatus.Ongoing);
-            //        //SendText(a, c.PhoneNumber, AlertStatus.Ongoing);
-            //    }
-            //}
-
-            if(count > 0)
-                a.Status = AlertStatus.Ongoing;
 
             DataContext.SaveChanges(); //changes the alert status if it was changed
 
@@ -251,27 +228,8 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             var contacts = a.getContacts().ToList();
             int count = SendNotifications(a.getContacts().ToList(), a);
 
-            //foreach (var c in contacts)
-            //{
-            //    if (c.ServiceType == "email")
-            //    {
-            //        SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName, a);
-            //    }
-            //    else if (c.ServiceType == "mobile")
-            //    {
-            //        //SendText(a, c.PhoneNumber);
-            //    }
-            //    else if (c.ServiceType == "both")
-            //    {
-            //        //need to figure out how to set up the changing of the alertstatus when servicetype is "both"
-            //        SendNotification(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName,
-            //           a);
-            //        //SendText(a, c.PhoneNumber);
-            //    }
-            //}
 
-            if (count > 0)
-                a.OriginAlert.Status = type;
+            a.OriginAlert.Status = type;
 
             DataContext.SaveChanges(); //changes the alert status if it was changed
 

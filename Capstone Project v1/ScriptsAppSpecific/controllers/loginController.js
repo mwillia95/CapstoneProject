@@ -7,14 +7,33 @@
             console.log($rootScope.isAuthorized);
         });
     });*/
-    self.loading = false;
-    $timeout($rootScope.authorize, 0).then(function () {
-        $timeout(function () {
-            if ($rootScope.isAuthorized) {
-                $location.path("/");
-            }
-        }, 100);
+    self.loading = true;
+    appServices.isAuthorized().then(function (response) {
+
+        $rootScope.isAuthorized = response.data[0];
+        $rootScope.fullName = response.data[1];
+
+        if (response.data[0] === true) {
+            $location.path("/home");
+        }
+        else {
+            self.loading = false;
+        }
+
+
     });
+    //$timeout($rootScope.authorize, 0).then(function () {
+    //    $timeout(function () {
+    //        appServices.isAuthorized().then(function (response) {
+
+    //            $rootScope.isAuthorized = response.data[0];
+    //            $rootScope.fullName = response.data[1];
+    //        });
+    //        if ($rootScope.isAuthorized) {
+    //            $location.path("/home");
+    //        }
+    //    }, 2000);
+    //});
     $scope.error = false;
     $scope.account = {};
     //Not sure if we need this anymore
@@ -39,7 +58,7 @@
             if (response.data === "Success") {
                 $rootScope.isAuthorized = true;
                 getName();
-                $location.path("/");
+                $location.path("/home");
             }
             else {
                 $scope.error = true;

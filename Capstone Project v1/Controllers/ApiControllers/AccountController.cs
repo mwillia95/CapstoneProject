@@ -21,7 +21,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
     public class AccountController : AppApiController
     {
-        static readonly bool overrideLogin = true;
+        static readonly bool overrideLogin = false;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private IAuthenticationManager _authenticationManager;
@@ -121,11 +121,21 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
         [HttpGet]
         [Route("isAuthorized")]
-        public bool isAuthorized()
+        public object[] isAuthorized()
         {
             //If you want to override authentication, change overrideLogin variable to true (top of class)
-
-            return AuthenticationManager.User.Identity.IsAuthenticated || overrideLogin;
+            object[] arr = new object[2];
+            bool loggedIn = AuthenticationManager.User.Identity.IsAuthenticated || overrideLogin;
+            arr[0] = loggedIn;
+            if (loggedIn)
+            {
+                arr[1] = getFullName();
+            }
+            else
+            {
+                arr[1] = "User";
+            }
+            return arr;
         }
 
         [HttpGet]

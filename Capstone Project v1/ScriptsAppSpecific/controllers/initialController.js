@@ -5,12 +5,14 @@
     $rootScope.id = -1;
     $rootScope.search = "";
     $rootScope.isAuthorized = false;
+    $rootScope.fullName = "";
     $rootScope.authorize = function () {
         appServices.isAuthorized().then(function (response) {
-            $rootScope.isAuthorized = response.data;
+            
+            $rootScope.isAuthorized = response.data[0];
+            $rootScope.fullName = response.data[1];
         });
     };
-    $rootScope.fullName = "";
     //use $timeout to help force authorization to check after the api call has finished
     $timeout($rootScope.authorize, 0).then(function () {
         //for some reason will execute before api has finished, 100ms delay to allow enough time
@@ -46,5 +48,5 @@
     v.Zoom = 8;
     v.Radius = 10;
   
-    appServices.verifyLatLong().then(function (response) {})
+    //appServices.verifyLatLong().then(function (response) {})
 }]);

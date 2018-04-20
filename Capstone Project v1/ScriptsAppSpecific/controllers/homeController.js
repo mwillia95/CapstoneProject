@@ -1,5 +1,6 @@
-﻿angular.module("app").controller("homeController", ['$scope', 'AppServices', '$rootScope', '$location', '$timeout', function ($scope, appServices, $rootScope, $location, $timeout) {
+﻿angular.module("app").controller("homeController", ['$scope', 'AppServices', '$rootScope', '$location', '$timeout', '$uibModal', function ($scope, appServices, $rootScope, $location, $timeout, $uibModal) {
     var self = this;
+    self.creatingAlert = false;
     self.zoomDistances = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
     self.measurements = [
         { type: "Meters", abbreviation: "m" },
@@ -336,9 +337,26 @@
         ],       
     };
 
+    self.openModal = function (data) {
+
+    }
+
+    self.openModal = function () {
+
+    }
+
     self.submit = function () {
+        var modal = $uibModal.open({
+            template: '<img src="Content/images/Loading.gif" />',
+            windowClass: 'show loading-modal modal-dialog',
+            backdropClass: 'show',
+            
+        });
+        console.log(modal);
+        self.creatingAlert = true;
         if (!self.marker.circle) {
             swal("WARNING", "You must draw a circle to specify the danger zone", "warning");
+            self.creatingAlert = false;
             return;
         }
         self.alert.zoom = map.getZoom();
@@ -352,6 +370,11 @@
             Zoom: self.alert.zoom
         };
         appServices.addAlert(alert).then(function (response) {
+            var count = response.data;
+            modal.close('');
+            modal.closed.then(function (data) {
+                swal("SUCCESS", "An alert was created successfully!\n" + count + " contacts were notified.", "success");
+            });
             console.log(response);
             self.activeSearch = false;
             //clears form data         
@@ -363,12 +386,16 @@
             map.setCenter(AugustaUniversity);
             self.showButton = false;
             self.showForm = false;
-            self.place = null;           
-            swal("SUCCESS", "An alert was created successfully!", "success");           
+            self.place = null;
         }).catch(function (response) {
-            swal("ERROR", "Something went wrong with creating the alert.", "error");
+            modal.close('');
+            modal.closed.then(function (data) {
+                swal("ERROR", "Something went wrong with creating the alert.", "error");
+            });
+            self.creatingAlert = false;
             return;
             });
+        self.creatingAlert = false;
      
     };
 

@@ -396,6 +396,7 @@
     <Content Include="ViewsClient\createContact.html" />
     <Content Include="ViewsClient\alerts.html" />
     <Content Include="ViewsClient\home.html" />
+    <Content Include="ViewsClient\loadingModal.html" />
     <Content Include="ViewsClient\login.html" />
     <Content Include="ViewsClient\resolvedAlertReview.html" />
     <Content Include="ViewsClient\resolvedAlerts.html" />

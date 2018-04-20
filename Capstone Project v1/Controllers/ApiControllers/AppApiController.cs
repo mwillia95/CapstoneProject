@@ -60,7 +60,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
 
                 //Uncomment the lines below to enable sending text messages if it was selected for the contact
-                //if (preference == "mobile" || preference == "both")
+                //if (preference == "mobile" || preference == "both")   
                    //text = SendText(c.PhoneNumber, a.Title + Environment.NewLine + a.Description);
 
                 if (email || text)
@@ -150,50 +150,5 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             return link.Success;
 
         }
-
-        ////update email notification
-        //public bool SendNotification(string toEmail, string subj, string msg, string fullName, string imageName)
-        //{
-        //    var fromAddress = new MailAddress("publicemergencysystem@gmail.com", "ENS");
-        //    var toAddress = new MailAddress($"{toEmail}", $"{fullName}");
-        //    const string fromPassword = "shrekemergency";
-        //    string subject = subj;
-        //    string body = msg;        
-
-        //    var smtp = new SmtpClient
-        //    {
-        //        Host = "smtp.gmail.com",
-        //        Port = 587,
-        //        EnableSsl = true,
-        //        DeliveryMethod = SmtpDeliveryMethod.Network,
-        //        UseDefaultCredentials = false,
-        //        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-        //    };
-
-        //    var message = new MailMessage(fromAddress, toAddress);
-        //    message.Subject = subject;
-        //    message.Body = body;
-        //    message.IsBodyHtml = true;
-        //    message.AlternateViews.Add(getEmbeddedImage(HttpContext.Current.Server.MapPath("~//StaticMaps//" + imageName), body));
-
-        //    try
-        //    {
-        //        smtp.Send(message);
-        //    }
-        //    catch
-        //    {               
-        //        return false;
-        //    }
-        //    return true;
-        //}
-
-        //////text for update
-        ////public bool SendText(UpdateAlert a, string phone)
-        ////{
-        ////    var client = new Client("adamperry1", "2RT8BaXnn2RU1zRimtUxe9gTndZuJn"); //this is the username of the account and the api key....dont mess with this
-        ////    var link = client.SendMessage(a.Title + Environment.NewLine + a.Description, "1" + phone); //message, then phonenumber with Country Code and area code.....1 is the US country code
-
-        ////    return link.Success;
-        ////}
     }
 }
