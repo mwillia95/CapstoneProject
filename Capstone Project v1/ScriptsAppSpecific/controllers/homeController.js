@@ -353,6 +353,7 @@
         };
         appServices.addAlert(alert).then(function (response) {
             console.log(response);
+            self.activeSearch = false;
             //clears form data         
             self.alert = {};
             self.marker.setMap(null);
@@ -362,8 +363,8 @@
             map.setCenter(AugustaUniversity);
             self.showButton = false;
             self.showForm = false;
-            self.place = null;
-            swal("SUCCESS", "An alert was created successfully!", "success");
+            self.place = null;           
+            swal("SUCCESS", "An alert was created successfully!", "success");           
         }).catch(function (response) {
             swal("ERROR", "Something went wrong with creating the alert.", "error");
             return;

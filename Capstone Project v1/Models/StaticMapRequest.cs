@@ -41,6 +41,30 @@ namespace Capstone_Project_v1.Models
             sb.Append("&markers=color:red|");
             sb.Append(Lat + "," + Lng);
             sb.Append(key);
+            sb.Append("&path=color:red|weight:4|fillcolor:0xFF000080");
+
+            const int r = 6371;
+            const double pi = Math.PI;
+
+            var latAux = ((double)Lat * pi) / 180;
+            var longAux = ((double)Lng * pi) / 180;
+            var d = ((double)Radius / 1000) / r;
+
+            var i = 0;
+
+            if (Radius > 0)
+            {
+                for (i = 0; i <= 360; i += 8)
+                {
+                    var brng = i * pi / 180;
+
+                    var pLat = Math.Asin(Math.Sin(latAux) * Math.Cos(d) + Math.Cos(latAux) * Math.Sin(d) * Math.Cos(brng));
+                    var pLng = ((longAux + Math.Atan2(Math.Sin(brng) * Math.Sin(d) * Math.Cos(latAux), Math.Cos(d) - Math.Sin(latAux) * Math.Sin(pLat))) * 180) / pi;
+                    pLat = (pLat * 180) / pi;
+                    sb.Append("|" + pLat + "," + pLng);
+                }
+            }
+
             return sb.ToString();
         }
     }
