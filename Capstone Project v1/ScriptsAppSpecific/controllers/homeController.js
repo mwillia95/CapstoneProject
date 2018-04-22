@@ -337,13 +337,6 @@
         ],       
     };
 
-    self.openModal = function (data) {
-
-    }
-
-    self.openModal = function () {
-
-    }
 
     self.submit = function () {
         var modal = $uibModal.open({
@@ -373,7 +366,7 @@
             var count = response.data;
             modal.close('');
             modal.closed.then(function (data) {
-                swal("SUCCESS", "An alert was created successfully!\n" + count + " contacts were notified.", "success");
+                swal("SUCCESS", "An alert was created successfully!\n" + count + " contact(s) were notified.", "success");
             });
             console.log(response);
             self.activeSearch = false;

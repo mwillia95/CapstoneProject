@@ -1,4 +1,4 @@
-﻿angular.module("app").controller("updateAlertController", ['$scope', 'AppServices', '$location', '$rootScope', '$timeout', 'uiGridConstants', function ($scope, appServices, $location, $rootScope, $timeout, uiGridConstants) {
+﻿angular.module("app").controller("updateAlertController", ['$scope', 'AppServices', '$location', '$rootScope', '$timeout', 'uiGridConstants', '$uibModal', function ($scope, appServices, $location, $rootScope, $timeout, uiGridConstants, $uibModal) {
     var self = this;
     self.form = {};
     self.formData = {};
@@ -68,6 +68,7 @@
     self.refreshData = function () {  
         appServices.getAlertById(self.id).then(function (response) {
             self.formData = response.data;
+            console.log(self.formData);
             if (self.formData[0].Updates !== null) {
                 self.form = {
                     Title: self.formData.length === 2 ? self.formData[0].Title : self.formData[0].Updates[self.formData[0].Updates.length - 1].Title.replace("[Update]", ""),
@@ -90,22 +91,40 @@
     };
    
     self.submitUpdate = function () {
+        var modal = $uibModal.open({
+            template: '<img src="Content/images/Loading.gif" />',
+            windowClass: 'show loading-modal modal-dialog',
+            backdropClass: 'show',
+        });
         var Update =
             {
                 Title: self.form.Title + " [Update]",
                 Description: self.updateAlert.Description,
                 OriginAlertRefId: self.id,
-                Status: "UPDATE"
+                Status: "UPDATED"
             };
         appServices.updateAlert(Update).then(function (response) {
             console.log(response);
-            swal("SUCCESS", "An update was created and sent successfully!", "success");
+            modal.close('');
+            modal.closed.then(function (data) {
+                swal("SUCCESS", "An update was created and sent successfully!", "success");
+            });
             self.refreshData();
             self.updateAlert.Description = "";
+        }).catch(function () {
+            modal.close('');
+            modal.closed.then(function (data) {
+                swal("ERROR", "Something went wrong with updating the alert.", "error");
+            });
         });
     };
 
     self.submitResolve = function () {
+        var modal = $uibModal.open({
+            template: '<img src="Content/images/Loading.gif" />',
+            windowClass: 'show loading-modal modal-dialog',
+            backdropClass: 'show',
+        });
         var Update =
             {
                 Title: self.form.Title + " [Resolved]",
@@ -115,8 +134,16 @@
             };
         appServices.updateAlert(Update).then(function (response) {
             console.log(response);
-            swal("SUCCESS", "Resolution was created and sent successfully!", "success");
-            $location.path("/activeAlerts");
+            modal.close('');
+            modal.closed.then(function (data) {
+                swal("SUCCESS", "A resolution was created and sent successfully!", "success");
+                $location.path("/activeAlerts");
+            });
+        }).catch(function () {
+            modal.close('');
+            modal.closed.then(function (data) {
+                swal("ERROR", "Something went wrong with resolving the alert.", "error");
+            });
         });
     }
 

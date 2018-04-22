@@ -1,4 +1,4 @@
-﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', '$rootScope', '$timeout', function ($scope, appServices, $location, uiGridConstants, $rootScope, $timeout) {
+﻿angular.module("app").controller("searchContactController", ['$scope', 'AppServices', '$location', 'uiGridConstants', '$rootScope', '$timeout', '$uibModal', function ($scope, appServices, $location, uiGridConstants, $rootScope, $timeout, $uibModal) {
     var self = this;
     $timeout($rootScope.authorize, 0).then(function () {
         if (!$rootScope.isAuthorized) {
@@ -101,18 +101,29 @@
     searchValidation = /\S/;
 
     self.refreshData = function () {
+        var modal = $uibModal.open({
+            template: '<img src="Content/images/Loading.gif" />',
+            windowClass: 'show loading-modal modal-dialog',
+            backdropClass: 'show',
+        });
         if (!searchValidation.test($rootScope.search)) {
             appServices.getContactsAll().then(function (response) {
-                self.gridOptions.data = response.data;
-                self.results = self.gridOptions.data;
-                self.gridOptions.paginationCurrentPage = 1;
+                modal.close('');
+                modal.closed.then(function (data) {
+                    self.gridOptions.data = response.data;
+                    self.results = self.gridOptions.data;
+                    self.gridOptions.paginationCurrentPage = 1;
+                });              
             });
         }
         else {
             appServices.getContacts($rootScope.search).then(function (response) { //send search string through to query
-                self.gridOptions.data = response.data;
-                self.results = self.gridOptions.data;
-                self.gridOptions.paginationCurrentPage = 1;
+                modal.close('');
+                modal.closed.then(function (data) {
+                    self.gridOptions.data = response.data;
+                    self.results = self.gridOptions.data;
+                    self.gridOptions.paginationCurrentPage = 1;
+                });         
             });
         }
     };

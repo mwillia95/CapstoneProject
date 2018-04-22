@@ -213,7 +213,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 a.OriginAlert = DataContext.Alerts.Include("Contacts").First(x => x.AlertId == a.OriginAlertRefId);
             }
             AlertStatus type;
-            if (a.Status == "UPDATE")
+            if (a.Status == "UPDATE" || a.Status == "UPDATED")
                 type = AlertStatus.Updated;
             else if (a.Status == "RESOLVED")
                 type = AlertStatus.Complete;
