@@ -60,7 +60,7 @@
     //end self.gridOptions();
 
     self.refreshData = function () {
-        appServices.getActivities().then(function (response) {           
+        appServices.getActivities().then(function (response) {      
             self.gridOptions.data = response.data;
             self.gridOptions.paginationCurrentPage = 1;
             self.load = false;

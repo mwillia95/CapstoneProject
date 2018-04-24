@@ -68,7 +68,6 @@
     self.refreshData = function () {  
         appServices.getAlertById(self.id).then(function (response) {
             self.formData = response.data;
-            console.log(self.formData);
             if (self.formData[0].Updates !== null) {
                 self.form = {
                     Title: self.formData.length === 2 ? self.formData[0].Title : self.formData[0].Updates[self.formData[0].Updates.length - 1].Title.replace("[Update]", ""),
@@ -104,7 +103,6 @@
                 Status: "UPDATED"
             };
         appServices.updateAlert(Update).then(function (response) {
-            console.log(response);
             modal.close('');
             modal.closed.then(function (data) {
                 swal("SUCCESS", "An update was created and sent successfully!", "success");
@@ -133,7 +131,6 @@
                 Status: "RESOLVED"
             };
         appServices.updateAlert(Update).then(function (response) {
-            console.log(response);
             modal.close('');
             modal.closed.then(function (data) {
                 swal("SUCCESS", "A resolution was created and sent successfully!", "success");

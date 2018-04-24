@@ -254,7 +254,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("activityLog")]
         public IHttpActionResult GetActivityLog()
         {
-            var activities = DataContext.Activities.ToList();
+            var activities = DataContext.Activities.ToList().OrderByDescending(x => x.ActivityId);
             return Ok(activities);
         }
 

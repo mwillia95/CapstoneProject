@@ -368,7 +368,6 @@
             modal.closed.then(function (data) {
                 swal("SUCCESS", "An alert was created successfully!\n" + count + " contact(s) were notified.", "success");
             });
-            console.log(response);
             self.activeSearch = false;
             //clears form data         
             self.alert = {};

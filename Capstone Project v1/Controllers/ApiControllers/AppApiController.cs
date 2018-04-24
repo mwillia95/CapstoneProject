@@ -59,9 +59,9 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                     email = SendEmail(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName, imageName);
 
 
-                //Uncomment the lines below to enable sending text messages if it was selected for the contact
-                //if (preference == "mobile" || preference == "both")   
-                   //text = SendText(c.PhoneNumber, a.Title + Environment.NewLine + a.Description);
+               // Uncomment the lines below to enable sending text messages if it was selected for the contact
+                if (preference == "mobile" || preference == "both")   
+                   text = SendText(c.PhoneNumber, a.Title + Environment.NewLine + a.Description);
 
                 if (email || text)
                     count++;
@@ -87,8 +87,8 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                     email = SendEmail(c.Email, a.Title, a.Description, c.FirstName + " " + c.LastName, imageName);
 
                 //Uncomment the lines below to enable text messaging
-                //if(preference == "mobile" || preference == "both")
-                   // text = SendText(c.PhoneNumber, a.Title + Environment.NewLine + a.Description);
+                if(preference == "mobile" || preference == "both")
+                    text = SendText(c.PhoneNumber, a.Title + Environment.NewLine + a.Description);
 
                 if(email || text)
                     count++;

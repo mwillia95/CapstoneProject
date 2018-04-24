@@ -211,7 +211,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApiControllers\AccountController.cs" />
-    <Compile Include="Controllers\ApiControllers\ActivityController.cs" />
     <Compile Include="Controllers\ApiControllers\AlertController.cs" />
     <Compile Include="Controllers\ApiControllers\AppApiController.cs" />
     <Compile Include="Controllers\ApiControllers\ContactController.cs" />

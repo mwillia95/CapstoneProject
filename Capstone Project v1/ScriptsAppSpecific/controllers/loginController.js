@@ -44,7 +44,7 @@
         appServices.register(account).then(function (response) {
             console.log(response);
         });
-        console.log("test complete");
+        //console.log("test complete");
     };
     var getName = function () {
         appServices.getName().then(function (response) {

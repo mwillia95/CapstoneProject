@@ -21,7 +21,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
     public class AccountController : AppApiController
     {
-        static readonly bool overrideLogin = true;
+        static readonly bool overrideLogin = false;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private IAuthenticationManager _authenticationManager;
