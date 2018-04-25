@@ -18,7 +18,7 @@
     });
 
     $scope.error = false;
-
+    $scope.account = {};
     var getName = function () {
         appServices.getName().then(function (response) {
             $rootScope.fullName = response.data;

@@ -116,7 +116,6 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
                 return Ok("Success");
             }
             return Ok(UserManager);
-            //AddErrors(result);
         }
 
         [HttpGet]
