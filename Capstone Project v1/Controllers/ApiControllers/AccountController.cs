@@ -21,7 +21,6 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
 
     public class AccountController : AppApiController
     {
-        static readonly bool overrideLogin = false;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private IAuthenticationManager _authenticationManager;
@@ -102,6 +101,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         [Route("register")]
         public IHttpActionResult Register(RegisterModel model)
@@ -123,18 +123,11 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         [Route("isAuthorized")]
         public object[] isAuthorized()
         {
-            //If you want to override authentication, change overrideLogin variable to true (top of class)
             object[] arr = new object[2];
-            bool loggedIn = AuthenticationManager.User.Identity.IsAuthenticated || overrideLogin;
+            bool loggedIn = AuthenticationManager.User.Identity.IsAuthenticated;
             arr[0] = loggedIn;
-            if (loggedIn)
-            {
-                arr[1] = getFullName();
-            }
-            else
-            {
-                arr[1] = "User";
-            }
+            arr[1] = getFullName();
+
             return arr;
         }
 
@@ -144,9 +137,9 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
         {
             var userClaim = AuthenticationManager.User.Identity;
             var user = UserManager.FindById(userClaim.GetUserId());
-            if(user.FullName == "" || user.FullName == null)
+            if(user == null || user.FullName == null || user.FullName == "")
             {
-                user.FullName = "Mitchell Williams";
+                return "User";
             }
             return user.FullName;
         }

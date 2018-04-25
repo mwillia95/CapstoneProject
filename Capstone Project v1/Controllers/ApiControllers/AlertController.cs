@@ -24,6 +24,7 @@ using System.Drawing;
  */
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
+    [Authorize]
     [RoutePrefix("api/" + AppName + "/alerts")]
     public class AlertController : AppApiController
     {

@@ -7,6 +7,7 @@ using System.Configuration;
 
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
+    [Authorize]
     [RoutePrefix("api/" + AppName + "/lists")]
     public class ListController : AppApiController
     {
