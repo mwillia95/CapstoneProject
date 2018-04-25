@@ -366,7 +366,8 @@
             var count = response.data;
             modal.close('');
             modal.closed.then(function (data) {
-                swal("SUCCESS", "An alert was created successfully!\n" + count + " contact(s) were notified.", "success");
+                var message = count === 1 ? " contact was notified." : " contacts were notified.";
+                swal("SUCCESS", "An alert was created successfully!\n" + count + message, "success");
             });
             self.activeSearch = false;
             //clears form data         
