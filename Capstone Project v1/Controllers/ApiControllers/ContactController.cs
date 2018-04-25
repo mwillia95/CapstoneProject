@@ -10,6 +10,7 @@ using System.IO;
 using Newtonsoft.Json;
 namespace Capstone_Project_v1.Controllers.ApiControllers
 {
+    [Authorize]
     [RoutePrefix("api/" + AppName + "/contacts")]
     public class ContactController : AppApiController
     {
