@@ -183,6 +183,10 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             DataContext.SaveChanges();
             string appPath = HttpContext.Current.Server.MapPath("~");
             string path = createImage(new StaticMapRequest(a.location_lat, a.location_lng, a.Zoom, a.Radius, a.AlertId), appPath);
+            if(path == "ERROR")
+            {
+                return InternalServerError();
+            }
             a.ImageName = path;
             DataContext.SaveChanges();
 
@@ -276,7 +280,7 @@ namespace Capstone_Project_v1.Controllers.ApiControllers
             }
             catch(Exception e)
             {
-                return e.Message;
+                return "ERROR";
             }
 
            // image.Save(path);
