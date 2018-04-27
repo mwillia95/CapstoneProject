@@ -28,9 +28,9 @@
                 return $http.post("api/PublicEmergencyNotificationSystem/contacts/verifyLatLong");
             },
             //AccountController functions
-            register: function (account) {
-                return $http.post("api/PublicEmergencyNotificationSystem/accounts/register", account);
-            },
+            //register: function (account) {
+            //    return $http.post("api/PublicEmergencyNotificationSystem/accounts/register", account);
+            //},
             login: function (account) {
                 return $http.post("api/PublicEmergencyNotificationSystem/accounts/login", account);
             },
